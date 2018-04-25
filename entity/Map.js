@@ -1,9 +1,8 @@
 'use strict'
 
 module.exports = class Map {
-  constructor(mapName, maxGrid, minGrid){
+  constructor(mapName, keepOut){
     this.mapName = mapName;
-    this.maxGrid = maxGrid;
-    this.minGrid = minGrid;
+    this.keepOut = keepOut;
   }
 };

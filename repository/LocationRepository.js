@@ -53,4 +53,21 @@ module.exports = class LocationRepository {
     }
     return locations;
   }
+
+    static async getLocationRecently(searchBeaconID) {
+        const client = await MongoClient.connect(DBURL)
+            .catch((err) => {
+                console.log(err);
+            });
+        const db = client.db(DBName);
+        const searchQuery = { beaconID: searchBeaconID };
+        const locationQuery = await db.collection('location').find(searchQuery).sort({time: -1}).toArray();
+        client.close();
+        let location = {};
+        if(locationQuery.length > 0) {
+            location = new Location(locationQuery[0]["beaconID"], locationQuery[0]["grid"],
+                                    locationQuery[0]["place"], locationQuery[0]["time"]);
+        }
+        return location;
+    }
 };

@@ -7,6 +7,7 @@ const APIHandler = require('./service/APIHandlers');
 const app = express();
 
 app.use(bodyParser.json());
+app.use(express.static('ui'));
 
 const server = app.listen(3000, () => {
     console.log("Node.js is listening to PORT:" + server.address().port);
@@ -14,8 +15,13 @@ const server = app.listen(3000, () => {
 
 //WebPageHandlers
 app.get('/', (request, response) => {
-    response.send('hello world!');
+    response.sendFile(__dirname + '/ui/map.html');
 });
+
+app.get('/chart', (request, response) => {
+    response.sendFile(__dirname + '/ui/chart.html');
+});
+
 
 //APIHandlers
 app.post('/api/add/detectionData', (request, response) => {
@@ -27,11 +33,14 @@ app.post('/api/add/tracker', (request, response) => {
 app.post('/api/add/detector', (request, response) => {
     APIHandler.addDetector(request, response)
 });
+app.post('/api/add/map', (request, response) => {
+    APIHandler.addMap(request, response)
+});
 app.get('/api/get/tracker', (request, response) => {
     APIHandler.getAllTracker(request, response)
 });
 app.get('/api/get/tracker/:id', (request, response) => {
-    APIHandler.searchTrackerByName(request, response)
+    APIHandler.searchTrackerByID(request, response)
 });
 app.get('/api/startTracking', (request, response) => {
     APIHandler.startPositionTracking(request, response)

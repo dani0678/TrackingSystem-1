@@ -1,0 +1,41 @@
+{
+	"detectorNumber": 1,
+    "detectorGrid": {
+    	"x": 18,
+      "y": 18
+    },
+    "detectorMap": "Lab3F_3809"
+}
+
+{
+	"detectorNumber": 2,
+    "detectorGrid": {
+    	"x": 30,
+      "y": 220
+    },
+    "detectorMap": "Lab3F_3809"
+}
+
+{
+	"detectorNumber": 3,
+    "detectorGrid": {
+    	"x": 245,
+      "y": 220
+    },
+    "detectorMap": "Lab3F_3809"
+}
+
+{
+	"detectorNumber": 4,
+    "detectorGrid": {
+    	"x": 240,
+      "y": 50
+    },
+    "detectorMap": "Lab3F_3809"
+}
+
+{
+	"trackerName": "Makita",
+	"trackerID": "abc123",
+	"beaconID": "81fb2f79e3014973aa78057588a084fc"
+}

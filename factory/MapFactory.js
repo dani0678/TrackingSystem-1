@@ -10,8 +10,7 @@ const DBURL = config.DB.URL + '/' + DBName;
 
 module.exports = class MapFactory {
   static async makeMap(mapData) {
-    const map = new Map(mapData["mapName"], mapData["maxGrid"],
-                        mapData["minGrid"]);
+    const map = new Map(mapData["mapName"], mapData["keepOut"]);
 
     const client = await MongoClient.connect(DBURL)
     .catch((err) => {

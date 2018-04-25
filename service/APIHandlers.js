@@ -4,13 +4,14 @@ const PositionTracking = require('./PositionTracking');
 const DetectionDataRepository = require('../repository/DetectionDataRepository');
 const TrackerRepository = require('../repository/TrackerRepository');
 const DetectorRepository = require('../repository/DetectorRepository');
+const MapRepository = require('../repository/MapRepository');
 
 module.exports = class APIHandlers {
     static addDetectionData(req, res) {
         const detectionData = req.body;
         DetectionDataRepository.addDetectionData(detectionData)
             .then(() => {
-                res.write("DetectionData Add Success!");
+                res.send("DetectionData Add Success!");
             });
     }
 
@@ -18,7 +19,7 @@ module.exports = class APIHandlers {
         const tracker = req.body;
         TrackerRepository.addTracker(tracker)
             .then(() => {
-                res.write("Tracker Add Success!");
+                res.send("Tracker Add Success!");
             });
     }
 
@@ -26,7 +27,15 @@ module.exports = class APIHandlers {
         const detector = req.body;
         DetectorRepository.addDetector(detector)
             .then(() => {
-                res.write("Detector Add Success!");
+                res.send("Detector Add Success!");
+            });
+    }
+
+    static addMap(req, res) {
+        const map = req.body;
+        MapRepository.addMap(map)
+            .then(() => {
+                res.send("Map Add Success!");
             });
     }
 
@@ -37,10 +46,10 @@ module.exports = class APIHandlers {
             });
     }
 
-    static searchTrackerByName(req, res) {
-        const trackerName = req.params.id;
+    static searchTrackerByID(req, res) {
+        const trackerID = req.params.id;
         const times = req.body;
-        TrackerRepository.getTrackerByTrackerName(trackerName, times)
+        TrackerRepository.getTrackerByTrackerID(trackerID, times)
             .then((response) => {
                 res.json(response);
             });
@@ -51,6 +60,7 @@ module.exports = class APIHandlers {
             const date = new Date();
             const startTime = date.getTime();
             PositionTracking.updateLocations(startTime);
-        }, 500);
+        }, 1000);
+        res.send("Tracking Start!");
     }
 };

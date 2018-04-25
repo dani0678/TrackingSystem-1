@@ -7,8 +7,4 @@ module.exports = class Tracker {
     this.beaconID = beaconID;
     this.Location = [];
   }
-
-  addLocation(location) {
-    this.Location.push(location);
-  }
 };

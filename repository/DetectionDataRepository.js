@@ -21,7 +21,7 @@ module.exports = class DetectionDataRepository {
       console.log(err);
     });
     const db = client.db(DBName);
-    const searchQuery = {$and: [{time: {$lte: searchTimes["end"],
+    const searchQuery = {$and: [{detectedTime: {$lte: searchTimes["end"],
                                         $gte: searchTimes["start"] }},
                                 {beaconID: searchBeaconID }]
     };

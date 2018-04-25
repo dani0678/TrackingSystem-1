@@ -34,8 +34,7 @@ module.exports = class MapRepository {
     const db = client.db(DBName);
     const searchQuery = {mapName: searchedMapName};
     const mapQuery = await db.collection('map').findOne(searchQuery);
-    const map = new Map(mapQuery["mapName"], mapQuery["maxGrid"],
-                        mapQuery["minGrid"]);
+    const map = new Map(mapQuery["mapName"], mapQuery["keepOut"]);
     client.close();
     return map;
   }
