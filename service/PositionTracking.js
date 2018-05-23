@@ -16,7 +16,7 @@ module.exports = class PositionTracking {
     static async updateLocations(calcTime) {
         const allTrackers = await TrackerRepository.getAllTracker();
         const calcTimeQuery = {
-                "start": calcTime-500,
+                "start": calcTime-1000,
                 "end"  : calcTime,
         };
         for(let tracker of allTrackers) {
