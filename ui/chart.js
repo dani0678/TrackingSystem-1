@@ -1,6 +1,6 @@
 'use strict';
 
-const chartURL = 'http://192.168.132.62:3000';
+const chartURL = 'https://frozen-reef-58691.herokuapp.com';
 const trackerID = 'abc123';
 
 let tracker;
