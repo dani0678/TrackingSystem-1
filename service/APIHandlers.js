@@ -5,6 +5,7 @@ const DetectionDataRepository = require('../repository/DetectionDataRepository')
 const TrackerRepository = require('../repository/TrackerRepository');
 const DetectorRepository = require('../repository/DetectorRepository');
 const MapRepository = require('../repository/MapRepository');
+let timerID;
 
 module.exports = class APIHandlers {
     static addDetectionData(req, res) {
@@ -39,11 +40,14 @@ module.exports = class APIHandlers {
             });
     }
 
-    static getAllTracker(req, res) {
-        TrackerRepository.getAllTracker()
-            .then((response) => {
-                res.json(response);
-            });
+    static async getAllTracker(req, res) {
+        const trackers = await TrackerRepository.getAllTracker();
+        for(let tracker of trackers) {
+            const map = await MapRepository.getMap(tracker.Location.place);
+            tracker.Location.grid.x = (map.mapSize.max.x - map.mapSize.min.x)/2 + map.mapSize.min.x;
+            tracker.Location.grid.y = (map.mapSize.max.y - map.mapSize.min.y)/2 + map.mapSize.min.y;
+        }
+        res.json(trackers);
     }
 
     static searchTrackerByID(req, res) {
@@ -56,11 +60,16 @@ module.exports = class APIHandlers {
     }
 
     static startPositionTracking(req, res) {
-        setInterval(() => {
+        timerID = setInterval(() => {
             const date = new Date();
-            const startTime = date.getTime();
+            const startTime = date.getTime()-1000;
             PositionTracking.updateLocations(startTime);
         }, 1000);
         res.send("Tracking Start!");
+    }
+
+    static stopPositionTracking(req, res) {
+        clearInterval(timerID);
+        res.send("Tracking Stop!");
     }
 };

@@ -1,0 +1,10 @@
+{
+  "DB": {
+    "URL": "mongodb://localhost:27017",
+    "Name": "trackingDB"
+  },
+  "Weight": {
+    "Median": 2,
+    "Distance": 1.8
+  }
+}

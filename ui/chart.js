@@ -1,23 +1,27 @@
-'use strict'
+'use strict';
 
-const URL = 'http://localhost:3000';
+const chartURL = 'http://192.168.132.62:3000';
 const trackerID = 'abc123';
 
 let tracker;
 
 setInterval(()=> {
     const request = new XMLHttpRequest();
-    request.open("get", URL + '/api/get/tracker/' + trackerID, false);
+    request.open("get", chartURL + '/api/get/tracker/' + trackerID, false);
     request.send(null);
     tracker = JSON.parse(request.responseText);
     let datasetLabel = tracker[0].trackerName;
     let xLabels = [];
     let datasetDatas = [];
     let yLabels = [];
+    let beforeTime = 0;
     for(let data of tracker[0].Location){
-        datasetDatas.push(data.place);
-        yLabels.push(data.place);
-        xLabels.push(unixTime2ymd(data.time));
+        if (data.time >= beforeTime+60000){
+            datasetDatas.push(data.place);
+            yLabels.push(data.place);
+            xLabels.push(unixTime2ymd(data.time));
+            beforeTime = data.time;
+        }
     }
 
     yLabels = yLabels.filter((x, i, self) => {
@@ -29,7 +33,7 @@ setInterval(()=> {
     chart.data.datasets[0].data = datasetDatas;
     chart.options.scales.yAxes[0].labels = yLabels;
     chart.update();
-}, 1000);
+}, 60000);
 
 
 function unixTime2ymd(intTime){
@@ -73,3 +77,31 @@ let chart = new Chart(ctx, {
         }
     }
 });
+
+const request = new XMLHttpRequest();
+request.open("get", chartURL + '/api/get/tracker/' + trackerID, false);
+request.send(null);
+tracker = JSON.parse(request.responseText);
+let datasetLabel = tracker[0].trackerName;
+let xLabels = [];
+let datasetDatas = [];
+let yLabels = [];
+let beforeTime = 0;
+for(let data of tracker[0].Location){
+    if (data.time >= beforeTime+60000){
+        datasetDatas.push(data.place);
+        yLabels.push(data.place);
+        xLabels.push(unixTime2ymd(data.time));
+        beforeTime = data.time;
+    }
+}
+
+yLabels = yLabels.filter((x, i, self) => {
+    return self.indexOf(x) === i;
+});
+
+chart.data.labels = xLabels;
+chart.data.datasets[0].label = datasetLabel;
+chart.data.datasets[0].data = datasetDatas;
+chart.options.scales.yAxes[0].labels = yLabels;
+chart.update();

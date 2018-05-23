@@ -21,11 +21,10 @@ module.exports = class DetectionDataRepository {
       console.log(err);
     });
     const db = client.db(DBName);
-    const searchQuery = {$and: [{detectedTime: {$lte: searchTimes["end"],
-                                        $gte: searchTimes["start"] }},
-                                {beaconID: searchBeaconID }]
-    };
+    const searchQuery = {detectedTime: {$lte: searchTimes["end"], $gte: searchTimes["start"]}};
+    console.log(searchTimes);
     const detectionDataQuery = await db.collection('detectionData').find(searchQuery).toArray();
+    console.log(detectionDataQuery);
     client.close();
     let detectionDatas = [];
     for(let query of detectionDataQuery) {

@@ -1,6 +1,6 @@
 'use strict'
 
-const URL = 'http://localhost:3000';
+const URL = 'http://192.168.132.62:3000';
 let trackers = [];
 let backImage;
 let alartTrackedPeople;
@@ -55,7 +55,7 @@ function draw() {
                 fill(color('black'));
                 textAlign(LEFT, TOP);
                 text(tracker.trackerName + "\n" + unixTime2ymd(tracker.Location.time),
-                     tracker.Location.grid.x + 30, tracker.Location.grid.y + 30);
+                    tracker.Location.grid.x + 30, tracker.Location.grid.y + 30);
             }
         }
     }
