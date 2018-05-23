@@ -1,7 +1,7 @@
 {
   "DB": {
-    "URL": "mongodb://heroku_ztlrpfxp:jp8qgfloau53j3i7friijko15e@ds231720.mlab.com:31720/heroku_ztlrpfxp",
-    "Name": "trackingDB"
+    "URL": "mongodb://heroku_ztlrpfxp:jp8qgfloau53j3i7friijko15e@ds231720.mlab.com:31720",
+    "Name": "heroku_ztlrpfxp"
   },
   "Weight": {
     "Median": 2,
