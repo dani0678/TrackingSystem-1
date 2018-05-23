@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.static('ui'));
 
-const server = app.listen(3000, () => {
+const server = app.listen((process.env.PORT || 3000), () => {
     console.log("Node.js is listening to PORT:" + server.address().port);
 });
 
