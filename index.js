@@ -34,6 +34,9 @@ app.post('/api/add/map', (request, response) => {
 app.get('/api/get/tracker', (request, response) => {
     APIHandler.getAllTracker(request, response)
 });
+app.get('/api/get/tracker/raw', (request, response) => {
+    APIHandler.getAllTrackerRaw(request, response)
+});
 app.get('/api/get/tracker/:id', (request, response) => {
     APIHandler.searchTrackerByID(request, response)
 });

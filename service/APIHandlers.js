@@ -50,6 +50,11 @@ module.exports = class APIHandlers {
         res.json(trackers);
     }
 
+    static async getAllTrackerRaw(req, res) {
+        const trackers = await TrackerRepository.getAllTracker();
+        res.json(trackers);
+    }
+
     static searchTrackerByID(req, res) {
         const trackerID = req.params.id;
         const times = req.body;
