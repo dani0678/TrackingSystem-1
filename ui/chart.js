@@ -101,6 +101,11 @@ for(let data of tracker[0].Location){
     }
 }
 
+while(datasetDatas.length > 60){
+    datasetDatas.shift();
+    xLabels.shift();
+}
+
 yLabels = yLabels.filter((x, i, self) => {
     return self.indexOf(x) === i;
 });
