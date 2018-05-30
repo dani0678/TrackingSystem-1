@@ -6,6 +6,7 @@ const TrackerRepository = require('../repository/TrackerRepository');
 const DetectorRepository = require('../repository/DetectorRepository');
 const DetectionDataRepository = require('../repository/DetectionDataRepository');
 const LocationRepository = require('../repository/LocationRepository');
+const MapRepository = require('../repository/MapRepository');
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 
 const weightOfMedian = config.Weight.Median;
@@ -15,7 +16,7 @@ module.exports = class PositionTracking {
     static async updateLocations(calcTime) {
         const allTrackers = await TrackerRepository.getAllTracker();
         const calcTimeQuery = {
-                "start": calcTime-500,
+                "start": calcTime-1000,
                 "end"  : calcTime,
         };
         for(let tracker of allTrackers) {
@@ -43,19 +44,19 @@ module.exports = class PositionTracking {
 
                 fixedDetectionDatas.push(fixedDetectionData);
             }
-
             const beaconAxis = await this.positionCalc(tracker.beaconID, fixedDetectionDatas);
             LocationRepository.addLocation(beaconAxis);
         }
     }
 
     static async positionCalc(beaconID, detectionDatas) {
+        const date = new Date();
         let beaconAxis = {
             beaconID: beaconID,
             grid: {x: 0, y: 0},
             weight: 0,
             place: "",
-            time: 0,
+            time: date.getTime()
         };
 
         for(let detectionData of detectionDatas) {
@@ -71,16 +72,29 @@ module.exports = class PositionTracking {
         beaconAxis.grid.x = beaconAxis.grid.x/beaconAxis.weight;
         beaconAxis.grid.y = beaconAxis.grid.y/beaconAxis.weight;
 
-        //beaconAxis.grid.x = beaconAxis.grid.x * 30; // 1m = 30px
-        //beaconAxis.grid.y = beaconAxis.grid.y * 30;
-
+        const lastLocation = await LocationRepository.getLocationByTime(beaconAxis.beaconID, {"start": beaconAxis.time-1200, "end": beaconAxis.time});
+        if(lastLocation[0]) {
+            beaconAxis.grid.x = (lastLocation[0].grid.x*1.6 + beaconAxis.grid.x*0.4)/2;
+            beaconAxis.grid.y = (lastLocation[0].grid.y*1.6 + beaconAxis.grid.y*0.4)/2;
+        }
         const sortedDetectorDataByDistance =_.sortBy(detectionDatas, 'distance');
         const nearestDetector = await DetectorRepository.getDetector(Number(sortedDetectorDataByDistance[0].detectorNumber));
-        beaconAxis.place = nearestDetector.detectorMap;
-        const date = new Date();
-        beaconAxis.time = date.getTime();
+        beaconAxis.place = await this.estimationMap(beaconAxis.grid);
+        if(!beaconAxis.place) beaconAxis.place = nearestDetector.detectorMap;
         delete beaconAxis.weight;
 
         return beaconAxis;
+    }
+
+    static async estimationMap(grid) {
+        const allMaps = await MapRepository.getAllMap();
+        for(let map of allMaps){
+            if(grid.x > map.mapSize.min.x && grid.x < map.mapSize.max.x) {
+                if(grid.y > map.mapSize.min.y && grid.y < map.mapSize.max.y) {
+                    return map.mapName;
+                }
+            }
+        }
+        return null;
     }
 };

@@ -1,17 +1,34 @@
 'use strict'
 
-const URL = 'http://localhost:3000';
+const URL = 'https://frozen-reef-58691.herokuapp.com';
 let trackers = [];
 let backImage;
 let alartTrackedPeople;
 let TrackedPeople;
+let flop = false;
+const button = document.getElementById("chengeFunc");
+button.onclick = changeFlop;
+
+
 setInterval(()=> {
     const request = new XMLHttpRequest();
-    request.open("get", URL + '/api/get/tracker/', false);
+    if(flop) {
+        request.open("get", URL + '/api/get/tracker/raw', false);
+    } else {
+        request.open("get", URL + '/api/get/tracker/', false);
+    }
+    console.log(flop);
     request.send(null);
     trackers = JSON.parse(request.responseText);
 }, 1000);
 
+function changeFlop() {
+    if(flop) {
+        flop = false;
+    } else {
+        flop = true;
+    }
+}
 
 function unixTime2ymd(intTime){
     const d = new Date(intTime);
@@ -55,7 +72,7 @@ function draw() {
                 fill(color('black'));
                 textAlign(LEFT, TOP);
                 text(tracker.trackerName + "\n" + unixTime2ymd(tracker.Location.time),
-                     tracker.Location.grid.x + 30, tracker.Location.grid.y + 30);
+                    tracker.Location.grid.x + 30, tracker.Location.grid.y + 30);
             }
         }
     }
