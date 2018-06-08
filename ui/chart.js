@@ -14,31 +14,21 @@ setInterval(()=> {
     let xLabels = [];
     let datasetDatas = [];
     let yLabels = [];
-    let beforeTime = 0;
     for(let data of tracker[0].Location){
-        if (data.time >= beforeTime+60000){
-            datasetDatas.push(data.place);
-            yLabels.push(data.place);
-            xLabels.push(unixTime2ymd(data.time));
-            beforeTime = data.time;
-        }
-    }
-
-    while(datasetDatas.length > 60){
-        datasetDatas.shift();
-        xLabels.shift();
+        datasetDatas.push(data.place);
+        yLabels.push(data.place);
+        xLabels.push(unixTime2ymd(data.time));
     }
 
     yLabels = yLabels.filter((x, i, self) => {
                 return self.indexOf(x) === i;
             });
-
     chart.data.labels = xLabels;
     chart.data.datasets[0].label = datasetLabel;
     chart.data.datasets[0].data = datasetDatas;
     chart.options.scales.yAxes[0].labels = yLabels;
     chart.update();
-}, 60000);
+}, 1000);
 
 
 function unixTime2ymd(intTime){
@@ -91,19 +81,10 @@ let datasetLabel = tracker[0].trackerName;
 let xLabels = [];
 let datasetDatas = [];
 let yLabels = [];
-let beforeTime = 0;
 for(let data of tracker[0].Location){
-    if (data.time >= beforeTime+60000){
         datasetDatas.push(data.place);
         yLabels.push(data.place);
         xLabels.push(unixTime2ymd(data.time));
-        beforeTime = data.time;
-    }
-}
-
-while(datasetDatas.length > 60){
-    datasetDatas.shift();
-    xLabels.shift();
 }
 
 yLabels = yLabels.filter((x, i, self) => {
