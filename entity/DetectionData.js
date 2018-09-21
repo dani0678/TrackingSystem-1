@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 module.exports = class DetectionData {
   constructor(detectorNumber, RSSI, TxPower, beaconID, detectedTime){

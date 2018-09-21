@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const PositionTracking = require('./PositionTracking');
 const DetectionDataRepository = require('../repository/DetectionDataRepository');

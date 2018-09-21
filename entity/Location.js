@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 module.exports = class Location {
   constructor(beaconID, grid, place, time){

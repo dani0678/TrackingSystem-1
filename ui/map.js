@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-const URL = 'https://frozen-reef-58691.herokuapp.com';
+const URL = 'http://127.0.0.1:3000';
 let trackers = [];
 let backImage;
 let alartTrackedPeople;
