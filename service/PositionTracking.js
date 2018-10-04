@@ -20,32 +20,36 @@ module.exports = class PositionTracking {
                 "end"  : calcTime,
         };
         for(let tracker of allTrackers) {
+            console.log(tracker);
             const detectionDatas = await DetectionDataRepository.getDetectionData(tracker.beaconID, calcTimeQuery);
-            const dataGroupByDetectorNum = _.groupBy(detectionDatas, 'detectorNumber');
+            console.log(detectionDatas);
+            if(detectionDatas.length){
+                const dataGroupByDetectorNum = _.groupBy(detectionDatas, 'detectorNumber');
 
-            let fixedDetectionDatas = [];
-            for(let detectorNum in dataGroupByDetectorNum) {
-                const sortedDetectorData =_.sortBy(dataGroupByDetectorNum[detectorNum], 'RSSI');
-                //const median = sortedDetectorData[sortedDetectorData.length/2].RSSI;
+                let fixedDetectionDatas = [];
+                for(let detectorNum in dataGroupByDetectorNum) {
+                    const sortedDetectorData =_.sortBy(dataGroupByDetectorNum[detectorNum], 'RSSI');
+                    //const median = sortedDetectorData[sortedDetectorData.length/2].RSSI;
 
-                let aveRSSI = 0;
-                for(let detectorData of sortedDetectorData) {
-                    aveRSSI += detectorData.RSSI;
+                    let aveRSSI = 0;
+                    for(let detectorData of sortedDetectorData) {
+                        aveRSSI += detectorData.RSSI;
+                    }
+
+                    aveRSSI = aveRSSI/sortedDetectorData.length;
+
+                    let fixedDetectionData = {
+                        detectorNumber: detectorNum,
+                        RSSI: aveRSSI,
+                        TxPower: dataGroupByDetectorNum[detectorNum][0].TxPower,
+                        numOfDataForAve: sortedDetectorData.length
+                    };
+
+                    fixedDetectionDatas.push(fixedDetectionData);
                 }
-
-                aveRSSI = aveRSSI/sortedDetectorData.length;
-
-                let fixedDetectionData = {
-                    detectorNumber: detectorNum,
-                    RSSI: aveRSSI,
-                    TxPower: dataGroupByDetectorNum[detectorNum][0].TxPower,
-                    numOfDataForAve: sortedDetectorData.length
-                };
-
-                fixedDetectionDatas.push(fixedDetectionData);
+                const beaconAxis = await this.positionCalc(tracker.beaconID, fixedDetectionDatas);
+                LocationRepository.addLocation(beaconAxis);
             }
-            const beaconAxis = await this.positionCalc(tracker.beaconID, fixedDetectionDatas);
-            LocationRepository.addLocation(beaconAxis);
         }
     }
 
