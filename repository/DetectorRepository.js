@@ -3,7 +3,6 @@
 const fs = require('fs');
 const MongoClient = require('mongodb').MongoClient;
 const Detector = require('../entity/Detector');
-const DetectorFactory = require('../factory/DetectorFactory');
 
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 
@@ -12,7 +11,17 @@ const DBURL = config.DB.URL + '/' + DBName;
 
 module.exports = class DetectorRepository {
   static async addDetector(detectorData) {
-    return await DetectorFactory.makeDetector(detectorData);
+      const detector = new Detector(detectorData["detectorNumber"], detectorData["detectorGrid"],
+          detectorData["detectorMap"]);
+
+      const client = await MongoClient.connect(DBURL)
+          .catch((err) => {
+              console.log(err);
+          });
+      const db = client.db(DBName);
+      const res = await db.collection('detector').insert(detector);
+      client.close();
+      return res.result;
   }
 
   static async removeDetector(searchedDetectorNumber) {

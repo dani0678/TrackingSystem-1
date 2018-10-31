@@ -4,7 +4,6 @@
 const fs = require('fs');
 const MongoClient = require('mongodb').MongoClient;
 const DetectionData = require('../entity/DetectionData');
-const DetectionDataFactory = require('../factory/DetectionDataFactory');
 
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 
@@ -13,7 +12,20 @@ const DBURL = config.DB.URL + '/' + DBName;
 
 module.exports = class DetectionDataRepository {
   static async addDetectionData(putDetectionData) {
-    return await DetectionDataFactory.makeDetectionData(putDetectionData);
+      const detectionData = new DetectionData(putDetectionData["detectorNumber"],
+          putDetectionData["rssi"],
+          putDetectionData["measuredPower"],
+          putDetectionData["beaconID"],
+          putDetectionData["detectedTime"]);
+
+      const client = await MongoClient.connect(DBURL)
+          .catch((err) => {
+              console.log(err);
+          });
+      const db = client.db(DBName);
+      const res = await db.collection('detectionData').insert(detectionData);
+      client.close();
+      return res.result;
   }
 
   static async getDetectionData(searchBeaconID, searchTimes) {
