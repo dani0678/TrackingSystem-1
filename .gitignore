@@ -1,2 +1,4 @@
 package-lock.json
+config.json
+.eslintrc.json
 node_modules/

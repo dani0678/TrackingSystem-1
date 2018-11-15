@@ -2,9 +2,9 @@
 
 const fs = require('fs');
 const MongoClient = require('mongodb').MongoClient;
-const Tracker = require('../entity/Tracker');
-const LocationRepository = require('./LocationRepository');
-const MapRepository = require('./MapRepository');
+const Tracker = require('./Tracker');
+const LocationRepository = require('../location/LocationRepository');
+const MapRepository = require('../map/MapRepository');
 
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 
@@ -100,7 +100,7 @@ module.exports = class TrackerRepository {
     for(let query of trackerQuery) {
       const tracker = new Tracker(query["trackerName"], query["trackerID"],
                                   query["beaconID"]);
-      if(times == {}) {
+      if(times) {
         const locations = await LocationRepository.getLocationByTime(tracker["beaconID"], times);
         tracker.Location = locations;
       }else{

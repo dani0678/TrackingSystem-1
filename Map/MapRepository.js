@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const MongoClient = require('mongodb').MongoClient;
-const Map = require('../entity/Map');
+const Map = require('./Map');
 
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 
@@ -11,7 +11,7 @@ const DBURL = config.DB.URL + '/' + DBName;
 
 module.exports = class MapRepository {
     static async addMap(mapData) {
-        const map = new Map(mapData["mapName"], mapData["keepOut"], mapData["mapSize"]);
+        const map = new Map(mapData["mapName"], mapData["mapSize"]);
 
         const client = await MongoClient.connect(DBURL)
             .catch((err) => {
@@ -42,7 +42,7 @@ module.exports = class MapRepository {
         const db = client.db(DBName);
         const searchQuery = {mapName: searchedMapName};
         const mapQuery = await db.collection('map').findOne(searchQuery);
-        const map = new Map(mapQuery["mapName"], mapQuery["keepOut"], mapQuery["mapSize"]);
+        const map = new Map(mapQuery["mapName"], mapQuery["mapSize"]);
         client.close();
         return map;
     }

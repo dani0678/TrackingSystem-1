@@ -5,6 +5,5 @@ module.exports = class Tracker {
     this.trackerName = trackerName;
     this.trackerID = trackerID;
     this.beaconID = beaconID;
-    this.Location = [];
   }
 };

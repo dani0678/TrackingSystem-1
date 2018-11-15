@@ -3,7 +3,7 @@
 //detecterからのデータなので基本的に削除, 変更はしない
 const fs = require('fs');
 const MongoClient = require('mongodb').MongoClient;
-const DetectionData = require('../entity/DetectionData');
+const DetectionData = require('./DetectionData');
 
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 
@@ -12,7 +12,8 @@ const DBURL = config.DB.URL + '/' + DBName;
 
 module.exports = class DetectionDataRepository {
   static async addDetectionData(putDetectionData) {
-      const detectionData = new DetectionData(putDetectionData["detectorNumber"],
+      const detectionData = new DetectionData(
+          putDetectionData["detectorNumber"],
           putDetectionData["rssi"],
           putDetectionData["measuredPower"],
           putDetectionData["beaconID"],

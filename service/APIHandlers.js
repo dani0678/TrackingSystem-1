@@ -1,10 +1,10 @@
 'use strict';
 
 const PositionTracking = require('./PositionTracking');
-const DetectionDataRepository = require('../repository/DetectionDataRepository');
-const TrackerRepository = require('../repository/TrackerRepository');
-const DetectorRepository = require('../repository/DetectorRepository');
-const MapRepository = require('../repository/MapRepository');
+const DetectionDataRepository = require('../detectionData/DetectionDataRepository');
+const TrackerRepository = require('../tracker/TrackerRepository');
+const DetectorRepository = require('../detector/DetectorRepository');
+const MapRepository = require('../map/MapRepository');
 let timerID;
 
 module.exports = class APIHandlers {
