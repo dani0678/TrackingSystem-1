@@ -48,19 +48,9 @@ module.exports = class TrackerRepository {
     client.close();
     let trackers = [];
     for(let query of trackerQuery) {
-      const tracker = new Tracker(query["trackerName"], query["trackerID"], query["beaconID"]);
+      const tracker = new Tracker(query["trackerName"], query["trackerID"], query["beaconID"],
+                                  query["Alart"], query["notifyAddressList"], query["mailTimeStamp"]);
       tracker.Location = await LocationRepository.getLocationRecently(tracker.beaconID);
-      if(Object.keys(tracker.Location).length > 0) {
-          const map = await MapRepository.getMap(tracker.Location.place);
-          if(map.keepOut) {
-            tracker.Alart = true;
-          }else{
-            tracker.Alart = false;
-          }
-      }else{
-        tracker.Alart = false;
-      }
-
       trackers.push(tracker);
     }
     return trackers;
@@ -74,13 +64,13 @@ module.exports = class TrackerRepository {
     const db = client.db(DBName);
     const searchQuery = {beaconID: searchedBeaconID};
     const trackerQuery = await db.collection('tracker').findOne(searchQuery);
-    const tracker = new Tracker(trackerQuery["trackerName"], trackerQuery["trackerID"],
-                                trackerQuery["beaconID"]);
+    const tracker = new Tracker(query["trackerName"], query["trackerID"], query["beaconID"],
+                                query["Alart"], query["notifyAddressList"], query["mailTimeStamp"]);
     if(times) {
-      const locations = await LocationRepository.getLocationByTime(tracker["beaconID"], times);
+      const locations = await LocationRepository.getLocationByTime(tracker.beaconID, times);
       tracker.Location = locations;
     }else {
-      const locations = await LocationRepository.getLocationByBeaconIDOnly(tracker["beaconID"]);
+      const locations = await LocationRepository.getLocationByBeaconIDOnly(tracker.beaconID);
       tracker.Location = locations;
     }
     client.close();
@@ -94,22 +84,19 @@ module.exports = class TrackerRepository {
     });
     const db = client.db(DBName);
     const searchQuery = {trackerID: searchedTrackerID};
-    const trackerQuery = await db.collection('tracker').find(searchQuery).toArray();
+    const trackerQuery = await db.collection('tracker').findOne(searchQuery);
     client.close();
-    let trackers = [];
-    for(let query of trackerQuery) {
-      const tracker = new Tracker(query["trackerName"], query["trackerID"],
-                                  query["beaconID"]);
-      if(times) {
-        const locations = await LocationRepository.getLocationByTime(tracker["beaconID"], times);
-        tracker.Location = locations;
-      }else{
-        const locations = await LocationRepository.getLocationByBeaconIDOnly(tracker["beaconID"]);
-        tracker.Location = locations;
-      }
-      trackers.push(tracker);
+    const tracker = new Tracker(query["trackerName"], query["trackerID"], query["beaconID"],
+                                query["Alart"], query["notifyAddressList"], query["mailTimeStamp"]);
+    if(times) {
+      const locations = await LocationRepository.getLocationByTime(tracker.beaconID, times);
+      tracker.Location = locations;
+    }else {
+      const locations = await LocationRepository.getLocationByBeaconIDOnly(tracker.beaconID);
+      tracker.Location = locations;
     }
-    return trackers;
+    client.close();
+    return tracker;
   }
 
   static async updateTracker(searchedBeaconID, setTrackerName) {
