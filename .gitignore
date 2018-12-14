@@ -1,2 +1,5 @@
 package-lock.json
+config.json
+keepOutMapList.json
+.eslintrc.json
 node_modules/

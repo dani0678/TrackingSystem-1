@@ -2,8 +2,7 @@
 
 const fs = require('fs');
 const MongoClient = require('mongodb').MongoClient;
-const Map = require('../entity/Map');
-const MapFactory = require('../factory/MapFactory');
+const Map = require('./Map');
 
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 
@@ -12,7 +11,16 @@ const DBURL = config.DB.URL + '/' + DBName;
 
 module.exports = class MapRepository {
     static async addMap(mapData) {
-        return await MapFactory.makeMap(mapData);
+        const map = new Map(mapData["name"], mapData["size"]);
+
+        const client = await MongoClient.connect(DBURL)
+            .catch((err) => {
+                console.log(err);
+            });
+        const db = client.db(DBName);
+        const res = await db.collection('map').insert(map);
+        client.close();
+        return res.result;
     }
 
     static async removeMap(searchedMapName) {
@@ -21,7 +29,7 @@ module.exports = class MapRepository {
                 console.log(err);
             });
         const db = client.db(DBName);
-        const removeQuery = {mapName: searchedMapName};
+        const removeQuery = {name: searchedMapName};
         const res = await db.collection('map').remove(removeQuery);
         client.close();
     }
@@ -32,9 +40,9 @@ module.exports = class MapRepository {
                 console.log(err);
             });
         const db = client.db(DBName);
-        const searchQuery = {mapName: searchedMapName};
+        const searchQuery = {name: searchedMapName};
         const mapQuery = await db.collection('map').findOne(searchQuery);
-        const map = new Map(mapQuery["mapName"], mapQuery["keepOut"], mapQuery["mapSize"]);
+        const map = new Map(mapQuery["name"], mapQuery["size"]);
         client.close();
         return map;
     }
@@ -49,7 +57,7 @@ module.exports = class MapRepository {
         client.close();
         let maps = [];
         for(let query of mapQuery) {
-            const map = new Map(query["mapName"], query["keepOut"], query["mapSize"]);
+            const map = new Map(query["name"], query["size"]);
             maps.push(map);
         }
         return maps;

@@ -1,10 +1,11 @@
 'use strict';
 
 const PositionTracking = require('./PositionTracking');
-const DetectionDataRepository = require('../repository/DetectionDataRepository');
-const TrackerRepository = require('../repository/TrackerRepository');
-const DetectorRepository = require('../repository/DetectorRepository');
-const MapRepository = require('../repository/MapRepository');
+const DetectionDataRepository = require('../DetectionData/DetectionDataRepository');
+const TrackerRepository = require('../Tracker/TrackerRepository');
+const DetectorRepository = require('../Detector/DetectorRepository');
+const MapRepository = require('../Map/MapRepository');
+const Alart = require('../Alart/Alart');
 let timerID;
 
 module.exports = class APIHandlers {
@@ -69,6 +70,7 @@ module.exports = class APIHandlers {
             const date = new Date();
             const startTime = date.getTime()-1000;
             PositionTracking.updateLocations(startTime);
+            Alart.check();
         }, 1000);
         res.send("Tracking Start!");
     }
