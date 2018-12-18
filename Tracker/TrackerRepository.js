@@ -13,8 +13,7 @@ const DBURL = config.DB.URL + '/' + DBName;
 
 module.exports = class TrackerRepository {
   static async addTracker(trackerData) {
-      const tracker = new Tracker(trackerData["trackerName"], trackerData["trackerID"],
-          trackerData["beaconID"]);
+      const tracker = new Tracker(trackerData["trackerName"], trackerData["beaconID"]);
 
       const client = await MongoClient.connect(DBURL)
           .catch((err) => {
@@ -99,14 +98,29 @@ module.exports = class TrackerRepository {
     return tracker;
   }
 
-  static async updateTracker(searchedBeaconID, setTrackerName) {
+  static async updateTracker(searchedTrackerID, newValueQuery) {
     const client = await MongoClient.connect(DBURL)
     .catch((err) => {
       console.log(err);
     });
     const db = client.db(DBName);
-    const searchQuery = {beaconID: searchedBeaconID};
-    const newValueQuery = { $set: {trackerName: setTrackerName} };
+    const searchQuery = {beaconID: searchedTrackerID};
+    const res = await db.collection('tracker').updateOne(searchQuery, newValueQuery);
+    client.close();
+    return res.result;
+  }
+
+  static async addTrackerMailAddr(searchedTrackerID, newAddr) {
+    const tracker = this.getTrackerByTrackerID(searchedTrackerID);
+    const newAddrList = tracker.notifyAddressList.push(newAddr);
+
+    const client = await MongoClient.connect(DBURL)
+    .catch((err) => {
+      console.log(err);
+    });
+    const db = client.db(DBName);
+    const searchQuery = {beaconID: searchedTrackerID};
+    const newValueQuery = { $set: {notifyAddressList: newAddrList} };
     const res = await db.collection('tracker').updateOne(searchQuery, newValueQuery);
     client.close();
     return res.result;

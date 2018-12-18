@@ -33,6 +33,10 @@ app.post('/api/add/detector', (request, response) => {
 app.post('/api/add/map', (request, response) => {
     APIHandler.addMap(request, response)
 });
+app.post('/api/add/trackerAddr/:id', (request, response) => {
+    APIHandler.addTrackerMailAddr(request, response)
+});
+
 app.get('/api/get/tracker', (request, response) => {
     APIHandler.getAllTracker(request, response)
 });

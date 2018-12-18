@@ -65,6 +65,23 @@ module.exports = class APIHandlers {
             });
     }
 
+    static addTracker(req, res) {
+        const tracker = req.body;
+        TrackerRepository.addTracker(tracker)
+            .then(() => {
+                res.send("Tracker Add Success!");
+            });
+    }
+
+    static addTrackerMailAddr(req, res) {
+        const trackerID = req.params.id;
+        const addr = req.body;
+        TrackerRepository.addTrackerMailAddr(trackerID, addr)
+        .then(() => {
+            res.send("TrackerAddr Update Success!");
+        });
+    }
+
     static startPositionTracking(req, res) {
         timerID = setInterval(() => {
             const date = new Date();
