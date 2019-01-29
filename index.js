@@ -20,6 +20,10 @@ app.get('/', (request, response) => {
     response.sendFile(__dirname + '/ui/main.html');
 });
 
+app.get('/userDashBoard', (request, response) => {
+    response.sendFile(__dirname + '/ui/dist/index.html');
+});
+
 //APIHandlers
 app.post('/api/add/detectionData', (request, response) => {
     APIHandler.addDetectionData(request, response)
