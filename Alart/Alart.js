@@ -4,7 +4,7 @@ const mailer = require('nodemailer');
 const fs = require('fs');
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 
-const TrackerRepository = require('../tracker/TrackerRepository');
+const TrackerRepository = require('../Tracker/TrackerRepository');
 
 const Lost = require("./Lost");
 const KeepOut = require("./KeepOut");

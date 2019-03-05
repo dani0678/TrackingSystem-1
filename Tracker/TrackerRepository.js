@@ -3,8 +3,8 @@
 const fs = require('fs');
 const MongoClient = require('mongodb').MongoClient;
 const Tracker = require('./Tracker');
-const LocationRepository = require('../location/LocationRepository');
-const MapRepository = require('../map/MapRepository');
+const LocationRepository = require('../Location/LocationRepository');
+const MapRepository = require('../Map/MapRepository');
 
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 

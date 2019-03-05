@@ -2,11 +2,11 @@
 
 const _ = require('underscore');
 const fs = require('fs');
-const TrackerRepository = require('../tracker/TrackerRepository');
-const DetectorRepository = require('../detector/DetectorRepository');
-const DetectionDataRepository = require('../detectionData/DetectionDataRepository');
-const LocationRepository = require('../location/LocationRepository');
-const MapRepository = require('../map/MapRepository');
+const TrackerRepository = require('../Tracker/TrackerRepository');
+const DetectorRepository = require('../Detector/DetectorRepository');
+const DetectionDataRepository = require('../DetectionData/DetectionDataRepository');
+const LocationRepository = require('../Location/LocationRepository');
+const MapRepository = require('../Map/MapRepository');
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 
 const weightOfMedian = config.Weight.Median;
