@@ -30,7 +30,7 @@ module.exports = class Alart {
             auth: {
                 user: config.Mail.User,
                 pass: config.Mail.Pass,
-                port: '25'
+                port: config.Mail.Port
             }
         };
         const date = new Date();

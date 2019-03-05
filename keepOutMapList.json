@@ -1,0 +1,13 @@
+{
+    "map" : [
+        {
+            "name" : "hoge",
+            "IDList" : ["abc123", "def456"]
+        },
+        {
+            "name" : "fuga",
+            "IDList" : ["abc123"]
+        }
+    ]
+
+}

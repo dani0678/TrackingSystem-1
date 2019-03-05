@@ -1,0 +1,16 @@
+{
+    "DB": {
+      "URL": "YourDBURL",
+      "Name": "YourDBName"
+    },
+    "Weight": {
+      "Median": 2,
+      "Distance": 1.8
+    },
+    "Mail": {
+        "Service": "Gmail",
+        "User": "MailAccountUserName",
+        "Pass": "MailAccountPassword",
+        "Port": "25"
+    }
+}
