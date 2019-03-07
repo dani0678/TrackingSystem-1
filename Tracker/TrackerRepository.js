@@ -83,7 +83,7 @@ module.exports = class TrackerRepository {
     });
     const db = client.db(DBName);
     const searchQuery = {trackerID: searchedTrackerID};
-    const trackerQuery = await db.collection('tracker').findOne(searchQuery);
+    const query = await db.collection('tracker').findOne(searchQuery);
     client.close();
     const tracker = new Tracker(query["trackerName"], query["trackerID"], query["beaconID"],
                                 query["Alart"], query["notifyAddressList"], query["mailTimeStamp"]);
