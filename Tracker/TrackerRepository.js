@@ -111,8 +111,8 @@ module.exports = class TrackerRepository {
   }
 
   static async addTrackerMailAddr(searchedTrackerID, newAddr) {
-    const tracker = this.getTrackerByTrackerID(searchedTrackerID);
-    const newAddrList = tracker.notifyAddressList.push(newAddr);
+    const tracker = await this.getTrackerByTrackerID(searchedTrackerID);
+    const newAddrList = tracker.notifyAddressList.push(newAddr["address"]);
 
     const client = await MongoClient.connect(DBURL)
     .catch((err) => {
