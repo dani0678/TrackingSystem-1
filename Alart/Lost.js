@@ -9,12 +9,14 @@ module.exports = class Lost {
 
     static check(tracker){
         const date = new Date();
-        if(this.abs(date.getTime() - tracker.location.time) > this.alartTime){
-            tracker.alart.lost = true;
-            return name + "さんを見失いました！";
-        }else{
-            tracker.alart.lost = false;
-            return null;
+        if(tracker.location){
+            if(this.abs(date.getTime() - tracker.location.time) > this.alartTime){
+                tracker.alart.lost = true;
+                return name + "さんを見失いました！";
+            }else{
+                tracker.alart.lost = false;
+                return null;
+            }
         }
     }
 
