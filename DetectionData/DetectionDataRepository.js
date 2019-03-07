@@ -40,10 +40,7 @@ module.exports = class DetectionDataRepository {
     const detectionDataQuery = await db.collection('detectionData').find(searchQuery).toArray();
     client.close();
     let detectionDatas = [];
-    for(let query of detectionDataQuery) {
-      const detectionData = new DetectionData(query["detectorNumber"], query["RSSI"],
-                                              query["TxPower"], query["beaconID"],
-                                              query["detectedTime"]);
+    for(let detectionData of detectionDataQuery) {
       detectionDatas.push(detectionData);
     }
     return detectionDatas;

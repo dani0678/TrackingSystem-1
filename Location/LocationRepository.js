@@ -38,9 +38,7 @@ module.exports = class LocationRepository {
     const locationQuery = await db.collection('location').find(searchQuery).toArray();
     client.close();
     let locations = [];
-    for(let query of locationQuery) {
-      const location = new Location(query["beaconID"], query["grid"],
-                                    query["map"], query["locatedTime"]);
+    for(let location of locationQuery) {
       locations.push(location);
     }
     return locations;
@@ -56,9 +54,7 @@ module.exports = class LocationRepository {
     const locationQuery = await db.collection('location').find(searchQuery).toArray();
     client.close();
     let locations = [];
-    for(let query of locationQuery) {
-      const location = new Location(query["beaconID"], query["grid"],
-                                    query["map"], query["locatedTime"]);
+    for(let location of locationQuery) {
       locations.push(location);
     }
     return locations;
@@ -75,8 +71,7 @@ module.exports = class LocationRepository {
         client.close();
         let location = {};
         if(locationQuery.length > 0) {
-            location = new Location(locationQuery[0]["beaconID"], locationQuery[0]["grid"],
-                                    locationQuery[0]["map"], locationQuery[0]["locatedTime"]);
+            location = locationQuery[0];
         }
         return location;
     }
