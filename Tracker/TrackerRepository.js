@@ -110,17 +110,20 @@ module.exports = class TrackerRepository {
     return res.result;
   }
 
-  static async addTrackerMailAddr(searchedTrackerID, newAddr) {
+  static async addTrackerMailAddr(searchedTrackerID, newAddrList) {
     const tracker = await this.getTrackerByTrackerID(searchedTrackerID);
-    const newAddrList = tracker.notifyAddressList.push(newAddr["address"]);
+    const addrList = tracker.notifyAddressList;
 
+    for(let addr of newAddrList["addrList"]){
+      addrList.push(addr);
+    }
     const client = await MongoClient.connect(DBURL)
     .catch((err) => {
       console.log(err);
     });
     const db = client.db(DBName);
-    const searchQuery = {beaconID: searchedTrackerID};
-    const newValueQuery = { $set: {notifyAddressList: newAddrList} };
+    const searchQuery = {trackerID: searchedTrackerID};
+    const newValueQuery = { $set: {notifyAddressList: addrList} };
     const res = await db.collection('tracker').updateOne(searchQuery, newValueQuery);
     client.close();
     return res.result;
