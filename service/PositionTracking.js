@@ -93,9 +93,9 @@ module.exports = class PositionTracking {
     static async estimationMap(grid) {
         const allMaps = await MapRepository.getAllMap();
         for(let map of allMaps){
-            if(grid.x > map.mapSize.min.x && grid.x < map.mapSize.max.x) {
-                if(grid.y > map.mapSize.min.y && grid.y < map.mapSize.max.y) {
-                    return map.mapName;
+            if(grid.x > map.size.min.x && grid.x < map.size.max.x) {
+                if(grid.y > map.size.min.y && grid.y < map.size.max.y) {
+                    return map.name;
                 }
             }
         }
