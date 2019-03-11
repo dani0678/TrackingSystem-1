@@ -16,11 +16,10 @@ module.exports = class PositionTracking {
     static async updateLocations(calcTime) {
         const allTrackers = await TrackerRepository.getAllTracker();
         const calcTimeQuery = {
-                "start": calcTime-1000,
+                "start": calcTime-5000,
                 "end"  : calcTime,
         };
         for(let tracker of allTrackers) {
-            console.log(tracker);
             const detectionDatas = await DetectionDataRepository.getDetectionData(tracker.beaconID, calcTimeQuery);
             console.log(detectionDatas);
             if(detectionDatas.length){
