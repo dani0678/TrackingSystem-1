@@ -46,9 +46,7 @@ module.exports = class TrackerRepository {
     const trackerQuery = await db.collection('tracker').find().toArray();
     client.close();
     let trackers = [];
-    for(let query of trackerQuery) {
-      const tracker = new Tracker(query["trackerName"], query["trackerID"], query["beaconID"],
-                                  query["Alart"], query["notifyAddressList"], query["mailTimeStamp"]);
+    for(let tracker of trackerQuery) {
       tracker.Location = await LocationRepository.getLocationRecently(tracker.beaconID);
       trackers.push(tracker);
     }
@@ -62,9 +60,7 @@ module.exports = class TrackerRepository {
     });
     const db = client.db(DBName);
     const searchQuery = {beaconID: searchedBeaconID};
-    const trackerQuery = await db.collection('tracker').findOne(searchQuery);
-    const tracker = new Tracker(query["trackerName"], query["trackerID"], query["beaconID"],
-                                query["Alart"], query["notifyAddressList"], query["mailTimeStamp"]);
+    const tracker = await db.collection('tracker').findOne(searchQuery);
     if(times) {
       const locations = await LocationRepository.getLocationByTime(tracker.beaconID, times);
       tracker.Location = locations;
@@ -83,10 +79,8 @@ module.exports = class TrackerRepository {
     });
     const db = client.db(DBName);
     const searchQuery = {trackerID: searchedTrackerID};
-    const trackerQuery = await db.collection('tracker').findOne(searchQuery);
+    const tracker = await db.collection('tracker').findOne(searchQuery);
     client.close();
-    const tracker = new Tracker(query["trackerName"], query["trackerID"], query["beaconID"],
-                                query["Alart"], query["notifyAddressList"], query["mailTimeStamp"]);
     if(times) {
       const locations = await LocationRepository.getLocationByTime(tracker.beaconID, times);
       tracker.Location = locations;
@@ -110,17 +104,20 @@ module.exports = class TrackerRepository {
     return res.result;
   }
 
-  static async addTrackerMailAddr(searchedTrackerID, newAddr) {
-    const tracker = this.getTrackerByTrackerID(searchedTrackerID);
-    const newAddrList = tracker.notifyAddressList.push(newAddr);
+  static async addTrackerMailAddr(searchedTrackerID, newAddrList) {
+    const tracker = await this.getTrackerByTrackerID(searchedTrackerID);
+    const addrList = tracker.notifyAddressList;
 
+    for(let addr of newAddrList["addrList"]){
+      addrList.push(addr);
+    }
     const client = await MongoClient.connect(DBURL)
     .catch((err) => {
       console.log(err);
     });
     const db = client.db(DBName);
-    const searchQuery = {beaconID: searchedTrackerID};
-    const newValueQuery = { $set: {notifyAddressList: newAddrList} };
+    const searchQuery = {trackerID: searchedTrackerID};
+    const newValueQuery = { $set: {notifyAddressList: addrList} };
     const res = await db.collection('tracker').updateOne(searchQuery, newValueQuery);
     client.close();
     return res.result;

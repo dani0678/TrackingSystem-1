@@ -30,7 +30,7 @@ export default {
   },
   mounted () {
     axios
-      .get('http://xi.eecs.tottori-u.ac.jp/api/get/tracker/abc123')
+      .get('https://tottori-tracking.herokuapp.com//api/get/tracker/abc123')
       .then(response => (this.info = response.data[0]))
   }
 }

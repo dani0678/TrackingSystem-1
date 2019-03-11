@@ -35,16 +35,12 @@ module.exports = class DetectionDataRepository {
       console.log(err);
     });
     const db = client.db(DBName);
-    const searchQuery = {detectedTime: {$lte: searchTimes["end"], $gte: searchTimes["start"]}};
-    console.log(searchTimes);
+    const searchQuery = {$and: [{detectedTime: {$lte: searchTimes["end"], $gte: searchTimes["start"]}},
+                                {beaconID: searchBeaconID}]};
     const detectionDataQuery = await db.collection('detectionData').find(searchQuery).toArray();
-    console.log(detectionDataQuery);
     client.close();
     let detectionDatas = [];
-    for(let query of detectionDataQuery) {
-      const detectionData = new DetectionData(query["detectorNumber"], query["RSSI"],
-                                              query["TxPower"], query["beaconID"],
-                                              query["detectedTime"]);
+    for(let detectionData of detectionDataQuery) {
       detectionDatas.push(detectionData);
     }
     return detectionDatas;

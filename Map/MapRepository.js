@@ -41,8 +41,7 @@ module.exports = class MapRepository {
             });
         const db = client.db(DBName);
         const searchQuery = {name: searchedMapName};
-        const mapQuery = await db.collection('map').findOne(searchQuery);
-        const map = new Map(mapQuery["name"], mapQuery["size"]);
+        const map = await db.collection('map').findOne(searchQuery);
         client.close();
         return map;
     }
@@ -56,8 +55,7 @@ module.exports = class MapRepository {
         const mapQuery = await db.collection('map').find().toArray();
         client.close();
         let maps = [];
-        for(let query of mapQuery) {
-            const map = new Map(query["name"], query["size"]);
+        for(let map of mapQuery) {
             maps.push(map);
         }
         return maps;
