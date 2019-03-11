@@ -12,7 +12,7 @@ const DBURL = config.DB.URL + '/' + DBName;
 module.exports = class DetectorRepository {
   static async addDetector(detectorData) {
       const detector = new Detector(detectorData["detectorNumber"], detectorData["detectorGrid"],
-          detectorData["map"]);
+          detectorData["detectorMap"]);
 
       const client = await MongoClient.connect(DBURL)
           .catch((err) => {

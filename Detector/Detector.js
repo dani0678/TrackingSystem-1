@@ -4,6 +4,6 @@ module.exports = class Detector {
   constructor(detectorNumber, detectorGrid, map){
     this.detectorNumber = detectorNumber;
     this.detectorGrid = detectorGrid;
-    this.map = map;
+    this.detectorMap = map;
   }
 };
