@@ -1,16 +1,16 @@
 {
     "DB": {
-        "URL": "mongodb://heroku_w32jzw3x:t8pk6hg9t19uu1kstkasg0boec@ds123003.mlab.com:23003",
-        "Name": "heroku_w32jzw3x"
+        "URL": "mongodb://localhost:27017",
+        "Name": "tracking"
     },
     "Weight": {
         "Median": 2,
         "Distance": 1.8
     },
     "Mail": {
-        "Service": "Gmail",
-        "User": "tottoritracking2019@gmail.com",
-        "Pass": "tracking2019",
+        "Service": "YourMailService",
+        "User": "MailUserAddress",
+        "Pass": "Password",
         "Port": "25"
     }
 }
