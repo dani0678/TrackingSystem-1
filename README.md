@@ -2,4 +2,4 @@
 
 This is a WebApp for TrackingSystem developed in TottoriUniv.
 
-これはテスト環境(heroku)用のブランチです。
+これは鳥取大学の研究用のアプリケーションです。
