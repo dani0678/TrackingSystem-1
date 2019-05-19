@@ -1,6 +1,6 @@
 'use strict';
 
-const URL = 'https://tottori-tracking.herokuapp.com';
+const URL = 'http://localhost:3000';
 let trackers = [];
 let backImage;
 let alartTrackedPeople;
@@ -9,7 +9,7 @@ let TrackedPeople;
 
 setInterval(()=> {
     const request = new XMLHttpRequest();
-    request.open("get", URL + '/api/get/tracker/raw', false);
+    request.open("get", URL + '/api/tracker', false);
     request.send(null);
     trackers = JSON.parse(request.responseText);
 }, 1000);
@@ -57,7 +57,7 @@ function draw() {
                     textSize(20);
                     fill(color('black'));
                     textAlign(LEFT, TOP);
-                    text(tracker.trackerName + "\n" + unixTime2ymd(tracker.Location.time),
+                    text(tracker.trackerName + "\n" + unixTime2ymd(tracker.Location.locatedTime),
                         tracker.Location.grid.x + 30, tracker.Location.grid.y + 30);
                 }
             }

@@ -21,8 +21,8 @@ export default {
     makeList: function(){
       const arraySize = this.info.Location.length-1;
       for(let i = arraySize; i > arraySize-400; i -= 10 ){
-        this.placeList.push(this.info.Location[i].place)
-        this.timeList.push(moment(this.info.Location[i].time).format('YYYY/MM/DD HH:mm:ss'))
+        this.placeList.push(this.info.Location[i].map)
+        this.timeList.push(moment(this.info.Location[i].locatedTime).format('YYYY/MM/DD HH:mm:ss'))
       }
       this.placeList.reverse()
       this.timeList.reverse()

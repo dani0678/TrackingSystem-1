@@ -21,7 +21,7 @@ export default {
       const list = []
       const arraySize = this.info.Location.length-1
       for(let i = arraySize; i > arraySize-400; i-- ){
-        list.push(this.info.Location[i].place)
+        list.push(this.info.Location[i].map)
       }
       list.reverse()
 
