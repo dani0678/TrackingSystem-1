@@ -46,6 +46,10 @@ app.post('/api/tracker', (request, response) => {
     APIHandler.addTracker(request, response)
 });
 
+app.post('/api/tracker/:id', (request, response) => {
+    APIHandler.updateTrackerByID(request, response)
+});
+
 //Detector
 app.post('/api/detector', (request, response) => {
     APIHandler.addDetector(request, response)
@@ -54,11 +58,6 @@ app.post('/api/detector', (request, response) => {
 //Map
 app.post('/api/map', (request, response) => {
     APIHandler.addMap(request, response)
-});
-
-
-app.post('/api/trackerAddr/:id', (request, response) => {
-    APIHandler.addTrackerMailAddr(request, response)
 });
 
 //TrackingManagement
