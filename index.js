@@ -46,7 +46,7 @@ app.post('/api/tracker', (request, response) => {
     APIHandler.addTracker(request, response)
 });
 
-app.post('/api/tracker/:id', (request, response) => {
+app.put('/api/tracker/:id', (request, response) => {
     APIHandler.updateTrackerByID(request, response)
 });
 
