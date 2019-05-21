@@ -61,7 +61,7 @@ module.exports = class TrackerRepository {
     const db = client.db(DBName);
     const searchQuery = {beaconID: searchedBeaconID};
     const tracker = await db.collection('tracker').findOne(searchQuery);
-    if(times) {
+    if(times.length) {
       const locations = await LocationRepository.getLocationByTime(tracker.beaconID, times);
       tracker.Location = locations;
     }else {
@@ -81,7 +81,7 @@ module.exports = class TrackerRepository {
     const searchQuery = {trackerID: searchedTrackerID};
     const tracker = await db.collection('tracker').findOne(searchQuery);
     client.close();
-    if(times) {
+    if(times.length) {
       const locations = await LocationRepository.getLocationByTime(tracker.beaconID, times);
       tracker.Location = locations;
     }else {
@@ -99,18 +99,9 @@ module.exports = class TrackerRepository {
     });
     const db = client.db(DBName);
     const searchQuery = {trackerID: searchedTrackerID};
-    const res = await db.collection('tracker').updateOne(searchQuery, newValueQuery);
+    const setValueQuery = { $set: newValueQuery };
+    const res = await db.collection('tracker').updateOne(searchQuery, setValueQuery);
     client.close();
-    return res.result;
-  }
-
-  static async addTrackerMailAddr(searchedTrackerID, newAddrList) {
-    const tracker = await this.getTrackerByTrackerID(searchedTrackerID);
-    const addrList = tracker.notifyAddressList;
-    for(let addr of newAddrList["addrList"]){ addrList.push(addr); }
-
-    const newValueQuery = { $set: {notifyAddressList: addrList} };
-    const res = await this.updateTracker(searchedTrackerID, newValueQuery);
     return res.result;
   }
 };

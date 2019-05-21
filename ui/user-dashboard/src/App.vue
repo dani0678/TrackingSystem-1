@@ -30,8 +30,8 @@ export default {
   },
   mounted () {
     axios
-      .get('https://tottori-tracking.herokuapp.com//api/get/tracker/abc123')
-      .then(response => (this.info = response.data[0]))
+      .get('http://localhost:3000/api/tracker/b21a483b-9db8-49b8-ab7f-33167fcb63d6')
+      .then(response => (this.info = response.data))
   }
 }
 </script>

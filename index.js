@@ -24,32 +24,43 @@ app.get('/userDashBoard', (request, response) => {
     response.sendFile(__dirname + '/ui/dist/index.html');
 });
 
-//APIHandlers
-app.post('/api/add/detectionData', (request, response) => {
+//DetectionData
+app.post('/api/detectionData', (request, response) => {
     APIHandler.addDetectionData(request, response)
 });
-app.post('/api/add/tracker', (request, response) => {
-    APIHandler.addTracker(request, response)
-});
-app.post('/api/add/detector', (request, response) => {
-    APIHandler.addDetector(request, response)
-});
-app.post('/api/add/map', (request, response) => {
-    APIHandler.addMap(request, response)
-});
-app.post('/api/add/trackerAddr/:id', (request, response) => {
-    APIHandler.addTrackerMailAddr(request, response)
-});
 
-app.get('/api/get/tracker', (request, response) => {
+//Tracker
+app.get('/api/tracker', (request, response) => {
     APIHandler.getAllTracker(request, response)
 });
-app.get('/api/get/tracker/raw', (request, response) => {
+
+app.get('/api/tracker/raw', (request, response) => {
     APIHandler.getAllTrackerRaw(request, response)
 });
-app.get('/api/get/tracker/:id', (request, response) => {
+
+app.get('/api/tracker/:id', (request, response) => {
     APIHandler.searchTrackerByID(request, response)
 });
+
+app.post('/api/tracker', (request, response) => {
+    APIHandler.addTracker(request, response)
+});
+
+app.put('/api/tracker/:id', (request, response) => {
+    APIHandler.updateTrackerByID(request, response)
+});
+
+//Detector
+app.post('/api/detector', (request, response) => {
+    APIHandler.addDetector(request, response)
+});
+
+//Map
+app.post('/api/map', (request, response) => {
+    APIHandler.addMap(request, response)
+});
+
+//TrackingManagement
 app.get('/api/startTracking', (request, response) => {
     APIHandler.startPositionTracking(request, response)
 });

@@ -25,18 +25,18 @@ export default {
     mounted () {
         if(this.info){
             const arraySize = this.info.Location.length-1
-            this.where = this.info.Location[arraySize].place
+            this.where = this.info.Location[arraySize].map
 
             this.timeOut = this.info.timeOut
             this.alart = this.info.Alart
             this.name = this.info.trackerName
-            this.where = this.info.Location[arraySize].place
+            this.where = this.info.Location[arraySize].map
         }
     },
     watch: {
         info: function() {
             const arraySize = this.info.Location.length-1
-            this.where = this.info.Location[arraySize].place
+            this.where = this.info.Location[arraySize].map
 
             this.timeOut = this.info.timeOut
             this.alart = this.info.Alart
