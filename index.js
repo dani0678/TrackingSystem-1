@@ -37,10 +37,6 @@ app.get('/api/tracker', (request, response) => {
     APIHandler.getAllTracker(request, response)
 });
 
-app.get('/api/tracker/raw', (request, response) => {
-    APIHandler.getAllTrackerRaw(request, response)
-});
-
 app.get('/api/tracker/:id', (request, response) => {
     APIHandler.searchTrackerByID(request, response)
 });
