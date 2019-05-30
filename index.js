@@ -62,9 +62,14 @@ app.put('/api/detector/axis', (request, response) => {
     APIHandler.putDetector(request, response)
 });
 
+app.put('/api/detector/active', (request, response) => {
+    APIHandler.updateDetectorActiveLastTime(request, response)
+});
+
 app.delete('/api/detector', (request, response) => {
     APIHandler.deleteDetector(request, response)
 });
+
 //Map
 app.post('/api/map', (request, response) => {
     APIHandler.addMap(request, response)
