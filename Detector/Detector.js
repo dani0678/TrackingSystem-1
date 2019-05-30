@@ -1,9 +1,9 @@
 'use strict';
 
 module.exports = class Detector {
-  constructor(detectorNumber, detectorGrid, map){
+  constructor(detectorNumber, detectorGrid, detectorMap){
     this.detectorNumber = detectorNumber;
     this.detectorGrid = detectorGrid;
-    this.detectorMap = map;
+    this.detectorMap = detectorMap;
   }
 };

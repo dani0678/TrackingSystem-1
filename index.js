@@ -24,6 +24,9 @@ app.get('/userDashBoard', (request, response) => {
     response.sendFile(__dirname + '/ui/dist/index.html');
 });
 
+app.get('/mapconfig', (request, response) => {
+    response.sendFile(__dirname + '/ui/config/mapconfig.html');
+});
 //DetectionData
 app.post('/api/detectionData', (request, response) => {
     APIHandler.addDetectionData(request, response)
@@ -55,9 +58,24 @@ app.post('/api/detector', (request, response) => {
     APIHandler.addDetector(request, response)
 });
 
+app.get('/api/detector', (request, response) => {
+    APIHandler.getDetector(request, response)
+});
+
+app.put('/api/detector/axis', (request, response) => {
+    APIHandler.putDetector(request, response)
+});
+
+app.delete('/api/detector', (request, response) => {
+    APIHandler.deleteDetector(request, response)
+});
 //Map
 app.post('/api/map', (request, response) => {
     APIHandler.addMap(request, response)
+});
+
+app.get('/api/map', (request, response) => {
+    APIHandler.getMap(request, response)
 });
 
 //TrackingManagement
@@ -68,4 +86,3 @@ app.get('/api/startTracking', (request, response) => {
 app.get('/api/stopTracking', (request, response) => {
     APIHandler.stopPositionTracking(request, response)
 });
-

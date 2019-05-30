@@ -42,8 +42,13 @@ module.exports = class DetectorRepository {
       console.log(err);
     });
     const db = client.db(DBName);
-    const searchQuery = {detectorNumber: searchedDetectorNumber};
-    const detector = await db.collection('detector').findOne(searchQuery);
+    let detector;
+    if(searchedDetectorNumber) {
+      const searchQuery = {detectorNumber: searchedDetectorNumber};
+      detector = await db.collection('detector').findOne(searchQuery);
+    }else {
+      detector = await db.collection('detector').find().toArray();;
+    }
     client.close();
     return detector;
   }
@@ -56,7 +61,7 @@ module.exports = class DetectorRepository {
     const db = client.db(DBName);
     const searchQuery = {detectorNumber: detectorData["detectorNumber"]};
     const newValueQuery = { $set: {detectorGrid: detectorData["detectorGrid"],
-                                   detectorMap: detectorData["map"] }
+                                   detectorMap: detectorData["detectorMap"] }
                           };
     const res = await db.collection('detector').updateOne(searchQuery, newValueQuery);
     client.close();
