@@ -76,9 +76,9 @@ module.exports = class APIHandlers {
         const trackerID = req.params.id;
         const addr = req.body;
         TrackerRepository.addTrackerMailAddr(trackerID, addr)
-        .then(() => {
-            res.send("TrackerAddr Update Success!");
-        });
+            .then(() => {
+                res.send("TrackerAddr Update Success!");
+            });
     }
 
     static startPositionTracking(req, res) {
@@ -94,5 +94,35 @@ module.exports = class APIHandlers {
     static stopPositionTracking(req, res) {
         clearInterval(timerID);
         res.send("Tracking Stop!");
+    }
+
+    static getDetector(req, res) {
+        DetectorRepository.getDetector()
+            .then((detector) => {
+                res.send(detector);
+            });
+    }
+
+    static deleteDetector(req, res) {
+        const detectorId = req.body.detectorNumber;
+        DetectorRepository.removeDetector(detectorId)
+            .then(() => {
+                res.send('Successfully delete detector!');
+            });
+    }
+
+    static putDetector(req, res) {
+        const detector = req.body;
+        DetectorRepository.updateDetector(detector)   
+            .then(() => {
+                res.send('Successfully put detector!');
+            });
+    }
+
+    static getMap(req, res) {
+        MapRepository.getMap()
+            .then((map) => {
+                res.send(map);
+            });
     }
 };
