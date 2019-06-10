@@ -67,11 +67,11 @@ module.exports = class LocationRepository {
             });
         const db = client.db(DBName);
         const searchQuery = { beaconID: searchBeaconID };
-        const locationQuery = await db.collection('location').find(searchQuery).sort({time: -1}).toArray();
+        const locationQuery = await db.collection('location').find(searchQuery).toArray();
         client.close();
         let location = {};
         if(locationQuery.length > 0) {
-            location = locationQuery[0];
+            location = locationQuery[locationQuery.length - 1];
         }
         return location;
     }
