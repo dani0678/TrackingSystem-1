@@ -18,25 +18,28 @@ module.exports = class Alart {
             const keepOutResult = KeepOut.check(tracker);
 
             if (lostResult || keepOutResult) {
-                const message = lostResult + "/n" + keepOutResult;
+                const message = lostResult + '</br>' + keepOutResult + '</br></br><a href="http://192.168.235.135:3000">Webで確認する</a>';
                 this.sendMail(tracker, message);
+            }else{
+                TrackerRepository.updateTracker(tracker.trackerID, tracker);
             }
         }
     }
 
     static sendMail(tracker, message){
-        const setting = {
-            service: config.Mail.Service,
+        const smtpConfig = {
+            host: config.Mail.Host,
+            port: 465,
+            secure: true, // SSL
             auth: {
-                user: config.Mail.User,
-                pass: config.Mail.Pass,
-                port: config.Mail.Port
+              user : config.Mail.User,
+              pass : config.Mail.Pass
             }
-        };
+          };
         const date = new Date();
         if(this.abs(date.getTime() - tracker.mailTimeStamp) > 600000 || tracker.mailTimeStamp === 0){
 
-            const smtp = mailer.createTransport('SMTP', setting);
+            const smtp = mailer.createTransport(smtpConfig);
 
             for(let addless of tracker.notifyAddressList){
                 let mailOptions = {
@@ -50,13 +53,14 @@ module.exports = class Alart {
                     if(err){
                         console.log(err);
                     }else{
-                        console.log('Message sent: ' + res.message);
+                        console.log('Message sent: ' + message);
                         return;
                     }
                 });
             }
             smtp.close();
             tracker.mailTimeStamp = date.getTime();
+            TrackerRepository.updateTracker(tracker.trackerID, tracker);
         }
     }
 

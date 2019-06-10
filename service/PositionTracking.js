@@ -21,7 +21,7 @@ module.exports = class PositionTracking {
         };
         for(let tracker of allTrackers) {
             const detectionDatas = await DetectionDataRepository.getDetectionData(tracker.beaconID, calcTimeQuery);
-            console.log(detectionDatas);
+            //console.log(detectionDatas);
             if(detectionDatas.length){
                 const dataGroupByDetectorNum = _.groupBy(detectionDatas, 'detectorNumber');
 
