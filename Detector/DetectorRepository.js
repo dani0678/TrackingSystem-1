@@ -11,7 +11,7 @@ const DBURL = config.DB.URL + '/' + DBName;
 
 module.exports = class DetectorRepository {
   static async addDetector(detectorData) {
-      const detector = new Detector(detectorData["detectorNumber"], detectorData["detectorGrid"],
+      const detector = new Detector(Number(detectorData["detectorNumber"]), detectorData["detectorGrid"],
           detectorData["detectorMap"]);
 
       const client = await MongoClient.connect(DBURL)
