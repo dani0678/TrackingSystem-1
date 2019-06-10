@@ -33,6 +33,15 @@ module.exports = class APIHandlers {
             });
     }
 
+
+    static updateDetectorActiveLastTime(req, res) {
+        const detector = req.body;
+        DetectorRepository.updateDetectorActiveLastTime(detector)
+            .then(() => {
+                res.send("Detector Active Time Updated!");
+            });
+    }
+
     static addMap(req, res) {
         const map = req.body;
         MapRepository.addMap(map)
@@ -113,7 +122,7 @@ module.exports = class APIHandlers {
 
     static putDetector(req, res) {
         const detector = req.body;
-        DetectorRepository.updateDetector(detector)   
+        DetectorRepository.updateDetector(detector)
             .then(() => {
                 res.send('Successfully put detector!');
             });

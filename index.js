@@ -37,10 +37,6 @@ app.get('/api/tracker', (request, response) => {
     APIHandler.getAllTracker(request, response)
 });
 
-app.get('/api/tracker/raw', (request, response) => {
-    APIHandler.getAllTrackerRaw(request, response)
-});
-
 app.get('/api/tracker/:id', (request, response) => {
     APIHandler.searchTrackerByID(request, response)
 });
@@ -66,9 +62,14 @@ app.put('/api/detector/axis', (request, response) => {
     APIHandler.putDetector(request, response)
 });
 
+app.put('/api/detector/active', (request, response) => {
+    APIHandler.updateDetectorActiveLastTime(request, response)
+});
+
 app.delete('/api/detector', (request, response) => {
     APIHandler.deleteDetector(request, response)
 });
+
 //Map
 app.post('/api/map', (request, response) => {
     APIHandler.addMap(request, response)

@@ -5,5 +5,8 @@ module.exports = class Detector {
     this.detectorNumber = detectorNumber;
     this.detectorGrid = detectorGrid;
     this.detectorMap = detectorMap;
+
+    const date = new Date();
+    this.detectorActiveLastTime = date.getTime();
   }
 };

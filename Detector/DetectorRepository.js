@@ -67,4 +67,20 @@ module.exports = class DetectorRepository {
     client.close();
     return res.result;
   }
+
+  static async updateDetectorActiveLastTime(detectorData) {
+    const date = new Date();
+    const newDetectorActiveLastTime = date.getTime();
+
+    const client = await MongoClient.connect(DBURL)
+    .catch((err) => {
+      console.log(err);
+    });
+    const db = client.db(DBName);
+    const searchQuery = {detectorNumber: detectorData["detectorNumber"]};
+    const newValueQuery = { $set: { detectorActiveLastTime: newDetectorActiveLastTime } };
+    const res = await db.collection('detector').updateOne(searchQuery, newValueQuery);
+    client.close();
+    return res.result;
+  }
 };
