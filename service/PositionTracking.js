@@ -21,7 +21,7 @@ module.exports = class PositionTracking {
         };
         for(let tracker of allTrackers) {
             const detectionDatas = await DetectionDataRepository.getDetectionData(tracker.beaconID, calcTimeQuery);
-            console.log(detectionDatas);
+            //console.log(detectionDatas);
             if(detectionDatas.length){
                 const dataGroupByDetectorNum = _.groupBy(detectionDatas, 'detectorNumber');
 
@@ -58,7 +58,7 @@ module.exports = class PositionTracking {
             beaconID: beaconID,
             grid: {x: 0, y: 0},
             weight: 0,
-            place: "",
+            map: "",
             time: date.getTime()
         };
 
@@ -82,8 +82,8 @@ module.exports = class PositionTracking {
         }
         const sortedDetectorDataByDistance =_.sortBy(detectionDatas, 'distance');
         const nearestDetector = await DetectorRepository.getDetector(Number(sortedDetectorDataByDistance[0].detectorNumber));
-        beaconAxis.place = await this.estimationMap(beaconAxis.grid);
-        if(!beaconAxis.place) beaconAxis.place = nearestDetector.detectorMap;
+        beaconAxis.map = await this.estimationMap(beaconAxis.grid);
+        if(!beaconAxis.map) beaconAxis.map = nearestDetector.detectorMap;
         delete beaconAxis.weight;
 
         return beaconAxis;
