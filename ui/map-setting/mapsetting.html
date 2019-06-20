@@ -14,15 +14,12 @@
 </head>
 <body>
     <div class="contents">
-        <div id="configmap"></div>
+        <div id="settingmap"></div>
         <div class="formbox">
-        <form class="Setting">
+        <form id="Setting">
             <legend>Setting</legend>
-            <p><label>detectorNumberF<input type="text" name="detectorNumber" size="20"></label></p>
-            <p><label>detectorGrid.xF<input type="text" name="detectorGrid.x" size="10"></label></p>
-            <p><label>detectorGrid.yF<input type="text" name="detectorGrid.y" size="10"></label></p>
-            <p><label>detectorMapF<input type="text" name="detectorMap" size="10"></label></p>
-            <button type=button class="submit">
+            <p><label>Mapnameï¼š<input type="text" name="name" class="text" size="20" ></label></p>
+            <button disabled type=button class="submit"> 
             submit
             </button>
             <button type=button class="delete">
@@ -31,7 +28,7 @@
         </form>
         </div>
     </div>
-    <script src="./config/js/mapconfig.js"></script>
-    <link rel="stylesheet" type="text/css" href="./config/css/mapconfig.css">
+    <script src="./map-setting/js/mapsetting.js"></script>
+    <link rel="stylesheet" type="text/css" href="./map-setting/css/mapsetting.css">
 </body>
 </html>
