@@ -78,7 +78,7 @@ module.exports = class DetectorRepository {
     });
     const db = client.db(DBName);
     const searchQuery = {detectorNumber: detectorData["detectorNumber"]};
-    const newValueQuery = { $set: { detectorActiveLastTime: newDetectorActiveLastTime } };
+    const newValueQuery = { $set: { detectorActiveLastTime: newDetectorActiveLastTime, IPAddress: detectorData["IPAddress"], SSID: detectorData["SSID"] } };
     const res = await db.collection('detector').updateOne(searchQuery, newValueQuery);
     client.close();
     return res.result;
