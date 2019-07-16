@@ -9,8 +9,8 @@ module.exports = class Tracker {
     this.trackerID = uuidV4();
     this.beaconID = beaconID;
 
-    //Alart Status
-    this.alart = { lost: false, keepOut: false };
+    //Alert Status
+    this.alert = {lost: false, keepOut: false};
     this.notifyAddressList = [];
     this.mailTimeStamp = 0;
   }

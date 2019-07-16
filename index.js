@@ -24,12 +24,16 @@ app.get('/userDashBoard', (request, response) => {
     response.sendFile(__dirname + '/ui/dist/index.html');
 });
 
-app.get('/mapconfig', (request, response) => {
-    response.sendFile(__dirname + '/ui/config/mapconfig.html');
+app.get('/detectorsetting', (request, response) => {
+    response.sendFile(__dirname + '/ui/detector-setting/detector-setting.html');
 });
 
 app.get('/mapsetting', (request, response) => {
     response.sendFile(__dirname + '/ui/map-setting/mapsetting.html');
+});
+
+app.get('/metasetting', (request, response) => {
+    response.sendFile(__dirname + '/ui/meta-setting/metasetting.html');
 });
 //DetectionData
 app.post('/api/detectionData', (request, response) => {
@@ -83,10 +87,26 @@ app.get('/api/map', (request, response) => {
     APIHandler.getMap(request, response)
 });
 
-app.delete('/api/map', (request, response) => {
+app.delete('/api/map/:id', (request, response) => {
     APIHandler.deleteMap(request, response)
 });
 
+//Meta
+app.post('/api/meta', (request, response) => {
+    APIHandler.addMeta(request, response)
+});
+
+app.get('/api/meta', (request, response) => {
+    APIHandler.getMeta(request, response)
+});
+
+app.delete('/api/meta/:id', (request, response) => {
+    APIHandler.deleteMeta(request, response)
+});
+
+app.put('/api/meta', (request, response) => {
+    APIHandler.putMeta(request, response)
+});
 //TrackingManagement
 app.get('/api/startTracking', (request, response) => {
     APIHandler.startPositionTracking(request, response)

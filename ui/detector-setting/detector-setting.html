@@ -11,6 +11,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="./detector-setting/js/detector-setting.js"></script>
+  <link rel="stylesheet" type="text/css" href="./detector-setting/css/detector-setting.css">
 </head>
 <body>
     <div class="contents">
@@ -18,10 +20,10 @@
         <div class="formbox">
         <form class="Setting">
             <legend>Setting</legend>
-            <p><label>detectorNumber：<input type="text" name="detectorNumber" size="20"></label></p>
-            <p><label>detectorGrid.x：<input type="text" name="detectorGrid.x" size="10"></label></p>
-            <p><label>detectorGrid.y：<input type="text" name="detectorGrid.y" size="10"></label></p>
-            <p><label>detectorMap：<input type="text" name="detectorMap" size="10"></label></p>
+            <p><label>detectorNumber:<input type="text" name="detectorNumber" size="20"></label></p>
+            <p><label>detectorGrid.x:<input type="text" name="detectorGrid.x" size="10"></label></p>
+            <p><label>detectorGrid.y:<input type="text" name="detectorGrid.y" size="10"></label></p>
+            <p><label>detectorMap:<input type="text" name="detectorMap" size="10"></label></p>
             <button type=button class="submit">
             submit
             </button>
@@ -30,8 +32,7 @@
             </button>
         </form>
         </div>
+        <div id="table"></div>
     </div>
-    <script src="./config/js/mapconfig.js"></script>
-    <link rel="stylesheet" type="text/css" href="./config/css/mapconfig.css">
 </body>
 </html>

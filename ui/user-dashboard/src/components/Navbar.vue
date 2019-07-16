@@ -2,10 +2,10 @@
     <b-navbar toggleable="md" type="light" variant="light">
         <b-navbar-brand>UserDashBoard</b-navbar-brand>
         <b-navbar-nav>
-            <b-nav-text>{{ name }}‚³‚ñ‚Í¡{{ where }}‚É‚¢‚Ü‚·&nbsp;&nbsp;</b-nav-text>
-            <b-nav-text style="color: #FF0000;" v-if="alart"> {{ name }}‚³‚ñ‚ª—§‚¿“ü‚è‹Ö~‹æˆæ‚ÉN“ü‚µ‚Ä‚¢‚Ü‚·I </b-nav-text>
-            <b-nav-text style="color: #FF0000;" v-else-if="timeOut"> {{ name }}‚³‚ñ‚ğŒ©¸‚¢‚Ü‚µ‚½I </b-nav-text>
-            <b-nav-text v-else>ˆÙí‚Í‚ ‚è‚Ü‚¹‚ñ</b-nav-text>
+            <b-nav-text>{{ name }}ã•ã‚“ã¯ä»Š{{ where }}ã«ã„ã¾ã™&nbsp;&nbsp;</b-nav-text>
+            <b-nav-text style="color: #FF0000;" v-if="alert"> {{ name }}ã•ã‚“ãŒç«‹ã¡å…¥ã‚Šç¦æ­¢åŒºåŸŸã«ä¾µå…¥ã—ã¦ã„ã¾ã™ï¼ </b-nav-text>
+            <b-nav-text style="color: #FF0000;" v-else-if="timeOut"> {{ name }}ã•ã‚“ã‚’è¦‹å¤±ã„ã¾ã—ãŸï¼ </b-nav-text>
+            <b-nav-text v-else>ç•°å¸¸ã¯ã‚ã‚Šã¾ã›ã‚“</b-nav-text>
         </b-navbar-nav>
     </b-navbar>
 </template>
@@ -17,7 +17,7 @@ export default {
     data () {
         return {
             timeOut: false,
-            alart: false,
+            alert: false,
             where: null,
             name: null
         }
@@ -28,7 +28,7 @@ export default {
             this.where = this.info.Location[arraySize].map
 
             this.timeOut = this.info.timeOut
-            this.alart = this.info.Alart
+            this.alert = this.info.Alert
             this.name = this.info.trackerName
             this.where = this.info.Location[arraySize].map
         }
@@ -39,7 +39,7 @@ export default {
             this.where = this.info.Location[arraySize].map
 
             this.timeOut = this.info.timeOut
-            this.alart = this.info.Alart
+            this.alert = this.info.Alert
             this.name = this.info.trackerName
         }
     }

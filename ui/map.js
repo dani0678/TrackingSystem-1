@@ -3,7 +3,7 @@
 const URL = 'http://localhost:3000';
 let trackers = [];
 let backImage;
-let alartTrackedPeople;
+let alertTrackedPeople;
 let TrackedPeople;
 
 
@@ -32,7 +32,7 @@ function setup() {
     const canvas = createCanvas(1020, 645);//katchimi=(1320, 768)
     canvas.parent("map");
     backImage = loadImage("./assets/lab3f.png");
-    alartTrackedPeople = loadImage("./assets/ruser.png");
+    alertTrackedPeople = loadImage("./assets/ruser.png");
     TrackedPeople = loadImage("./assets/user.png");
 
 }
@@ -42,20 +42,22 @@ function draw() {
     image(backImage, 0, 0, 0);
     for(let tracker of trackers) {
         if(Object.keys(tracker.Location).length){
-            if(tracker.alart.keepOut) {
+            if(tracker.alert.keepOut) {
+                
                 textSize(20);
                 textAlign(LEFT, TOP);
                 fill(color('red'));
-                text(tracker.trackerName + "‚³‚ñ‚ª—§“ü‹Ö~‹æˆæ‚ÉN“ü‚µ‚Ä‚¢‚Ü‚·I",
+               
+                text(tracker.trackerName + "ã•ã‚“ãŒç«‹å…¥ç¦æ­¢åŒºåŸŸã«ä¾µå…¥ã—ã¦ã„ã¾ã™ï¼",
                     tracker.Location.grid.x + 30, tracker.Location.grid.y + 30);
-                image(alartTrackedPeople, tracker.Location.grid.x, tracker.Location.grid.y);
-            }else if(tracker.alart.lost) {
+                image(alertTrackedPeople, tracker.Location.grid.x, tracker.Location.grid.y);
+            }else if(tracker.alert.lost) {
                 textSize(20);
                 textAlign(LEFT, TOP);
                 fill(color('red'));
-                text(tracker.trackerName + "‚³‚ñ‚ğŒ©¸‚¢‚Ü‚µ‚½I",
+                text(tracker.trackerName + "ã•ã‚“ã‚’è¦‹å¤±ã„ã¾ã—ãŸï¼",
                     tracker.Location.grid.x + 30, tracker.Location.grid.y + 30);
-                image(alartTrackedPeople, tracker.Location.grid.x, tracker.Location.grid.y);
+                image(alertTrackedPeople, tracker.Location.grid.x, tracker.Location.grid.y);
             }else{
                 image(TrackedPeople, tracker.Location.grid.x, tracker.Location.grid.y);
             }
