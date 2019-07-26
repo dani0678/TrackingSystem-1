@@ -2,6 +2,7 @@
 
 //detecterからのデータなので基本的に削除, 変更はしない
 const fs = require('fs');
+const _ = require('underscore');
 const MongoClient = require('mongodb').MongoClient;
 const DetectionData = require('./DetectionData');
 
@@ -12,19 +13,23 @@ const DBURL = config.DB.URL + '/' + DBName;
 
 module.exports = class DetectionDataRepository {
   static async addDetectionData(putDetectionData) {
-      const detectionData = new DetectionData(
-          Number(putDetectionData["detectorNumber"]),
-          Number(putDetectionData["rssi"]),
-          Number(putDetectionData["measuredPower"]),
-          putDetectionData["beaconID"],
-          putDetectionData["detectedTime"]);
+    const detectionData = [];
+    _.each(putDetectionData, (data) => {
+      detectionData.push(new DetectionData(
+        Number(data["detectorNumber"]),
+        Number(data["rssi"]),
+        Number(data["measuredPower"]),
+        data["beaconID"],
+        data["detectedTime"])
+      );
+    });
 
       const client = await MongoClient.connect(DBURL)
           .catch((err) => {
               console.log(err);
           });
       const db = client.db(DBName);
-      const res = await db.collection('detectionData').insert(detectionData);
+      const res = await db.collection('detectionData').insertMany(detectionData);
       client.close();
       return res.result;
   }
