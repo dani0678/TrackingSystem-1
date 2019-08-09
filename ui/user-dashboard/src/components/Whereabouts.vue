@@ -20,7 +20,9 @@ export default {
   methods: {
     makeList: function(){
       const arraySize = this.info.Location.length-1;
-      for(let i = arraySize; i > arraySize-400; i -= 10 ){
+      const limitTime = this.info.Location[arraySize].locatedTime - 3600000;
+
+      for(let i = arraySize; this.info.Location[i].locatedTime >= limitTime; i -- ){
         this.placeList.push(this.info.Location[i].map)
         this.timeList.push(moment(this.info.Location[i].locatedTime).format('YYYY/MM/DD HH:mm:ss'))
       }
