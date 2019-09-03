@@ -38,7 +38,7 @@ module.exports = class TrackerRepository {
     return res.result;
   }
 
-  static async getAllTracker() {
+  static async getAllTracker(endTime = 0) {
     const client = await MongoClient.connect(DBURL).catch(err => {
       console.log(err);
     });
@@ -49,11 +49,27 @@ module.exports = class TrackerRepository {
       .toArray();
     client.close();
     let trackers = [];
-    for (let tracker of trackerQuery) {
-      tracker.Location = await LocationRepository.getLocationRecently(
-        tracker.beaconID
-      );
-      trackers.push(tracker);
+    if (endTime) {
+      const date = new Date();
+      const searchTimes = {
+        start: endTime,
+        end: date.getTime()
+      };
+      console.log(searchTimes);
+      for (let tracker of trackerQuery) {
+        tracker.Location = await LocationRepository.getLocationByTime(
+          tracker.beaconID,
+          searchTimes
+        );
+        trackers.push(tracker);
+      }
+    } else {
+      for (let tracker of trackerQuery) {
+        tracker.Location = await LocationRepository.getLocationRecently(
+          tracker.beaconID
+        );
+        trackers.push(tracker);
+      }
     }
     return trackers;
   }
