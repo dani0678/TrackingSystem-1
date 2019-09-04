@@ -45,9 +45,8 @@ module.exports = class APIHandlers {
   }
 
   static async getAllTracker(req, res) {
-    const searchTime = req.body ? req.body.searchTime : 0;
+    const searchTime = req.body ? req.body : {};
     const trackers = await TrackerRepository.getAllTracker(searchTime);
-    console.log(trackers);
     res.json(trackers);
   }
 
