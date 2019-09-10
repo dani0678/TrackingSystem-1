@@ -72,7 +72,7 @@ module.exports = class TrackerRepository {
     const db = client.db(DBName);
     const searchQuery = { beaconID: searchedBeaconID };
     const tracker = await db.collection("tracker").findOne(searchQuery);
-    if (times.length) {
+    if (Object.keys(times).length) {
       const locations = await LocationRepository.getLocationByTime(
         tracker.beaconID,
         times
@@ -96,7 +96,7 @@ module.exports = class TrackerRepository {
     const searchQuery = { trackerID: searchedTrackerID };
     const tracker = await db.collection("tracker").findOne(searchQuery);
     client.close();
-    if (times.length) {
+    if (Object.keys(times).length) {
       const locations = await LocationRepository.getLocationByTime(
         tracker.beaconID,
         times
