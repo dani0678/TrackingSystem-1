@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
 module.exports = class Map {
-  constructor(mapName, mapSize){
+  constructor(mapName, mapSize) {
     this.name = mapName;
     this.size = mapSize;
   }

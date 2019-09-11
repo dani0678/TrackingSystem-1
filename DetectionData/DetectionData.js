@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
 module.exports = class DetectionData {
-  constructor(detectorNumber, RSSI, TxPower, beaconID, detectedTime){
+  constructor(detectorNumber, RSSI, TxPower, beaconID, detectedTime) {
     this.detectorNumber = detectorNumber;
     this.RSSI = RSSI;
     this.TxPower = TxPower;

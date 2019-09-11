@@ -1,25 +1,32 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const _ = require('underscore');
+const fs = require("fs");
+const _ = require("underscore");
 
 module.exports = class KeepOut {
-    static check(tracker){
-        const keepOutList = JSON.parse(fs.readFileSync('./keepOutMapList.json', 'utf-8'));
-        for(let map of keepOutList['map']){
-            if(tracker.Location){
-                if(map.name == tracker.Location.map && _.indexOf(map.IDList, tracker.trackerID) != -1){
-                    tracker.alart.keepOut = true;
-                    return tracker.trackerName + "さんが" + map.name + "に侵入しています！";
-                }else{
-                    tracker.alart.keepOut = false;
-                    return '';
-                }
-            }
+  static check(tracker) {
+    const keepOutList = JSON.parse(
+      fs.readFileSync("./keepOutMapList.json", "utf-8")
+    );
+    for (let map of keepOutList["map"]) {
+      if (tracker.Location) {
+        if (
+          map.name == tracker.Location.map &&
+          _.indexOf(map.IDList, tracker.trackerID) != -1
+        ) {
+          tracker.alart.keepOut = true;
+          return (
+            tracker.trackerName + "さんが" + map.name + "に侵入しています！"
+          );
+        } else {
+          tracker.alart.keepOut = false;
+          return "";
         }
+      }
     }
+  }
 
-    static abs(val) {
-        return val < 0 ? -val : val;
-    }
+  static abs(val) {
+    return val < 0 ? -val : val;
+  }
 };
