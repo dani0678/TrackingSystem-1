@@ -1,8 +1,10 @@
 {
     "map" : [
-        {
-            "name" : "makita",
-            "IDList" : ["abc123", "def456"]
+        {       
+            "meta" : "学生居室(大)",
+            "name" : "3810",
+            "IDList" : ["202df376-f362-404c-bd39-78486547959a"]
+
         },
         {
             "name" : "fuga",
