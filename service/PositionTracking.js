@@ -1,13 +1,13 @@
-"use strict";
+'use strict';
 
-const _ = require("underscore");
-const fs = require("fs");
-const TrackerRepository = require("../Tracker/TrackerRepository");
-const DetectorRepository = require("../Detector/DetectorRepository");
-const DetectionDataRepository = require("../DetectionData/DetectionDataRepository");
-const LocationRepository = require("../Location/LocationRepository");
-const MapRepository = require("../Map/MapRepository");
-const config = JSON.parse(fs.readFileSync("./config.json", "utf-8"));
+const _ = require('underscore');
+const fs = require('fs');
+const TrackerRepository = require('../Tracker/TrackerRepository');
+const DetectorRepository = require('../Detector/DetectorRepository');
+const DetectionDataRepository = require('../DetectionData/DetectionDataRepository');
+const LocationRepository = require('../Location/LocationRepository');
+const MapRepository = require('../Map/MapRepository');
+const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 
 const weightOfMedian = config.Weight.Median;
 const weightOfDistance = config.Weight.Distance;
@@ -39,40 +39,40 @@ module.exports = class PositionTracking {
                     );
                     //const median = sortedDetectorData[sortedDetectorData.length/2].RSSI;
 
-          let aveRSSI = 0;
-          for (let detectorData of sortedDetectorData) {
-            aveRSSI += detectorData.RSSI;
-          }
+                    let aveRSSI = 0;
+                    for(let detectorData of sortedDetectorData) {
+                        aveRSSI += detectorData.RSSI;
+                    }
 
-          aveRSSI = aveRSSI / sortedDetectorData.length;
+                    aveRSSI = aveRSSI/sortedDetectorData.length;
 
-          let fixedDetectionData = {
-            detectorNumber: detectorNum,
-            RSSI: aveRSSI,
-            TxPower: dataGroupByDetectorNum[detectorNum][0].TxPower,
-            numOfDataForAve: sortedDetectorData.length
-          };
+                    let fixedDetectionData = {
+                        detectorNumber: detectorNum,
+                        RSSI: aveRSSI,
+                        TxPower: dataGroupByDetectorNum[detectorNum][0].TxPower,
+                        numOfDataForAve: sortedDetectorData.length
+                    };
 
-          fixedDetectionDatas.push(fixedDetectionData);
+                    fixedDetectionDatas.push(fixedDetectionData);
+                }
+                const beaconAxis = await this.positionCalc(
+                    tracker.beaconID,
+                    fixedDetectionDatas
+                );
+                LocationRepository.addLocation(beaconAxis);
+            }
         }
-        const beaconAxis = await this.positionCalc(
-          tracker.beaconID,
-          fixedDetectionDatas
-        );
-        LocationRepository.addLocation(beaconAxis);
-      }
     }
-  }
 
-  static async positionCalc(beaconID, detectionDatas) {
-    const date = new Date();
-    let beaconAxis = {
-      beaconID: beaconID,
-      grid: { x: 0, y: 0 },
-      weight: 0,
-      map: "",
-      time: date.getTime()
-    };
+    static async positionCalc(beaconID, detectionDatas) {
+        const date = new Date();
+        let beaconAxis = {
+            beaconID: beaconID,
+            grid: {x: 0, y: 0},
+            weight: 0,
+            map: "",
+            time: date.getTime()
+        };
 
         for(let detectionData of detectionDatas) {
             const detector = await DetectorRepository.getDetector(
@@ -92,8 +92,8 @@ module.exports = class PositionTracking {
             beaconAxis.weight += 1/detectionData.distance * weightForCalc;
         }
 
-    beaconAxis.grid.x = beaconAxis.grid.x / beaconAxis.weight;
-    beaconAxis.grid.y = beaconAxis.grid.y / beaconAxis.weight;
+        beaconAxis.grid.x = beaconAxis.grid.x/beaconAxis.weight;
+        beaconAxis.grid.y = beaconAxis.grid.y/beaconAxis.weight;
 
         const lastLocation = await LocationRepository.getLocationByTime(
             beaconAxis.beaconID,
@@ -115,16 +115,6 @@ module.exports = class PositionTracking {
         
         return beaconAxis;
     }
-    const sortedDetectorDataByDistance = _.sortBy(detectionDatas, "distance");
-    const nearestDetector = await DetectorRepository.getDetector(
-      Number(sortedDetectorDataByDistance[0].detectorNumber)
-    );
-    beaconAxis.map = await this.estimationMap(beaconAxis.grid);
-    if (!beaconAxis.map) beaconAxis.map = nearestDetector.detectorMap;
-    delete beaconAxis.weight;
-
-    return beaconAxis;
-  }
 
     static async estimationMap(grid) {
         const isContain = (map) => {
@@ -141,6 +131,4 @@ module.exports = class PositionTracking {
             }
         }
     }
-    return null;
-  }
 };
