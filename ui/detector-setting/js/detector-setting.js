@@ -139,7 +139,9 @@ function checkDetector(){
 	for(i=0;i<detectors.length;i++){
 		detectorData.push(detectors[i].detectorNumber)
 		time = new Date(detectors[i].detectorActiveLastTime)
-		detectorData.push(time)
+		time1 = new String(time)
+		time2 = time1.replace(/\(日本標準時\)/g,"")
+		detectorData.push(time2)
 		detectorData.push(detectors[i].IPAddress)
 		detectorData.push(detectors[i].SSID)
 		data.push(detectorData)
