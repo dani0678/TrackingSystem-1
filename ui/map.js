@@ -38,7 +38,7 @@ function draw() {
   image(backImage, 0, 0, 0);
   for (let tracker of trackers) {
     if (Object.keys(tracker.Location).length) {
-      if (tracker.alart.keepOut) {
+      if (tracker.alert.keepOut) {
         textSize(20);
         textAlign(LEFT, TOP);
         fill(color("red"));
@@ -52,7 +52,7 @@ function draw() {
           tracker.Location.grid.x,
           tracker.Location.grid.y
         );
-      } else if (tracker.alart.lost) {
+      } else if (tracker.alert.lost) {
         textSize(20);
         textAlign(LEFT, TOP);
         fill(color("red"));
