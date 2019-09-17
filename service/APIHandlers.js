@@ -7,7 +7,6 @@ const DetectorRepository = require("../Detector/DetectorRepository");
 const MapRepository = require("../Map/MapRepository");
 const MetaRepository = require("../Meta/MetaRepository");
 const Alert = require("../Alert/Alert");
-const { performance } = require("perf_hooks");
 let timerID;
 
 module.exports = class APIHandlers {
@@ -54,10 +53,7 @@ module.exports = class APIHandlers {
         end: Number(req.query.end)
       };
     }
-    const checkStartTime = performance.now();
     const trackers = await TrackerRepository.getAllTracker(searchTime);
-    const checkEndTime = performance.now();
-    console.log("EstimateTime: " + String(checkEndTime - checkStartTime));
     res.json(trackers);
   }
 
