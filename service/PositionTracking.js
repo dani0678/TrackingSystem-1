@@ -92,18 +92,20 @@ module.exports = class PositionTracking {
       beaconAxis.weight += (1 / detectionData.distance) * weightForCalc;
     }
 
-    beaconAxis.grid.x = beaconAxis.grid.x / beaconAxis.weight;
-    beaconAxis.grid.y = beaconAxis.grid.y / beaconAxis.weight;
+    beaconAxis.grid.x = parseInt(beaconAxis.grid.x / beaconAxis.weight);
+    beaconAxis.grid.y = parseInt(beaconAxis.grid.y / beaconAxis.weight);
 
     const lastLocation = await LocationRepository.getLocationByTime(
       beaconAxis.beaconID,
       { start: beaconAxis.time - 1200, end: beaconAxis.time }
     );
     if (lastLocation[0]) {
-      beaconAxis.grid.x =
-        (lastLocation[0].grid.x * 1.6 + beaconAxis.grid.x * 0.4) / 2;
-      beaconAxis.grid.y =
-        (lastLocation[0].grid.y * 1.6 + beaconAxis.grid.y * 0.4) / 2;
+      beaconAxis.grid.x = parseInt(
+        (lastLocation[0].grid.x * 1.6 + beaconAxis.grid.x * 0.4) / 2
+      );
+      beaconAxis.grid.y = parseInt(
+        (lastLocation[0].grid.y * 1.6 + beaconAxis.grid.y * 0.4) / 2
+      );
     }
     const sortedDetectorDataByDistance = _.sortBy(detectionDatas, "distance");
     const nearestDetector = await DetectorRepository.getDetector(
