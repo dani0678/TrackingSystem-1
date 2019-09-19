@@ -32,12 +32,12 @@ module.exports = class MapRepository {
     client.close();
   }
 
-  static async getMap(searchedMapName) {
+  static async getMap(searchedMapID) {
     const client = await MongoClient.connect(DBURL).catch(err => {
       console.log(err);
     });
     const db = client.db(DBName);
-    const searchQuery = { name: searchedMapName };
+    const searchQuery = { mapID: searchedMapID };
     const map = await db.collection("map").findOne(searchQuery);
     client.close();
     return map;

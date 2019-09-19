@@ -30,7 +30,10 @@ export default {
   },
   mounted () {
     axios
-      .get('http://localhost:3000/api/tracker/b21a483b-9db8-49b8-ab7f-33167fcb63d6')
+      .get('http://localhost:3000/api/tracker/d31f674d-b6e5-4951-8964-06de9cf32fb9', {
+         params: {
+          needMapName : true
+      }})
       .then(response => (this.info = response.data))
   }
 }

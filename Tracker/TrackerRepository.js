@@ -88,7 +88,7 @@ module.exports = class TrackerRepository {
     return tracker;
   }
 
-  static async getTrackerByTrackerID(searchedTrackerID, times) {
+  static async getTrackerByTrackerID(searchedTrackerID, times, needMapName) {
     const client = await MongoClient.connect(DBURL).catch(err => {
       console.log(err);
     });
@@ -109,6 +109,14 @@ module.exports = class TrackerRepository {
       tracker.Location = locations;
     }
     client.close();
+   
+    if(needMapName) {
+      const allMap = await MapRepository.getAllMap();
+      for(let location of tracker.Location) {
+        const map = allMap.find((map) =>{ return map.mapID === location.map; });
+        location.map = map.name;
+      }
+    }
     return tracker;
   }
 
