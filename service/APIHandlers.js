@@ -59,6 +59,7 @@ module.exports = class APIHandlers {
 
   static searchTrackerByID(req, res) {
     const trackerID = req.params.id;
+    const needMapName = req.query.needMapName;
     let times = {};
     if (req.query.start && req.query.end) {
       times = {
@@ -66,7 +67,7 @@ module.exports = class APIHandlers {
         end: Number(req.query.end)
       };
     }
-    TrackerRepository.getTrackerByTrackerID(trackerID, times).then(response => {
+    TrackerRepository.getTrackerByTrackerID(trackerID, times, needMapName).then(response => {
       res.json(response);
     });
   }
