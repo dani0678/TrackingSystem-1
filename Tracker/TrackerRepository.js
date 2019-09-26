@@ -15,7 +15,8 @@ module.exports = class TrackerRepository {
   static async addTracker(trackerData) {
     const tracker = new Tracker(
       trackerData["trackerName"],
-      trackerData["beaconID"]
+      trackerData["beaconID"],
+      trackerData["userStatus"]
     );
 
     const client = await MongoClient.connect(DBURL).catch(err => {
@@ -109,11 +110,13 @@ module.exports = class TrackerRepository {
       tracker.Location = locations;
     }
     client.close();
-   
-    if(needMapName) {
+
+    if (needMapName) {
       const allMap = await MapRepository.getAllMap();
-      for(let location of tracker.Location) {
-        const map = allMap.find((map) =>{ return map.mapID === location.map; });
+      for (let location of tracker.Location) {
+        const map = allMap.find(map => {
+          return map.mapID === location.map;
+        });
         location.map = map.name;
       }
     }
