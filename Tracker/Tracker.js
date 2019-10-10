@@ -17,6 +17,7 @@ module.exports = class Tracker {
 
     //Alert Status
     this.alert = { lost: false, keepOut: false };
+    this.keepOutMaps = [];
     this.notifyAddressList = [];
     this.mailTimeStamp = 0;
   }

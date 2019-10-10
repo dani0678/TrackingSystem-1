@@ -13,8 +13,8 @@ module.exports = class Alert {
   static async check() {
     const trackers = await TrackerRepository.getAllTracker();
     for (let tracker of trackers) {
-      const lostResult = Lost.check(tracker);
-      const keepOutResult = KeepOut.check(tracker);
+      const lostResult = await Lost.check(tracker);
+      const keepOutResult = await KeepOut.check(tracker);
 
       if (lostResult || keepOutResult) {
         const message =
