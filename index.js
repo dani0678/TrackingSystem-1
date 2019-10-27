@@ -107,6 +107,12 @@ app.delete('/api/meta/:id', (request, response) => {
 app.put('/api/meta', (request, response) => {
     APIHandler.putMeta(request, response)
 });
+
+//Location
+app.get('/api/location/:id', (request, response) => {
+    APIHandler.getLocationByTimeAndMap(request, response)
+});
+
 //TrackingManagement
 app.get('/api/startTracking', (request, response) => {
     APIHandler.startPositionTracking(request, response)

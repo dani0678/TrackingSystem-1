@@ -27,7 +27,7 @@ module.exports = class LocationRepository {
     client.close();
     return res.result;
   }
-
+  // FIX ME: Locationの取得条件を複合的に指定できるように関数を作り変える
   static async getLocationByTime(searchBeaconID, searchTimes) {
     const client = await MongoClient.connect(DBURL).catch(err => {
       console.log(err);
@@ -39,6 +39,31 @@ module.exports = class LocationRepository {
           locatedTime: { $lte: searchTimes["end"], $gte: searchTimes["start"] }
         },
         { beaconID: searchBeaconID }
+      ]
+    };
+    const locationQuery = await db
+      .collection("location")
+      .find(searchQuery)
+      .toArray();
+    client.close();
+    let locations = [];
+    for (let location of locationQuery) {
+      locations.push(location);
+    }
+    return locations;
+  }
+
+  static async getLocationByTimeAndMap(mapID, searchTimes) {
+    const client = await MongoClient.connect(DBURL).catch(err => {
+      console.log(err);
+    });
+    const db = client.db(DBName);
+    const searchQuery = {
+      $and: [
+        {
+          locatedTime: { $lte: searchTimes["end"], $gte: searchTimes["start"] }
+        },
+        { map: mapID }
       ]
     };
     const locationQuery = await db

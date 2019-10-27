@@ -6,6 +6,7 @@ const TrackerRepository = require("../Tracker/TrackerRepository");
 const DetectorRepository = require("../Detector/DetectorRepository");
 const MapRepository = require("../Map/MapRepository");
 const MetaRepository = require("../Meta/MetaRepository");
+const LocationRepository = require("../Location/LocationRepository");
 const Alert = require("../Alert/Alert");
 let timerID;
 
@@ -67,9 +68,11 @@ module.exports = class APIHandlers {
         end: Number(req.query.end)
       };
     }
-    TrackerRepository.getTrackerByTrackerID(trackerID, times, needMapName).then(response => {
-      res.json(response);
-    });
+    TrackerRepository.getTrackerByTrackerID(trackerID, times, needMapName).then(
+      response => {
+        res.json(response);
+      }
+    );
   }
 
   static updateTrackerByID(req, res) {
@@ -77,21 +80,6 @@ module.exports = class APIHandlers {
     const newValueQuery = req.body;
     TrackerRepository.updateTracker(trackerID, newValueQuery).then(() => {
       res.send("Tracker Update Success!");
-    });
-  }
-
-  static addTracker(req, res) {
-    const tracker = req.body;
-    TrackerRepository.addTracker(tracker).then(() => {
-      res.send("Tracker Add Success!");
-    });
-  }
-
-  static addTrackerMailAddr(req, res) {
-    const trackerID = req.params.id;
-    const addr = req.body;
-    TrackerRepository.addTrackerMailAddr(trackerID, addr).then(() => {
-      res.send("TrackerAddr Update Success!");
     });
   }
 
@@ -169,4 +157,20 @@ module.exports = class APIHandlers {
       res.send("Successfully put meta!");
     });
   }
+
+  static getLocationByTimeAndMap(req, res) {
+    const mapId = req.params.id;
+    let searchTime = {};
+    if (req.query.start && req.query.end) {
+      searchTime = {
+        start: Number(req.query.start),
+        end: Number(req.query.end)
+      };
+    }
+    LocationRepository.getLocationByTimeAndMap(mapId, searchTime)
+      .then(locations => {
+        res.send(locations);
+      });
+  }
+
 };
