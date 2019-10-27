@@ -48,6 +48,9 @@ app.get('/api/tracker', (request, response) => {
 app.get('/api/tracker/:id', (request, response) => {
     APIHandler.searchTrackerByID(request, response)
 });
+app.get('/api/tracker/beacon/:id', (request, response) => {
+    APIHandler.searchTrackerByBeaconID(request, response)
+});
 
 app.post('/api/tracker', (request, response) => {
     APIHandler.addTracker(request, response)

@@ -69,9 +69,26 @@ module.exports = class APIHandlers {
       };
     }
     TrackerRepository.getTrackerByTrackerID(trackerID, times, needMapName).then(
-      response => {
-        res.json(response);
-      }
+        response => {
+          res.json(response);
+        }
+    );
+  }
+
+  static searchTrackerByBeaconID(req, res) {
+    const beaconID = req.params.id;
+    const needMapName = req.query.needMapName;
+    let times = {};
+    if (req.query.start && req.query.end) {
+      times = {
+        start: Number(req.query.start),
+        end: Number(req.query.end)
+      };
+    }
+    TrackerRepository.getTrackerByBeaconID(beaconID, times, needMapName).then(
+        response => {
+          res.json(response);
+        }
     );
   }
 

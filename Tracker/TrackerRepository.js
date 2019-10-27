@@ -80,7 +80,7 @@ module.exports = class TrackerRepository {
       );
       tracker.Location = locations;
     } else {
-      const locations = await LocationRepository.getLocationByBeaconIDOnly(
+      const locations = await LocationRepository.getLocationRecently(
         tracker.beaconID
       );
       tracker.Location = locations;
@@ -104,7 +104,7 @@ module.exports = class TrackerRepository {
       );
       tracker.Location = locations;
     } else {
-      const locations = await LocationRepository.getLocationByBeaconIDOnly(
+      const locations = await LocationRepository.getLocationRecently(
         tracker.beaconID
       );
       tracker.Location = locations;
