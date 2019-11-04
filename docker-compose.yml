@@ -17,14 +17,33 @@ services:
     image: mongo-express
     container_name: mongo-express
     environment:
-      - ME_CONFIG_BASICAUTH_USERNAME=dev
-      - ME_CONFIG_BASICAUTH_PASSWORD=password
+      ME_CONFIG_BASICAUTH_USERNAME: dev
+      ME_CONFIG_BASICAUTH_PASSWORD: password
     links:
       - mongodb:mongo
     ports:
       - "8081:8081"
     depends_on:
       - mongodb
+
+  tracking-server:
+    image: maktak/tracking-server
+    container_name: tracking-server
+    working_dir: /usr/src/app
+    environment:
+      DB_NAME: tracking
+      DB_URL: mongodb://mongodb/
+      MAIL_HOST: smtp.gmail.com
+      MAIL_USER: tottori.tracking@gmail.com
+      MAIL_PASS: tracking
+    links:
+      - mongodb:mongo
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    volumes:
+      - .:/usr/src/app/
 
 volumes:
   mongodb-data:

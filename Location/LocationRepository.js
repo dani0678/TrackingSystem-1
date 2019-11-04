@@ -1,14 +1,12 @@
 "use strict";
 
-//detecterからのデータなので基本的に削除, 変更はしない
+//Detectorからのデータなので基本的に削除, 変更はしない
 const fs = require("fs");
 const MongoClient = require("mongodb").MongoClient;
 const Location = require("./Location");
 
-const config = JSON.parse(fs.readFileSync("./config.json", "utf-8"));
-
-const DBName = config.DB.Name;
-const DBURL = config.DB.URL + "/" + DBName;
+const DBName = process.env.DB_NAME || "tracking";
+const DBURL = process.env.DB_URL + DBName || "mongodb://localhost:27017/" + DBName;
 
 module.exports = class LocationRepository {
   static async addLocation(putLocation) {

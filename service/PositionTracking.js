@@ -7,10 +7,9 @@ const DetectorRepository = require("../Detector/DetectorRepository");
 const DetectionDataRepository = require("../DetectionData/DetectionDataRepository");
 const LocationRepository = require("../Location/LocationRepository");
 const MapRepository = require("../Map/MapRepository");
-const config = JSON.parse(fs.readFileSync("./config.json", "utf-8"));
 
-const weightOfMedian = config.Weight.Median;
-const weightOfDistance = config.Weight.Distance;
+const weightOfMedian = 2;
+const weightOfDistance = 1.8;
 
 module.exports = class PositionTracking {
   static async updateLocations(calcTime) {
