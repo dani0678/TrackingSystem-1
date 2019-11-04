@@ -1,9 +1,6 @@
 "use strict";
 
 const mailer = require("nodemailer");
-const fs = require("fs");
-const config = JSON.parse(fs.readFileSync("./config.json", "utf-8"));
-
 const TrackerRepository = require("../Tracker/TrackerRepository");
 
 const Lost = require("./Lost");
@@ -31,12 +28,12 @@ module.exports = class Alert {
 
   static sendMail(tracker, message) {
     const smtpConfig = {
-      host: config.Mail.Host,
+      host: process.env.MAIL_HOST || "smtp.gmail.com",
       port: 465,
       secure: true, // SSL
       auth: {
-        user: config.Mail.User,
-        pass: config.Mail.Pass
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS
       }
     };
     const date = new Date();
@@ -48,7 +45,7 @@ module.exports = class Alert {
 
       for (let addless of tracker.notifyAddressList) {
         let mailOptions = {
-          from: config.Mail.User,
+          from: process.env.MAIL_USER,
           to: addless,
           subject: "TrackingSystemAlert",
           html: message
