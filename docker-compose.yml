@@ -27,7 +27,7 @@ services:
       - mongodb
 
   tracking-server:
-    image: node:10
+    image: maktak/tracking-server
     container_name: tracking-server
     working_dir: /usr/src/app
     environment:
@@ -44,7 +44,7 @@ services:
       - mongodb
     volumes:
       - .:/usr/src/app/
-    command: [sh, -c, npm install && npm start]
+      - /usr/src/app/node_modules
 
 volumes:
   mongodb-data:
