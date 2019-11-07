@@ -46,6 +46,19 @@ services:
       - .:/usr/src/app/
     command: ["sh", "-c", "npm install && npm start"]
 
+  tracking-frontend:
+    image: node
+    container_name: tracking-frontend
+    working_dir: /usr/src/app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - tracking-server
+    volumes:
+      - ./webapp:/usr/src/app/
+    command: ["sh", "-c", "npm install && PORT=8080 npm start"]
+
+
 volumes:
   mongodb-data:
     external: true
