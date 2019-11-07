@@ -14,10 +14,11 @@ export default function RealtimeMapView(props) {
   }, [timerID]);
 
   const fetchTrackers = useCallback(() => {
-    fetch('http://127.0.0.1:3000/api/tracker')
+    fetch(`${process.env.REACT_APP_API_URL}/api/tracker` || 'http://127.0.0.1:3000/api/tracker')
       .then(res => res.json())
       .then(json => {
         json = json.filter(tracker => {
+          // eslint-disable-next-line no-unused-vars
           for (let chosen of props.chosenTrackers) {
             if (tracker.trackerID === chosen.ID) {
               return true;

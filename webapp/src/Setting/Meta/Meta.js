@@ -29,7 +29,7 @@ export default class Meta extends React.Component {
   }
 
   fetchMetas() {
-    const metaURL = new URL('http://127.0.0.1:3000/api/meta');
+    const metaURL = new URL(`${process.env.REACT_APP_API_URL}/api/meta` || 'http://127.0.0.1:3000/api/meta');
     fetch(metaURL)
       .then(res => res.json())
       .then(json => {

@@ -6,8 +6,8 @@ import './Form.scss';
 export default class Form extends React.Component {
   constructor(props) {
     super(props);
-    this.basementDetectorAPIURL = new URL('http://127.0.0.1:3000/api/detector');
-    this.updateDetectorAPIURL = new URL('http://127.0.0.1:3000/api/detector/axis');
+    this.basementDetectorAPIURL = new URL(`${process.env.REACT_APP_API_URL}/api/detector` || 'http://127.0.0.1:3000/api/detector');
+    this.updateDetectorAPIURL = new URL(`${process.env.REACT_APP_API_URL}/api/detector/axis` || 'http://127.0.0.1:3000/api/detector/axis');
     this.state = { detectors: [], prevDetectors: '', activeDetector: '', formDisabled: false };
     this.deleteDetector = this.deleteDetector.bind(this);
     this.updateDetector = this.updateDetector.bind(this);

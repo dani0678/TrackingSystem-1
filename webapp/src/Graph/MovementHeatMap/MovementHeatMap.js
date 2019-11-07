@@ -16,7 +16,7 @@ export default function MovementHeatMap() {
 
   const fetchTrackers = useCallback(
     (term, tracker) => {
-      const url = new URL(`http://127.0.0.1:3000/api/tracker/${tracker.ID}`);
+      const url = new URL(`${process.env.REACT_APP_API_URL}/api/tracker/${tracker.ID}` || `http://127.0.0.1:3000/api/tracker/${tracker.ID}`);
       Object.keys(term).forEach(key => url.searchParams.append(key, term[key]));
       url.searchParams.append('needMapName', true);
       fetch(url)
@@ -53,12 +53,14 @@ export default function MovementHeatMap() {
             .fill(0)
             .map(() => new Array(timeLabels.length).fill(0));
 
+          // eslint-disable-next-line no-unused-vars
           for (let x in timeLabels) {
             if (Number(x) + 1 <= timeLabels.length - 1) {
               const filteredData = rawData.filter(data => {
                 return data.time >= timeLabels[x] && data.time <= timeLabels[Number(x) + 1];
               });
               const allDataSize = filteredData.length;
+              // eslint-disable-next-line no-unused-vars
               for (let y in yLabels) {
                 const eachData = filteredData.filter(data => {
                   return data.map === yLabels[y];
@@ -70,6 +72,7 @@ export default function MovementHeatMap() {
           //どうしても余分な1マスができちゃうので無理やり除去する
           xLabels.pop();
           xLabelsVisibility.pop();
+          // eslint-disable-next-line no-unused-vars
           for (let y in yLabels) {
             data[y].pop();
           }
@@ -90,6 +93,7 @@ export default function MovementHeatMap() {
     const extractTimeLabel = [timeLabel[0]];
 
     let count = 0;
+    // eslint-disable-next-line no-unused-vars
     for (let index in timeLabel) {
       count++;
       if (count === span) {

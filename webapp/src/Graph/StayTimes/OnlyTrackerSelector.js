@@ -6,7 +6,7 @@ export default function OnlyTrackerSelector(props) {
   const [items, setItems] = useState({});
 
   if (!items.length) {
-    fetch('http://127.0.0.1:3000/api/tracker')
+    fetch(`${process.env.REACT_APP_API_URL}/api/tracker` || 'http://127.0.0.1:3000/api/tracker')
       .then(res => res.json())
       .then(json => {
         const items = json.map(item => {
@@ -25,14 +25,14 @@ export default function OnlyTrackerSelector(props) {
 
   const menu = [];
   if (items.length) {
-    for (let item of items) {
+    items.forEach(item => {
       menu.push(
         <div key={item.ID}>
           <Radio type="checkbox" value={item.ID} color="primary" />
           {item.name}
         </div>
       );
-    }
+    });
   }
   return <RadioGroup onChange={itemSelect}>{menu}</RadioGroup>;
 }

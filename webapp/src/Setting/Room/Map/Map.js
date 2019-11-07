@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import P5Wrapper from 'react-p5-wrapper';
 import mapImage from '../../../assets/lab3f.png';
 
@@ -35,7 +35,7 @@ const mapSetting = function sketch(p) {
     p.clear();
     if (backImage) p.image(backImage, 0, 0, width, height);
     if (metas.length > 0) {
-      for (let meta of metas) {
+      metas.forEach((meta) => {
         for (let i = 0; meta.size.length > i; i++) {
           p.fill(0, 30);
           p.quad(
@@ -49,10 +49,10 @@ const mapSetting = function sketch(p) {
             meta.size[i].max.y
           );
         }
-      }
+      });
     }
     if (rooms.length > 0) {
-      for (let room of rooms) {
+      rooms.forEach((room) => {
         for (let i = 0; room.size.length > i; i++) {
           p.fill('rgba(255,150,0,0.5)');
           p.quad(
@@ -82,7 +82,7 @@ const mapSetting = function sketch(p) {
             );
           }
         }
-      }
+      });
     }
     if (rooms_hozon.length > 0) {
       for (let i = 0; rooms_hozon[0].size.length > i; i++) {
@@ -107,7 +107,7 @@ const mapSetting = function sketch(p) {
     let map = rooms.find(room => room.name === 'new');
     if (y < height) {
       if (!map) {
-        for (let meta of metas) {
+        metas.forEach((meta) => {
           for (let i = 0; meta.size.length > i; i++) {
             if (
               meta.size[i].max.x - p.mouseX > 0 &&
@@ -127,9 +127,8 @@ const mapSetting = function sketch(p) {
               mName: metaName
             });
             existMeta = true;
-            break;
           }
-        }
+        });
         if (!existMeta) {
           alert('先にメタを登録してください');
         }
@@ -137,7 +136,7 @@ const mapSetting = function sketch(p) {
         rooms.pop();
         metaName = null;
         existMeta = false;
-        for (let meta of metas) {
+        metas.forEach((meta) => {
           for (let i = 0; meta.size.length > i; i++) {
             if (
               meta.size[i].max.x - p.mouseX > 0 &&
@@ -157,9 +156,8 @@ const mapSetting = function sketch(p) {
               mName: metaName
             });
             existMeta = true;
-            break;
           }
-        }
+        });
         if (!existMeta) {
           alert('先にメタを登録してください');
         }
@@ -172,7 +170,7 @@ const mapSetting = function sketch(p) {
     let room = rooms.find(room => room.name === 'new');
     let y = p.mouseY;
     if (y < height) {
-      if (rooms_hozon.length == 0) {
+      if (rooms_hozon.length === 0) {
         rooms_hozon.push({
           name: 'new',
           size: [
@@ -195,7 +193,7 @@ const mapSetting = function sketch(p) {
 
   p.doubleClicked = function() {
     if (rooms.length > 0) {
-      for (let room of rooms) {
+      rooms.forEach((room) => {
         for (let i = 0; room.size.length > i; i++) {
           if (
             room.size[i].max.x - p.mouseX > 0 &&
@@ -210,7 +208,7 @@ const mapSetting = function sketch(p) {
             room.active = false;
           }
         }
-      }
+      });
       return false;
     }
   };

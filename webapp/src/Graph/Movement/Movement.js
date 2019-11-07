@@ -31,6 +31,7 @@ export default function Movement() {
         datas_copy.push(processData);
       }
       datas_copy = datas_copy.filter(data => {
+        // eslint-disable-next-line no-unused-vars
         for (let chosen of chosenTrackers) {
           if (data.name === chosen.name) {
             return true;
@@ -45,7 +46,10 @@ export default function Movement() {
 
   const fetchTrackers = useCallback(
     (term, tracker) => {
-      const url = new URL(`http://127.0.0.1:3000/api/tracker/${tracker.ID}`);
+      const url = new URL(
+        `${process.env.REACT_APP_API_URL}/api/tracker/${tracker.ID}` ||
+          `http://127.0.0.1:3000/api/tracker/${tracker.ID}`
+      );
       Object.keys(term).forEach(key => url.searchParams.append(key, term[key]));
       url.searchParams.append('needMapName', true);
       fetch(url)
@@ -73,6 +77,7 @@ export default function Movement() {
     const extractTimeLabel = [timeLabel[0]];
 
     let count = 0;
+    // eslint-disable-next-line no-unused-vars
     for (let index in mapDatas) {
       count++;
       if (count === term) {
@@ -86,9 +91,9 @@ export default function Movement() {
 
   useEffect(() => {
     if (chosenTrackers.length && Object.keys(term).length) {
-      for (let tracker of chosenTrackers) {
+      chosenTrackers.forEach((tracker) => {
         fetchTrackers(term, tracker);
-      }
+      });
     }
   }, [fetchTrackers, chosenTrackers, term]);
 

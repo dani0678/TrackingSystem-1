@@ -14,6 +14,7 @@ export default function PlaybackMapView(props) {
 
   useEffect(() => {
     const filteredTrackers = allTrackers.current.filter(tracker => {
+      // eslint-disable-next-line no-unused-vars
       for (let chosen of props.chosenTrackers) {
         if (tracker.trackerID === chosen.ID) {
           return true;

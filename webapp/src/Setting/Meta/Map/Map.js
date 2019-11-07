@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import P5Wrapper from 'react-p5-wrapper';
 import mapImage from '../../../assets/lab3f.png';
 
@@ -33,7 +33,7 @@ const mapSetting = function sketch(p) {
     p.clear();
     if (backImage) p.image(backImage, 0, 0, width, height);
     if (maps.length > 0) {
-      for (let map of maps) {
+      maps.forEach(map => {
         for (let i = 0; map.size.length > i; i++) {
           p.fill('rgba(255,150,0,0.5)');
           p.quad(
@@ -47,11 +47,11 @@ const mapSetting = function sketch(p) {
             map.size[i].max.y
           );
         }
-      }
+      });
     }
 
     if (metas.length > 0) {
-      for (let meta of metas) {
+      metas.forEach(meta => {
         for (let i = 0; meta.size.length > i; i++) {
           p.fill(0, 30);
           p.quad(
@@ -81,7 +81,7 @@ const mapSetting = function sketch(p) {
             );
           }
         }
-      }
+      });
     }
     if (metas_hozon.length > 0) {
       for (let i = 0; metas_hozon[0].size.length > i; i++) {
@@ -125,7 +125,7 @@ const mapSetting = function sketch(p) {
     let meta = metas.find(meta => meta.name === 'new');
 
     if (y < height) {
-      if (metas_hozon.length == 0) {
+      if (metas_hozon.length === 0) {
         metas_hozon.push({
           name: 'new',
           size: [
@@ -148,7 +148,7 @@ const mapSetting = function sketch(p) {
 
   p.doubleClicked = function() {
     if (metas.length > 0) {
-      for (let meta of metas) {
+      metas.forEach(meta => {
         for (let i = 0; meta.size.length > i; i++) {
           if (
             meta.size[i].max.x - p.mouseX > 0 &&
@@ -163,7 +163,7 @@ const mapSetting = function sketch(p) {
             meta.active = false;
           }
         }
-      }
+      });
       return false;
     }
   };

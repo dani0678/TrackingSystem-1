@@ -20,7 +20,7 @@ export default class Room extends React.Component {
   componentDidMount() {
     this.fetchRooms();
 
-    const metaURL = new URL('http://127.0.0.1:3000/api/meta');
+    const metaURL = new URL(`${process.env.REACT_APP_API_URL}/api/meta` || 'http://127.0.0.1:3000/api/meta');
     fetch(metaURL)
       .then(res => res.json())
       .then(json => {
@@ -29,7 +29,7 @@ export default class Room extends React.Component {
   }
 
   fetchRooms() {
-    const roomURL = new URL('http://127.0.0.1:3000/api/map');
+    const roomURL = new URL(`${process.env.REACT_APP_API_URL}/api/map` || 'http://127.0.0.1:3000/api/map');
     fetch(roomURL)
       .then(res => res.json())
       .then(json => {

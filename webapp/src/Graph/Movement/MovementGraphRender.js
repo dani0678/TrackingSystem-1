@@ -19,7 +19,7 @@ export default function MovementGraphRender(props) {
         datasets: []
       };
       const dataset = [];
-      for (let data of props.data) {
+      props.data.forEach(data => {
         dataset.push({
           label: data.name,
           lineTension: 0,
@@ -27,7 +27,7 @@ export default function MovementGraphRender(props) {
           fill: false,
           data: data.location.mapDatas
         });
-      }
+      });
       data.datasets = dataset;
       setData(data);
     }

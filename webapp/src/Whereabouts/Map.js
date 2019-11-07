@@ -13,9 +13,9 @@ export default function sketch(p) {
   p.myCustomRedrawAccordingToNewPropsHandler = function(props) {
     if (props.trackers) {
       trackers = props.trackers;
-      for (let tracker of trackers) {
+      trackers.forEach( (tracker) => {
         tracker.image = p.loadImage('data:image/png;base64,' + tracker.userImage);
-      }
+      });
     }
   };
 
@@ -24,7 +24,7 @@ export default function sketch(p) {
     p.noTint();
     p.image(backImage, 0, 0, 0);
     if (trackers.length) {
-      for (let tracker of trackers) {
+      trackers.forEach( (tracker) => {
         if (tracker.Location && Object.keys(tracker.Location).length) {
           if (tracker.alert.keepOut) {
             p.textSize(20);
@@ -75,7 +75,7 @@ export default function sketch(p) {
             }
           }
         }
-      }
+      });
     }
   };
 
