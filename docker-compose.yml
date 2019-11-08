@@ -47,7 +47,7 @@ services:
     command: ["sh", "-c", "npm install && npm start"]
 
   tracking-frontend:
-    image: node
+    image: maktak/tracking-frontend
     container_name: tracking-frontend
     working_dir: /usr/src/app
     ports:
@@ -56,8 +56,6 @@ services:
       - tracking-server
     volumes:
       - ./webapp:/usr/src/app/
-    command: ["sh", "-c", "npm install && PORT=8080 npm start"]
-
 
 volumes:
   mongodb-data:
