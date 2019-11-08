@@ -2,6 +2,7 @@
 
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const bodyParser = require('body-parser');
 const APIHandler = require('./service/APIHandlers');
 
@@ -9,7 +10,7 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static('ui'));
+app.use(express.static(path.join(__dirname, 'webapp', 'build')));
 
 const server = app.listen((process.env.PORT || 3000), () => {
     console.log("Node.js is listening to PORT:" + server.address().port);
@@ -17,7 +18,7 @@ const server = app.listen((process.env.PORT || 3000), () => {
 
 //WebPageHandlers
 app.get('/', (request, response) => {
-    response.sendFile(__dirname + '/ui/main.html');
+    response.sendFile(path.join(__dirname, 'webapp', 'build', 'index.html'));
 });
 
 app.get('/userDashBoard', (request, response) => {

@@ -1,0 +1,19 @@
+.ListUpTrackerByMap {
+  display: flex;
+}
+
+.List {
+  margin-top: 20px;
+  margin-left: 70px;
+  .Root {
+    width: 100%;
+    overflow-x: auto;
+  }
+  .Table {
+    min-width: 300px;
+  };
+}
+
+.TermSelector {
+  margin-top: 20px;
+}
