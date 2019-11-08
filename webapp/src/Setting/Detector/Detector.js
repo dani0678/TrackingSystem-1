@@ -18,7 +18,7 @@ export default class Detector extends React.Component {
   componentDidMount() {
     this.fetchDetectors();
 
-    const mapURL = new URL(`${process.env.REACT_APP_API_URL}/api/map` || 'http://127.0.0.1:3000/api/map');
+    const mapURL = new URL(`${process.env.REACT_APP_API_URL}/api/map`);
     fetch(mapURL)
       .then(res => res.json())
       .then(json => {
@@ -27,7 +27,7 @@ export default class Detector extends React.Component {
   }
 
   fetchDetectors() {
-    const detectorURL = new URL(`${process.env.REACT_APP_API_URL}/api/detector` || 'http://127.0.0.1:3000/api/detector');
+    const detectorURL = new URL(`${process.env.REACT_APP_API_URL}/api/detector`);
     fetch(detectorURL)
       .then(res => res.json())
       .then(json => {

@@ -28,7 +28,7 @@ export default function ListUpTrackerByMap(props) {
   };
 
   const fetchLocationByMap = (map, term) => {
-    const url = new URL(`${process.env.REACT_APP_API_URL}/api/location/${map.ID}` || `http://127.0.0.1:3000/api/location/${map.ID}`);
+    const url = new URL(`${process.env.REACT_APP_API_URL}/api/location/${map.ID}`);
     Object.keys(term).forEach(key => url.searchParams.append(key, term[key]));
     fetch(url)
       .then(res => res.json())
@@ -46,7 +46,7 @@ export default function ListUpTrackerByMap(props) {
 
     // eslint-disable-next-line no-unused-vars
     for (let beaconID of beaconIDList) {
-      const url = new URL(`${process.env.REACT_APP_API_URL}/api/tracker/beacon/${beaconID}` || `http://127.0.0.1:3000/api/tracker/beacon/${beaconID}`);
+      const url = new URL(`${process.env.REACT_APP_API_URL}/api/tracker/beacon/${beaconID}`);
       const res = await fetch(url);
       let data = await res.json();
 

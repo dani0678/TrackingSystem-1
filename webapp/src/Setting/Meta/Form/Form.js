@@ -7,7 +7,7 @@ import './Form.scss';
 export default class Form extends React.Component {
   constructor(props) {
     super(props);
-    this.metaURL = new URL(`${process.env.REACT_APP_API_URL}/api/meta` || 'http://127.0.0.1:3000/api/meta');
+    this.metaURL = new URL(`${process.env.REACT_APP_API_URL}/api/meta`);
     this.state = {
       metaList: [],
       activeMeta: {},

@@ -11,7 +11,7 @@ export default function Playback(props) {
   const [time, setTime] = useState(0);
 
   const fetchTrackers = term => {
-    const url = new URL(`${process.env.REACT_APP_API_URL}/api/tracker` || 'http://127.0.0.1:3000/api/tracker');
+    const url = new URL(`${process.env.REACT_APP_API_URL}/api/tracker`);
     Object.keys(term).forEach(key => url.searchParams.append(key, term[key]));
     fetch(url)
       .then(res => res.json())

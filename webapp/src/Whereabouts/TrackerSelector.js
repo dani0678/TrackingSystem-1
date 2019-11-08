@@ -5,7 +5,7 @@ export default function TrackerSelector(props) {
   const [items, setItems] = useState({});
 
   if (!items.length) {
-    fetch(`${process.env.REACT_APP_API_URL}/api/tracker` || 'http://127.0.0.1:3000/api/tracker')
+    fetch(`${process.env.REACT_APP_API_URL}/api/tracker`)
       .then(res => res.json())
       .then(json => {
         const items = json.map(item => {
