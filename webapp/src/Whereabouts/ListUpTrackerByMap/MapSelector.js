@@ -7,7 +7,7 @@ export default function MapSelector(props) {
   const [map, setMap] = useState({});
 
   if (!mapMenu.length) {
-    const url = new URL(`${process.env.REACT_APP_API_URL}/api/map` || 'http://127.0.0.1:3000/api/map');
+    const url = new URL(`${process.env.REACT_APP_API_URL}/api/map`);
     fetch(url)
       .then(res => res.json())
       .then(json => {

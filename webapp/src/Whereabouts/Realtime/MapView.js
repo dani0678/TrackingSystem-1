@@ -14,7 +14,7 @@ export default function RealtimeMapView(props) {
   }, [timerID]);
 
   const fetchTrackers = useCallback(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/tracker` || 'http://127.0.0.1:3000/api/tracker')
+    fetch(`${process.env.REACT_APP_API_URL}/api/tracker`)
       .then(res => res.json())
       .then(json => {
         json = json.filter(tracker => {

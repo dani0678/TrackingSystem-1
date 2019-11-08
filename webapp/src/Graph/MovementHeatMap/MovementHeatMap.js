@@ -16,7 +16,7 @@ export default function MovementHeatMap() {
 
   const fetchTrackers = useCallback(
     (term, tracker) => {
-      const url = new URL(`${process.env.REACT_APP_API_URL}/api/tracker/${tracker.ID}` || `http://127.0.0.1:3000/api/tracker/${tracker.ID}`);
+      const url = new URL(`${process.env.REACT_APP_API_URL}/api/tracker/${tracker.ID}`);
       Object.keys(term).forEach(key => url.searchParams.append(key, term[key]));
       url.searchParams.append('needMapName', true);
       fetch(url)

@@ -20,7 +20,7 @@ export default class Meta extends React.Component {
   componentDidMount() {
     this.fetchMetas();
 
-    const mapURL = new URL('http://127.0.0.1:3000/api/map');
+    const mapURL = new URL(`${process.env.REACT_APP_API_URL}/api/map`);
     fetch(mapURL)
       .then(res => res.json())
       .then(json => {
@@ -29,7 +29,7 @@ export default class Meta extends React.Component {
   }
 
   fetchMetas() {
-    const metaURL = new URL(`${process.env.REACT_APP_API_URL}/api/meta` || 'http://127.0.0.1:3000/api/meta');
+    const metaURL = new URL(`${process.env.REACT_APP_API_URL}/api/meta`);
     fetch(metaURL)
       .then(res => res.json())
       .then(json => {
