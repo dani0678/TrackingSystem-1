@@ -1,4 +1,5 @@
-import mapImage from '../assets/lab3f.png';
+import mapImage from '../assets/map.png';
+import lab3fImage from '../assets/lab3f.png';
 
 export default function sketch(p) {
   let backImage;
@@ -6,8 +7,8 @@ export default function sketch(p) {
   let trackers = [];
 
   p.setup = function() {
-    p.createCanvas(1020, 645);
-    backImage = p.loadImage(mapImage);
+    p.createCanvas(`${process.env.REACT_APP_API_MAP_WIDTH}`, `${process.env.REACT_APP_API_MAP_HEIGHT}`);
+    backImage = p.loadImage(`${process.env.REACT_APP_API_MAP}`);
   };
 
   p.myCustomRedrawAccordingToNewPropsHandler = function(props) {

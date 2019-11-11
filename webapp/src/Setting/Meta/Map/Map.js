@@ -1,11 +1,12 @@
 import React from 'react';
 import P5Wrapper from 'react-p5-wrapper';
-import mapImage from '../../../assets/lab3f.png';
+import mapImage from '../../../assets/map.png';
+import lab3fImage from '../../../assets/lab3f.png';
 
 const mapSetting = function sketch(p) {
   let backImage;
-  let width = 1020;
-  let height = 645;
+  let width = `${process.env.REACT_APP_API_MAP_WIDTH}`;
+  let height = `${process.env.REACT_APP_API_MAP_HEIGHT}`;
   let metas = [];
   let maps = [];
   let metas_hozon = [];
@@ -14,7 +15,7 @@ const mapSetting = function sketch(p) {
 
   p.setup = function() {
     p.createCanvas(width, height);
-    backImage = p.loadImage(mapImage);
+    backImage = p.loadImage(`${process.env.REACT_APP_API_MAP}`);
   };
 
   p.myCustomRedrawAccordingToNewPropsHandler = function(props) {
