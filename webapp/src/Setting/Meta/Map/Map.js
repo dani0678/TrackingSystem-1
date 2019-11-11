@@ -1,7 +1,5 @@
 import React from 'react';
 import P5Wrapper from 'react-p5-wrapper';
-import mapImage from '../../../assets/map.png';
-import lab3fImage from '../../../assets/lab3f.png';
 
 const mapSetting = function sketch(p) {
   let backImage;

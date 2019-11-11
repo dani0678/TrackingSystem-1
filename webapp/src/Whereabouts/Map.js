@@ -1,6 +1,3 @@
-import mapImage from '../assets/map.png';
-import lab3fImage from '../assets/lab3f.png';
-
 export default function sketch(p) {
   let backImage;
 
