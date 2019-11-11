@@ -17,6 +17,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'webapp', 'build')));
+app.use(express.static(path.join(__dirname, 'webapp', 'assets')));
 app.use('/api/tracker', TrackerRouter);
 app.use('/api/detector', DetectorRouter);
 app.use('/api/location', LocationRouter);
