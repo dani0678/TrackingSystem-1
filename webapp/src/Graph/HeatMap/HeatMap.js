@@ -46,7 +46,7 @@ export default function HeatMap() {
         <br />
       </div>
       <div className="Graph">
-        <div className="HeatMap" style={{ width: 1020, height: 645 }}>
+        <div className="HeatMap" style={{ width: `${process.env.REACT_APP_API_MAP_WIDTH}`, height: `${process.env.REACT_APP_API_MAP_HEIGHT}` }}>
           <ReactHeatmap data={datas} />
         </div>
       </div>
