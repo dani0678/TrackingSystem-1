@@ -39,6 +39,13 @@ export default function HeatMap() {
     }
   }, [fetchTrackers, chosenTrackers, term]);
 
+  const heatMapStyle = {
+    width: mapWidth,
+    height: mapHeight,
+    display: "flex",
+    backgroundImage: `url(${process.env.REACT_APP_API_URL}/${process.env.REACT_APP_API_MAP})`
+  };
+
   return (
     <div className="Movement">
       <div className="SideSelector">
@@ -48,7 +55,7 @@ export default function HeatMap() {
         <br />
       </div>
       <div className="Graph">
-        <div className="HeatMap" style={{ width: mapWidth, height: mapHeight}}>
+        <div className="HeatMap" style={heatMapStyle}>
           <ReactHeatmap data={datas} />
         </div>
       </div>

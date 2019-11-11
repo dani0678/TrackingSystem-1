@@ -5,7 +5,7 @@ export default function sketch(p) {
 
   p.setup = function() {
     p.createCanvas(`${process.env.REACT_APP_API_MAP_WIDTH}`, `${process.env.REACT_APP_API_MAP_HEIGHT}`);
-    backImage = p.loadImage(`${process.env.REACT_APP_API_MAP}`);
+    backImage = p.loadImage(`${process.env.REACT_APP_API_URL}/${process.env.REACT_APP_API_MAP}`);
   };
 
   p.myCustomRedrawAccordingToNewPropsHandler = function(props) {
