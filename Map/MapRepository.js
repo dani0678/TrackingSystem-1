@@ -1,6 +1,6 @@
 "use strict";
 
-const fs = require("fs");
+require('dotenv').config();
 const MongoClient = require("mongodb").MongoClient;
 const Map = require("./Map");
 
