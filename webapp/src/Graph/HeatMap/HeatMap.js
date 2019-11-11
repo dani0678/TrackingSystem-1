@@ -9,6 +9,8 @@ export default function HeatMap() {
   const [datas, setDatas] = useState([]);
   const [chosenTrackers, setChosenTrackers] = useState([]);
   const [term, setTerm] = useState({});
+  const mapWidth = Number(`${process.env.REACT_APP_API_MAP_WIDTH}`);
+  const mapHeight = Number(`${process.env.REACT_APP_API_MAP_HEIGHT}`);
 
   const fetchTrackers = useCallback((term, tracker) => {
     const url = new URL(`${process.env.REACT_APP_API_URL}/api/tracker/${tracker.ID}`);
@@ -46,7 +48,7 @@ export default function HeatMap() {
         <br />
       </div>
       <div className="Graph">
-        <div className="HeatMap" style={{ width: `${process.env.REACT_APP_API_MAP_WIDTH}`, height: `${process.env.REACT_APP_API_MAP_HEIGHT}` }}>
+        <div className="HeatMap" style={{ width: mapWidth, height: mapHeight}}>
           <ReactHeatmap data={datas} />
         </div>
       </div>
