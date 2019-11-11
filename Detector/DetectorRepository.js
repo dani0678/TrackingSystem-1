@@ -1,25 +1,25 @@
-"use strict";
+'use strict';
 
 require('dotenv').config();
-const MongoClient = require("mongodb").MongoClient;
-const Detector = require("./Detector");
+const MongoClient = require('mongodb').MongoClient;
+const Detector = require('./Detector');
 
-const DBName = process.env.DB_NAME || "tracking";
-const DBURL = process.env.DB_URL + DBName || "mongodb://localhost:27017/" + DBName;
+const DBName = process.env.DB_NAME || 'tracking';
+const DBURL = process.env.DB_URL + DBName || 'mongodb://localhost:27017/' + DBName;
 
 module.exports = class DetectorRepository {
   static async addDetector(detectorData) {
     const detector = new Detector(
-      Number(detectorData["detectorNumber"]),
-      detectorData["detectorGrid"],
-      detectorData["detectorMap"]
+      Number(detectorData['detectorNumber']),
+      detectorData['detectorGrid'],
+      detectorData['detectorMap']
     );
 
     const client = await MongoClient.connect(DBURL).catch(err => {
       console.log(err);
     });
     const db = client.db(DBName);
-    const res = await db.collection("detector").insert(detector);
+    const res = await db.collection('detector').insert(detector);
     client.close();
     return res.result;
   }
@@ -30,7 +30,7 @@ module.exports = class DetectorRepository {
     });
     const db = client.db(DBName);
     const removeQuery = { detectorNumber: searchedDetectorNumber };
-    const res = await db.collection("detector").remove(removeQuery);
+    const res = await db.collection('detector').remove(removeQuery);
     client.close();
     return res.result;
   }
@@ -43,10 +43,10 @@ module.exports = class DetectorRepository {
     let detector;
     if (searchedDetectorNumber) {
       const searchQuery = { detectorNumber: searchedDetectorNumber };
-      detector = await db.collection("detector").findOne(searchQuery);
+      detector = await db.collection('detector').findOne(searchQuery);
     } else {
       detector = await db
-        .collection("detector")
+        .collection('detector')
         .find()
         .toArray();
     }
@@ -59,16 +59,14 @@ module.exports = class DetectorRepository {
       console.log(err);
     });
     const db = client.db(DBName);
-    const searchQuery = { detectorNumber: detectorData["detectorNumber"] };
+    const searchQuery = { detectorNumber: detectorData['detectorNumber'] };
     const newValueQuery = {
       $set: {
-        detectorGrid: detectorData["detectorGrid"],
-        detectorMap: detectorData["detectorMap"]
+        detectorGrid: detectorData['detectorGrid'],
+        detectorMap: detectorData['detectorMap']
       }
     };
-    const res = await db
-      .collection("detector")
-      .updateOne(searchQuery, newValueQuery);
+    const res = await db.collection('detector').updateOne(searchQuery, newValueQuery);
     client.close();
     return res.result;
   }
@@ -81,17 +79,15 @@ module.exports = class DetectorRepository {
       console.log(err);
     });
     const db = client.db(DBName);
-    const searchQuery = { detectorNumber: detectorData["detectorNumber"] };
+    const searchQuery = { detectorNumber: detectorData['detectorNumber'] };
     const newValueQuery = {
       $set: {
         detectorActiveLastTime: newDetectorActiveLastTime,
-        IPAddress: detectorData["IPAddress"],
-        SSID: detectorData["SSID"]
+        IPAddress: detectorData['IPAddress'],
+        SSID: detectorData['SSID']
       }
     };
-    const res = await db
-      .collection("detector")
-      .updateOne(searchQuery, newValueQuery);
+    const res = await db.collection('detector').updateOne(searchQuery, newValueQuery);
     client.close();
     return res.result;
   }
