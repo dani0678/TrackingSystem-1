@@ -3,3 +3,4 @@ node_modules
 webapp/build/
 .vscode/
 webapp/.env
+.env

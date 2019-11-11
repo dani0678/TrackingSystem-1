@@ -1,7 +1,7 @@
 "use strict";
 
 //detecterからのデータなので基本的に削除, 変更はしない
-const fs = require("fs");
+require('dotenv').config();
 const _ = require("underscore");
 const MongoClient = require("mongodb").MongoClient;
 const DetectionData = require("./DetectionData");
