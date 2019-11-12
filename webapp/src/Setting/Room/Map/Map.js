@@ -15,7 +15,7 @@ const mapSetting = function sketch(p) {
     const canvas = p.createCanvas(width, height);
     canvas.mousePressed(p.mousePress);
     canvas.mouseReleased(p.mouseRelease);
-    backImage = p.loadImage(`${process.env.REACT_APP_API_MAP}`);
+    backImage = p.loadImage(`${process.env.REACT_APP_API_URL}/${process.env.REACT_APP_API_MAP}`);
   };
 
   p.myCustomRedrawAccordingToNewPropsHandler = function(props) {

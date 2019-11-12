@@ -22,7 +22,7 @@ const mapSetting = function sketch(p) {
 
   p.setup = function() {
     p.createCanvas(width, height);
-    backImage = p.loadImage(`${process.env.REACT_APP_API_MAP}`);
+    backImage = p.loadImage(`${process.env.REACT_APP_API_URL}/${process.env.REACT_APP_API_MAP}`);
   };
 
   p.myCustomRedrawAccordingToNewPropsHandler = function(props) {
