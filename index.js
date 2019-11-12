@@ -37,7 +37,7 @@ const server = app.listen((process.env.PORT || 3000), () => {
     console.log("Node.js is listening to PORT:" + server.address().port);
 });
 
-app.get('/', (request, response) => {
+app.get('*', (request, response) => {
     response.sendFile(path.join(__dirname, 'webapp', 'build', 'index.html'));
 });
 
