@@ -23,10 +23,18 @@ module.exports = class Handler {
     });
   }
 
-  static selectSchedule(rea, res) {
+  static selectSchedule(req, res) {
     const scheduleId = req.params.id;
     ScheduleRepository.getSchedule(scheduleId).then(schedule => {
       res.send(schedule);
+    });
+  }
+
+  static updateTrackerList(req, res) {
+    const scheduleID = req.params.id;
+    const trackerID = req.body;
+    ScheduleRepository.updateSchedule(scheduleID, trackerID).then(() => {
+      res.send('Successfully put schedule!');
     });
   }
 };

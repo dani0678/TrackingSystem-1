@@ -30,7 +30,7 @@ module.exports = class MetaRepository {
       console.log(err);
     });
     const db = client.db(DBName);
-    const removeQuery = { _id: scheduleID };
+    const removeQuery = { scheduleID: scheduleID };
     const res = await db.collection('schedule').remove(removeQuery);
     client.close();
   }
@@ -57,7 +57,7 @@ module.exports = class MetaRepository {
       console.log(err);
     });
     const db = client.db(DBName);
-    const searchQuery = { _id: scheduleID };
+    const searchQuery = { scheduleID: scheduleID };
     const schedule = await db.collection('schedule').findOne(searchQuery);
     client.close();
     return schedule;
@@ -68,7 +68,7 @@ module.exports = class MetaRepository {
       console.log(err);
     });
     const db = client.db(DBName);
-    const searchQuery = { _id: scheduleID };
+    const searchQuery = { scheduleID: scheduleID };
     const newValueQuery = {
       $push: {
         trackerList: trackerID
