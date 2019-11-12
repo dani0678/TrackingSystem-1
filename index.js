@@ -23,9 +23,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'webapp', 'build')));
 app.use(express.static(path.join(__dirname, 'webapp', 'assets')));
-if(process.env.MONGO_EXPRESS_AVAILABLE) {
-  app.use('/mongo_express', mongo_express(mongo_express_config));
-}
+app.use('/mongo_express', mongo_express(mongo_express_config));
+
 app.use('/api/tracker', TrackerRouter);
 app.use('/api/detector', DetectorRouter);
 app.use('/api/location', LocationRouter);
@@ -34,6 +33,7 @@ app.use('/api/map', MapRouter);
 app.use('/api/meta', MetaRouter);
 
 const server = app.listen((process.env.PORT || 3000), () => {
+    console.log(process.env.MONGO_EXPRESS_AVAILABLE);
     console.log("Node.js is listening to PORT:" + server.address().port);
 });
 
