@@ -13,19 +13,6 @@ services:
     volumes:
       - "mongodb-data:/data/db"
 
-  mongo-express:
-    image: mongo-express
-    container_name: mongo-express
-    environment:
-      ME_CONFIG_BASICAUTH_USERNAME: dev
-      ME_CONFIG_BASICAUTH_PASSWORD: password
-    links:
-      - mongodb:mongo
-    ports:
-      - "8081:8081"
-    depends_on:
-      - mongodb
-
   tracking-server:
     image: node
     container_name: tracking-server
@@ -36,6 +23,11 @@ services:
       MAIL_HOST: smtp.gmail.com
       MAIL_USER: tottori.tracking@gmail.com
       MAIL_PASS: tracking
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_AUTH_DATABASE: tracking
+      ME_CONFIG_BASICAUTH_USERNAME: dev
+      ME_CONFIG_BASICAUTH_PASSWORD: password
+
     links:
       - mongodb:mongo
     ports:
