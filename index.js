@@ -1,9 +1,14 @@
 'use strict';
+require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
+const mongo_express = require('mongo-express/lib/middleware');
+const mongo_express_config = require('./mongo_express_config');
+
+
 const PositionTrackingHandlers = require('./service/PositionTrackingHandlers');
 const DetectionDataRouter = require('./DetectionData/Router');
 const DetectorRouter = require('./Detector/Router');
@@ -18,6 +23,9 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'webapp', 'build')));
 app.use(express.static(path.join(__dirname, 'webapp', 'assets')));
+if(process.env.MONGO_EXPRESS_AVAILABLE) {
+  app.use('/mongo_express', mongo_express(mongo_express_config));
+}
 app.use('/api/tracker', TrackerRouter);
 app.use('/api/detector', DetectorRouter);
 app.use('/api/location', LocationRouter);
