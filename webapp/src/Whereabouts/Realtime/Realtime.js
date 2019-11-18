@@ -14,9 +14,7 @@ export default function Realtime(props) {
         </div>
       </div>
       <div className="Map">
-        <div className="MapView">
-          <MapView chosenTrackers={trackers} />
-        </div>
+        <MapView chosenTrackers={trackers} />
       </div>
     </div>
   );
