@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import P5Wrapper from 'react-p5-wrapper';
 import fetch from 'node-fetch';
 
+import P5Wrapper from 'react-p5-wrapper';
 import Map from '../Map';
+import AlertBuzzer from './AlertBuzzer';
 
 export default function RealtimeMapView(props) {
   const [trackers, setTrackers] = useState([]);
@@ -36,5 +37,10 @@ export default function RealtimeMapView(props) {
     return () => clearInterval(refTimerID.current);
   }, [fetchTrackers]);
 
-  return <P5Wrapper sketch={Map} trackers={trackers} />;
+  return (
+    <div className="MapView">
+      <P5Wrapper sketch={Map} trackers={trackers} />
+      <AlertBuzzer trackers={trackers} />
+    </div>
+  );
 }
