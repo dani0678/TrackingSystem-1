@@ -4,3 +4,4 @@ webapp/build/
 .vscode/
 webapp/.env
 .env
+keepOutMapList.json

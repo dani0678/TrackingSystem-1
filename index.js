@@ -9,7 +9,7 @@ const mongo_express = require('mongo-express/lib/middleware');
 const mongo_express_config = require('./mongo_express_config');
 
 
-const PositionTrackingHandlers = require('./service/PositionTrackingHandlers');
+const PositionTrackingRouter = require('./service/PositionTrackingRouter');
 const DetectionDataRouter = require('./DetectionData/Router');
 const DetectorRouter = require('./Detector/Router');
 const LocationRouter = require('./Location/Router');
@@ -31,6 +31,7 @@ app.use('/api/location', LocationRouter);
 app.use('/api/detectionData', DetectionDataRouter);
 app.use('/api/map', MapRouter);
 app.use('/api/meta', MetaRouter);
+app.use('/api/tracking', PositionTrackingRouter);
 
 const server = app.listen((process.env.PORT || 3000), () => {
     console.log(process.env.MONGO_EXPRESS_AVAILABLE);
@@ -39,13 +40,4 @@ const server = app.listen((process.env.PORT || 3000), () => {
 
 app.get('*', (request, response) => {
     response.sendFile(path.join(__dirname, 'webapp', 'build', 'index.html'));
-});
-
-//TrackingManagement
-app.get('/api/startTracking', (request, response) => {
-  PositionTrackingHandlers.startPositionTracking(request, response)
-});
-
-app.get('/api/stopTracking', (request, response) => {
-  PositionTrackingHandlers.stopPositionTracking(request, response)
 });
