@@ -25,5 +25,5 @@ export default function AlertBuzzer(props) {
   }, [props.trackers]);
 
 
-  return <Sound url={`${process.env.REACT_APP_API_URL}/alert3.mp3`} playStatus={status}/>;
+  return <Sound url={`${process.env.REACT_APP_API_URL}/warning.mp3`} playStatus={status}/>;
 }

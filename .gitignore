@@ -5,3 +5,4 @@ webapp/build/
 webapp/.env
 .env
 keepOutMapList.json
+dist/
