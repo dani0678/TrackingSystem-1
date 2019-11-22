@@ -1,12 +1,12 @@
-"use strict";
+'use strict';
 
-const TrackerRepository = require("../Tracker/TrackerRepository");
+const TrackerRepository = require('../Tracker/TrackerRepository');
 
 module.exports = class Handler {
   static addTracker(req, res) {
     const tracker = req.body;
     TrackerRepository.addTracker(tracker).then(() => {
-      res.send("Tracker Add Success!");
+      res.send('Tracker Add Success!');
     });
   }
 
@@ -15,7 +15,7 @@ module.exports = class Handler {
     if (req.query.start && req.query.end) {
       searchTime = {
         start: Number(req.query.start),
-        end: Number(req.query.end)
+        end: Number(req.query.end),
       };
     }
     const trackers = await TrackerRepository.getAllTracker(searchTime);
@@ -29,14 +29,12 @@ module.exports = class Handler {
     if (req.query.start && req.query.end) {
       times = {
         start: Number(req.query.start),
-        end: Number(req.query.end)
+        end: Number(req.query.end),
       };
     }
-    TrackerRepository.getTrackerByTrackerID(trackerID, times, needMapName).then(
-      response => {
-        res.json(response);
-      }
-    );
+    TrackerRepository.getTrackerByTrackerID(trackerID, times, needMapName).then(response => {
+      res.json(response);
+    });
   }
 
   static searchTrackerByBeaconID(req, res) {
@@ -46,21 +44,26 @@ module.exports = class Handler {
     if (req.query.start && req.query.end) {
       times = {
         start: Number(req.query.start),
-        end: Number(req.query.end)
+        end: Number(req.query.end),
       };
     }
-    TrackerRepository.getTrackerByBeaconID(beaconID, times, needMapName).then(
-      response => {
-        res.json(response);
-      }
-    );
+    TrackerRepository.getTrackerByBeaconID(beaconID, times, needMapName).then(response => {
+      res.json(response);
+    });
   }
 
   static updateTrackerByID(req, res) {
     const trackerID = req.params.id;
     const newValueQuery = req.body;
     TrackerRepository.updateTracker(trackerID, newValueQuery).then(() => {
-      res.send("Tracker Update Success!");
+      res.send('Tracker Update Success!');
+    });
+  }
+
+  static deleteTracker(req, res) {
+    const trackerId = req.params.id;
+    ScheduleRepository.removeTracker(trackerId).then(() => {
+      res.send('Successfully delete tracker!');
     });
   }
 };
