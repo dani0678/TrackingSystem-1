@@ -2,7 +2,7 @@
 
 module.exports = class Lost {
   static check(tracker) {
-    const alertTime = 10000;
+    const alertTime = 15000;
     const date = new Date();
     if (tracker.Location) {
       if (this.abs(date.getTime() - tracker.Location.locatedTime) > alertTime) {
