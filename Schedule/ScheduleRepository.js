@@ -63,18 +63,16 @@ module.exports = class MetaRepository {
     return schedule;
   }
 
-  static async updateTrackerList(scheduleID, trackerID) {
+  static async updateTrackerList(scheduleID, trackerIDList) {
     const client = await MongoClient.connect(DBURL).catch(err => {
       console.log(err);
     });
     const db = client.db(DBName);
-    const searchQuery = { scheduleID: scheduleID };
-    const newValueQuery = {
-      $push: {
-        trackerList: trackerID
-      }
-    };
-    const res = await db.collection('schedule').updateOne(searchQuery, newValueQuery);
+    const ID = scheduleID;
+    const List = trackerIDList;
+    const res = await db
+      .collection('schedule')
+      .update({ scheduleID: ID }, { $set: { trackerList: List } });
     client.close();
     return res.result;
   }

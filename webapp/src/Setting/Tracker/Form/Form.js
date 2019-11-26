@@ -10,22 +10,20 @@ import Select from '@material-ui/core/Select';
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120
-  }
+    minWidth: 120,
+  },
 }));
 
 export default function Form(props) {
   const classes = useStyles();
-  const newTracker = { newTracker: { trackerName: '', beaconID: '', userStatus: '' } };
 
   const submitTracker = () => {
-    const trackerURL = `${process.env.REACT_APP_API_URL}/api/tracker`;
+    const trackerURL = 'http://127.0.0.1:3000/api/tracker';
     fetch(trackerURL, {
       method: 'POST',
       headers: { 'content-type': 'application/json; charset=utf-8' },
-      body: JSON.stringify(props.newTracker)
+      body: JSON.stringify(props.newTracker),
     });
-    props.setNewTracker({ newTracker: '' });
   };
 
   const handleInputChange = e => {

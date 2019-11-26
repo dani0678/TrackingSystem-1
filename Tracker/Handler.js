@@ -62,7 +62,7 @@ module.exports = class Handler {
 
   static deleteTracker(req, res) {
     const trackerId = req.params.id;
-    ScheduleRepository.removeTracker(trackerId).then(() => {
+    TrackerRepository.removeTracker(trackerId).then(() => {
       res.send('Successfully delete tracker!');
     });
   }

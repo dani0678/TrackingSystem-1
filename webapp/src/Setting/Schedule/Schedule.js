@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Form from './Form/Form';
-import List from './List/List';
+import ScheduleList from './List/List';
 
 export default function Schedule() {
   const [unitList, setUnitList] = useState([]);
   const [roomList, setRoomList] = useState([]);
+  const [trackerList, setTrackerList] = useState([]);
   const [scheduleList, setScheduleList] = useState([]);
   const [newSchedule, setNewSchedule] = useState({
     name: '',
@@ -14,9 +15,10 @@ export default function Schedule() {
     room: '',
   });
 
-  const scheduleURL = new URL('http://127.0.0.1:3000/api/schedule');
-  const metaURL = new URL('http://127.0.0.1:3000/api/meta');
-  const mapURL = new URL('http://127.0.0.1:3000/api/map');
+  const scheduleURL = new URL(`${process.env.REACT_APP_API_URL}/api/schedule`);
+  const metaURL = new URL(`${process.env.REACT_APP_API_URL}/api/meta`);
+  const mapURL = new URL(`${process.env.REACT_APP_API_URL}/api/map`);
+  const trackerURL = new URL(`${process.env.REACT_APP_API_URL}/api/tracker`);
 
   useEffect(() => {
     fetch(scheduleURL)
@@ -42,6 +44,11 @@ export default function Schedule() {
       .then(json => {
         setScheduleList(json);
       });
+    fetch(trackerURL)
+      .then(res => res.json())
+      .then(json => {
+        setTrackerList(json);
+      });
   }, []);
 
   return (
@@ -55,7 +62,12 @@ export default function Schedule() {
         />
       </div>
       <div className="List">
-        <List unitList={unitList} roomList={roomList} scheduleList={scheduleList} />
+        <ScheduleList
+          unitList={unitList}
+          roomList={roomList}
+          scheduleList={scheduleList}
+          trackerList={trackerList}
+        />
       </div>
     </div>
   );

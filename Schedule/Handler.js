@@ -37,4 +37,12 @@ module.exports = class Handler {
       res.send('Successfully put schedule!');
     });
   }
+
+  static putSchedule(req, res) {
+    const scheduleID = req.params.id;
+    const trackerIDList = req.body;
+    ScheduleRepository.updateTrackerList(scheduleID, trackerIDList).then(() => {
+      res.send('Successfully put schedule!');
+    });
+  }
 };

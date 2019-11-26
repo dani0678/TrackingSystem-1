@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { lighten, makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -13,12 +14,18 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Checkbox from '@material-ui/core/Checkbox';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ListIcon from '@material-ui/icons/List';
 import IconButton from '@material-ui/core/IconButton';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import _ from 'underscore';
 
 const useStyles = makeStyles({
   root: {
-    width: '75%',
+    width: '70%',
   },
   tableWrapper: {
     maxHeight: 440,
@@ -86,21 +93,73 @@ EnhancedTableToolbar.propTypes = {
   deleteSchedule: PropTypes.func.isRequired,
 };
 
+function SelectDialog(props) {
+  const { onClose, open, residentsList, trackerIDList, updateTrackerList, scheduleID } = props;
+
+  const handleClose = () => {
+    onClose();
+  };
+
+  const handleListItemClick = value => {
+    const IDListCopy = trackerIDList;
+    if (IDListCopy) {
+      if (IDListCopy.find(id => id === value.trackerID)) {
+        const newIDList = IDListCopy.filter(id => id != value.trackerID);
+        updateTrackerList(scheduleID, newIDList);
+      } else {
+        IDListCopy.push(value.trackerID);
+        updateTrackerList(scheduleID, IDListCopy);
+      }
+    }
+  };
+
+  return (
+    <Dialog onClose={handleClose} aria-labelledby="tracker-dialog" open={open}>
+      <DialogTitle id="tracker-dialog">入居者を選んでください</DialogTitle>
+      <List>
+        {residentsList.map(tracker => (
+          <ListItem key={tracker.trackerName}>
+            <Checkbox
+              onClick={() => handleListItemClick(tracker)}
+              checked={trackerIDList.includes(tracker.trackerID)}
+            />
+            <ListItemText primary={tracker.trackerName} />
+          </ListItem>
+        ))}
+      </List>
+      <Button variant="contained" color="primary" size="medium" onClick={handleClose}>
+        閉じる
+      </Button>
+    </Dialog>
+  );
+}
+
+SelectDialog.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+};
+
 const columns = [
   { id: 'checkbox', label: '', minWidth: 30, align: 'center' },
-  { id: 'name', label: 'スケジュール名', minWidth: 170, align: 'center' },
-  { id: 'openingTime', label: '開始時刻', minWidth: 170, align: 'center' },
-  { id: 'closingTime', label: '終了時刻', minWidth: 170, align: 'center' },
-  { id: 'unitName', label: 'ユニット', minWidth: 170, align: 'center' },
-  { id: 'roomName', label: '部屋', minWidth: 170, align: 'center' },
+  { id: 'name', label: 'スケジュール名', minWidth: 50, align: 'center' },
+  { id: 'openingTime', label: '開始時刻', minWidth: 50, align: 'center' },
+  { id: 'closingTime', label: '終了時刻', minWidth: 50, align: 'center' },
+  { id: 'unitName', label: 'ユニット', minWidth: 50, align: 'center' },
+  { id: 'roomName', label: '部屋', minWidth: 50, align: 'center' },
+  { id: 'selectTracker', label: '選択', minWidth: 30, align: 'center' },
 ];
 
-export default function List(props) {
+export default function ScheduleList(props) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [selected, setSelected] = React.useState([]);
+  const [open, setOpen] = React.useState(false);
 
+  const residentsList = props.trackerList.filter(function(tracker) {
+    if (tracker.userStatus === '入居者') return true;
+  });
+  //Rows per page
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -109,7 +168,7 @@ export default function List(props) {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
+  //handleCheckbox
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
@@ -130,9 +189,27 @@ export default function List(props) {
   };
 
   const isSelected = name => selected.indexOf(name) !== -1;
+  //handleDialog
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = value => {
+    setOpen(false);
+  };
+  //API
+  const updateTrackerList = (shceduleID, trackerList) => {
+    const scheduleURL = `${process.env.REACT_APP_API_URL}/api/schedule`;
+    const updateScheduleUrl = scheduleURL + '/' + shceduleID;
+    fetch(updateScheduleUrl, {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json; charset=utf-8' },
+      body: JSON.stringify(trackerList),
+    });
+  };
 
   const deleteSchedule = selected => {
-    const scheduleURL = 'http://127.0.0.1:3000/api/schedule';
+    const scheduleURL = `${process.env.REACT_APP_API_URL}/api/schedule`;
     selected.map(select => {
       const schedule = props.scheduleList.find(schedule => schedule.name === select);
       const deleteScheduleUrl = scheduleURL + '/' + schedule.scheduleID;
@@ -159,23 +236,32 @@ export default function List(props) {
           let unitName = room.mName;
           let roomName = room.name;
           return (
-            <TableRow
-              hover
-              key={schedule.name}
-              onClick={event => handleClick(event, schedule.name)}
-              role="checkbox"
-              aria-checked={isItemSelected}
-              tabIndex={-1}
-              selected={isItemSelected}
-            >
+            <TableRow hover key={schedule.name} tabIndex={-1} selected={isItemSelected}>
               <TableCell padding="checkbox">
-                <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
+                <Checkbox
+                  checked={isItemSelected}
+                  inputProps={{ 'aria-labelledby': labelId }}
+                  onClick={event => handleClick(event, schedule.name)}
+                />
               </TableCell>
               <TableCell align="center">{schedule.name}</TableCell>
               <TableCell align="center">{schedule.openingTime}</TableCell>
               <TableCell align="center">{schedule.closingTime}</TableCell>
               <TableCell align="center">{unitName}</TableCell>
               <TableCell align="center">{roomName}</TableCell>
+              <TableCell>
+                <IconButton onClick={handleClickOpen}>
+                  <ListIcon />
+                </IconButton>
+              </TableCell>
+              <SelectDialog
+                open={open}
+                onClose={handleClose}
+                residentsList={residentsList}
+                trackerIDList={schedule.trackerList}
+                updateTrackerList={updateTrackerList}
+                scheduleID={schedule.scheduleID}
+              />
             </TableRow>
           );
         }

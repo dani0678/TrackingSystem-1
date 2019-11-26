@@ -26,7 +26,7 @@ export default function Form(props) {
   const [roomForm, setRoomForm] = useState('');
 
   const submitSchedule = () => {
-    const scheduleURL = 'http://127.0.0.1:3000/api/schedule';
+    const scheduleURL = `${process.env.REACT_APP_API_URL}/api/schedule`;
     fetch(scheduleURL, {
       method: 'POST',
       headers: { 'content-type': 'application/json; charset=utf-8' },

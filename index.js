@@ -8,12 +8,7 @@ const bodyParser = require('body-parser');
 const mongo_express = require('mongo-express/lib/middleware');
 const mongo_express_config = require('./mongo_express_config');
 
-<<<<<<< HEAD
-
 const PositionTrackingRouter = require('./service/PositionTrackingRouter');
-=======
-const PositionTrackingHandlers = require('./service/PositionTrackingHandlers');
->>>>>>> scheduleUI作り中
 const DetectionDataRouter = require('./DetectionData/Router');
 const DetectorRouter = require('./Detector/Router');
 const LocationRouter = require('./Location/Router');
@@ -37,6 +32,7 @@ app.use('/api/detectionData', DetectionDataRouter);
 app.use('/api/map', MapRouter);
 app.use('/api/meta', MetaRouter);
 app.use('/api/tracking', PositionTrackingRouter);
+app.use('/api/schedule', ScheduleRouter);
 
 const server = app.listen(process.env.PORT || 3000, () => {
   console.log(process.env.MONGO_EXPRESS_AVAILABLE);

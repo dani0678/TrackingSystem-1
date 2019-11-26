@@ -7,9 +7,9 @@ export default function Tracker() {
   const [newTracker, setNewTracker] = useState({
     trackerName: '',
     beaconID: '',
-    userStatus: ''
+    userStatus: '',
   });
-  const trackerURL = new URL(`${process.env.REACT_APP_API_URL}/api/tracker`);
+  const trackerURL = new URL('http://localhost:3000/api/tracker');
 
   useEffect(() => {
     fetch(trackerURL)
