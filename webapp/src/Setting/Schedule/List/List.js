@@ -24,15 +24,16 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import _ from 'underscore';
+import dayjs from 'dayjs';
 
 const useStyles = makeStyles({
   root: {
-    width: '70%',
+    width: '70%'
   },
   tableWrapper: {
     maxHeight: 440,
-    overflow: 'auto',
-  },
+    overflow: 'auto'
+  }
 });
 //タイトル（ツールバー）作成
 const EnhancedTableToolbar = props => {
@@ -71,7 +72,7 @@ const EnhancedTableToolbar = props => {
 
 EnhancedTableToolbar.propTypes = {
   selected: PropTypes.array.isRequired,
-  deleteSchedule: PropTypes.func.isRequired,
+  deleteSchedule: PropTypes.func.isRequired
 };
 //dialog作成
 function SimpleDialog(props) {
@@ -85,6 +86,7 @@ function SimpleDialog(props) {
 
   const submitList = () => {
     updateTrackerList(scheduleID, selected);
+    onClose();
   };
 
   const handleClick = trackerID => {
@@ -136,7 +138,7 @@ function SimpleDialog(props) {
 
 SimpleDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
+  open: PropTypes.bool.isRequired
 };
 
 const columns = [
@@ -146,7 +148,7 @@ const columns = [
   { id: 'closingTime', label: '終了時刻', minWidth: 50, align: 'center' },
   { id: 'unitName', label: 'ユニット', minWidth: 50, align: 'center' },
   { id: 'roomName', label: '部屋', minWidth: 50, align: 'center' },
-  { id: 'selectTracker', label: '選択', minWidth: 30, align: 'center' },
+  { id: 'selectTracker', label: '選択', minWidth: 30, align: 'center' }
 ];
 
 export default function ScheduleList(props) {
@@ -205,7 +207,7 @@ export default function ScheduleList(props) {
     fetch(updateScheduleUrl, {
       method: 'PUT',
       headers: { 'content-type': 'application/json; charset=utf-8' },
-      body: JSON.stringify(trackerList),
+      body: JSON.stringify(trackerList)
     });
   };
 
@@ -217,7 +219,7 @@ export default function ScheduleList(props) {
       fetch(deleteScheduleUrl, {
         method: 'DELETE',
         headers: { 'content-type': 'application/json; charset=utf-8' },
-        body: JSON.stringify(schedule),
+        body: JSON.stringify(schedule)
       });
       setSelected([]);
     });
@@ -236,6 +238,8 @@ export default function ScheduleList(props) {
         if (room) {
           let unitName = room.mName;
           let roomName = room.name;
+          const openingTime = dayjs(schedule.openingTime).format('HH:mm');
+          const closingTime = dayjs(schedule.closingTime).format('HH:mm');
           return (
             <TableRow hover key={schedule.name} tabIndex={-1} selected={isItemSelected}>
               <TableCell padding="checkbox">
@@ -246,8 +250,8 @@ export default function ScheduleList(props) {
                 />
               </TableCell>
               <TableCell align="center">{schedule.name}</TableCell>
-              <TableCell align="center">{schedule.openingTime}</TableCell>
-              <TableCell align="center">{schedule.closingTime}</TableCell>
+              <TableCell align="center">{openingTime}</TableCell>
+              <TableCell align="center">{closingTime}</TableCell>
               <TableCell align="center">{unitName}</TableCell>
               <TableCell align="center">{roomName}</TableCell>
               <TableCell>
@@ -303,10 +307,10 @@ export default function ScheduleList(props) {
         rowsPerPage={rowsPerPage}
         page={page}
         backIconButtonProps={{
-          'aria-label': 'previous page',
+          'aria-label': 'previous page'
         }}
         nextIconButtonProps={{
-          'aria-label': 'next page',
+          'aria-label': 'next page'
         }}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}

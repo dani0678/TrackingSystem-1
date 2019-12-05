@@ -14,8 +14,8 @@ import Button from '@material-ui/core/Button';
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
-  },
+    minWidth: 120
+  }
 }));
 
 export default function Form(props) {
@@ -30,25 +30,19 @@ export default function Form(props) {
     fetch(scheduleURL, {
       method: 'POST',
       headers: { 'content-type': 'application/json; charset=utf-8' },
-      body: JSON.stringify(props.newSchedule),
+      body: JSON.stringify(props.newSchedule)
     });
   };
 
   const setOpTime = date => {
-    const hour = ('0' + date.getHours()).slice(-2);
-    const min = ('0' + date.getMinutes()).slice(-2);
-    const time = hour + ':' + min;
     let schedule = props.newSchedule;
-    schedule.openingTime = time;
+    schedule.openingTime = date;
     props.setNewSchedule(schedule);
   };
 
   const setClTime = date => {
-    const hour = ('0' + date.getHours()).slice(-2);
-    const min = ('0' + date.getMinutes()).slice(-2);
-    const time = hour + ':' + min;
     let schedule = props.newSchedule;
-    schedule.closingTime = time;
+    schedule.closingTime = date;
     props.setNewSchedule(schedule);
   };
 
@@ -101,7 +95,7 @@ export default function Form(props) {
               setOpTime(date);
             }}
             KeyboardButtonProps={{
-              'aria-label': 'change time',
+              'aria-label': 'change time'
             }}
           />
         </Grid>
@@ -117,7 +111,7 @@ export default function Form(props) {
               setClTime(date);
             }}
             KeyboardButtonProps={{
-              'aria-label': 'change time',
+              'aria-label': 'change time'
             }}
           />
         </Grid>

@@ -13,7 +13,7 @@ module.exports = class Tracker {
     this.userImage = new Identicon(this.trackerID.replace(/-/g, ''), 32).toString();
 
     //Alert Status
-    this.alert = { lost: false, keepOut: false };
+    this.alert = { lost: false, keepOut: false, schedule: false };
     this.keepOutMaps = [];
     this.notifyAddressList = [];
     this.mailTimeStamp = 0;

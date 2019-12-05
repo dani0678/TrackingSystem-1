@@ -4,7 +4,7 @@ import Sound from 'react-sound';
 export default function AlertBuzzer(props) {
   const [status, setStatus] = useState(Sound.status.STOPPED);
 
-  useEffect(() => {
+  /* useEffect(() => {
     const trackers = props.trackers;
     if (trackers.length) {
       trackers.forEach( (tracker) => {
@@ -15,8 +15,7 @@ export default function AlertBuzzer(props) {
         }
       })
     }
-  }, [props.trackers]);
+  }, [props.trackers]); */
 
-
-  return <Sound url={`${process.env.REACT_APP_API_URL}/warning.mp3`} playStatus={status}/>;
+  return <Sound url={`${process.env.REACT_APP_API_URL}/warning.mp3`} playStatus={status} />;
 }

@@ -4,14 +4,17 @@ export default function sketch(p) {
   let trackers = [];
 
   p.setup = function() {
-    p.createCanvas(`${process.env.REACT_APP_API_MAP_WIDTH}`, `${process.env.REACT_APP_API_MAP_HEIGHT}`);
+    p.createCanvas(
+      `${process.env.REACT_APP_API_MAP_WIDTH}`,
+      `${process.env.REACT_APP_API_MAP_HEIGHT}`
+    );
     backImage = p.loadImage(`${process.env.REACT_APP_API_URL}/${process.env.REACT_APP_API_MAP}`);
   };
 
   p.myCustomRedrawAccordingToNewPropsHandler = function(props) {
     if (props.trackers) {
       trackers = props.trackers;
-      trackers.forEach( (tracker) => {
+      trackers.forEach(tracker => {
         tracker.image = p.loadImage('data:image/png;base64,' + tracker.userImage);
       });
     }
@@ -22,7 +25,7 @@ export default function sketch(p) {
     p.noTint();
     p.image(backImage, 0, 0, 0);
     if (trackers.length) {
-      trackers.forEach( (tracker) => {
+      trackers.forEach(tracker => {
         if (tracker.Location && Object.keys(tracker.Location).length) {
           if (tracker.alert.keepOut) {
             p.textSize(20);
@@ -41,6 +44,17 @@ export default function sketch(p) {
             p.textAlign(p.LEFT, p.TOP);
             p.text(
               tracker.trackerName + 'さんを見失いました！',
+              tracker.Location.grid.x + 30,
+              tracker.Location.grid.y + 30
+            );
+            p.tint('red');
+            p.image(tracker.image, tracker.Location.grid.x, tracker.Location.grid.y);
+          } else if (tracker.alert.schedule) {
+            p.textSize(20);
+            p.fill(p.color('red'));
+            p.textAlign(p.LEFT, p.TOP);
+            p.text(
+              tracker.trackerName + 'さんが予定とは違う場所にいます！',
               tracker.Location.grid.x + 30,
               tracker.Location.grid.y + 30
             );
