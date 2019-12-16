@@ -10,6 +10,9 @@ module.exports = class Schedule {
       if (tracker.Location.map !== schedule.room) {
         tracker.alert.schedule = true;
         return tracker.tarckerName + 'さんが予定とは違う場所にいます';
+      } else {
+        tracker.alert.schedule = false;
+        return '';
       }
     };
 
@@ -23,13 +26,26 @@ module.exports = class Schedule {
 
       if (schedule.trackerList.includes(tracker.trackerID)) {
         if (openingHour <= now.getHours() && now.getHours() <= closingHour) {
-          if (openingHour === now.getHours()) {
+          if (openingHour === closingHour) {
+            if (openingMinute <= now.getMinutes() && now.getMinutes() <= closingMinute) {
+              checkSchedule(schedule);
+            } else {
+              tracker.alert.schedule = false;
+              return '';
+            }
+          } else if (openingHour === now.getHours()) {
             if (openingMinute <= now.getMinutes()) {
               checkSchedule(schedule);
+            } else {
+              tracker.alert.schedule = false;
+              return '';
             }
           } else if (closingHour === now.getHours()) {
             if (now.getMinutes() <= closingMinute) {
               checkSchedule(schedule);
+            } else {
+              tracker.alert.schedule = false;
+              return '';
             }
           } else {
             checkSchedule(schedule);
@@ -38,9 +54,6 @@ module.exports = class Schedule {
           tracker.alert.schedule = false;
           return '';
         }
-      } else {
-        tracker.alert.schedule = false;
-        return '';
       }
     }
   }
