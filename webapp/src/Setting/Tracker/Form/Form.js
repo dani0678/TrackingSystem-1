@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -10,8 +10,8 @@ import Select from '@material-ui/core/Select';
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
-  },
+    minWidth: 120
+  }
 }));
 
 export default function Form(props) {
@@ -22,7 +22,7 @@ export default function Form(props) {
     fetch(trackerURL, {
       method: 'POST',
       headers: { 'content-type': 'application/json; charset=utf-8' },
-      body: JSON.stringify(props.newTracker),
+      body: JSON.stringify(props.newTracker)
     });
   };
 

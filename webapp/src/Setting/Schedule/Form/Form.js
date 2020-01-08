@@ -1,5 +1,5 @@
 import 'date-fns';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
@@ -12,9 +12,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120
+  root: {
+    flexDirection: 'row',
+    display: 'flex'
   }
 }));
 
@@ -72,100 +72,103 @@ export default function Form(props) {
   };
 
   return (
-    <div>
-      <TextField
-        className="schedule-name"
-        name="name"
-        label="Schedule"
-        margin="normal"
-        onChange={handleInputChange}
-      />
+    <div className={classes.root}>
+      <FormControl>
+        <TextField
+          className="schedule-name"
+          name="name"
+          label="Schedule"
+          margin="normal"
+          onChange={handleInputChange}
+        />
+        <FormControl>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Grid container justify="space-around">
+              <KeyboardTimePicker
+                margin="normal"
+                id="openingtime-picker"
+                label="開始時間"
+                name="openingTime"
+                value={openingTime}
+                onChange={date => {
+                  setOpeningTime(date);
+                  setClosingTime(date);
+                  setOpTime(date);
+                }}
+                KeyboardButtonProps={{
+                  'aria-label': 'change time'
+                }}
+              />
+            </Grid>
 
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <Grid container justify="space-around">
-          <KeyboardTimePicker
-            margin="normal"
-            id="time-picker"
-            label="開始時間"
-            name="openingTime"
-            value={openingTime}
-            onChange={date => {
-              setOpeningTime(date);
-              setClosingTime(date);
-              setOpTime(date);
-            }}
-            KeyboardButtonProps={{
-              'aria-label': 'change time'
-            }}
-          />
-        </Grid>
+            <Grid container justify="space-around">
+              <KeyboardTimePicker
+                margin="normal"
+                id="closingtime-picker"
+                label="終了時間"
+                value={closingTime}
+                onChange={date => {
+                  setClosingTime(date);
+                  setClTime(date);
+                }}
+                KeyboardButtonProps={{
+                  'aria-label': 'change time'
+                }}
+              />
+            </Grid>
+          </MuiPickersUtilsProvider>
+        </FormControl>
 
-        <Grid container justify="space-around">
-          <KeyboardTimePicker
-            margin="normal"
-            id="time-picker"
-            label="終了時間"
-            value={closingTime}
-            onChange={date => {
-              setClosingTime(date);
-              setClTime(date);
+        <FormControl>
+          <InputLabel id="unit">Unit</InputLabel>
+          <Select
+            labelid="unit"
+            id="unit"
+            name="unit"
+            value={props.newSchedule.unit ? props.newSchedule.unit : ''}
+            onChange={e => {
+              handleInputChange(e);
+              setRoom(e);
             }}
-            KeyboardButtonProps={{
-              'aria-label': 'change time'
-            }}
-          />
-        </Grid>
-      </MuiPickersUtilsProvider>
+          >
+            {props.unitList.map(value => (
+              <MenuItem value={value.name} key={value.name}>
+                {value.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-      <FormControl className={classes.formControl}>
-        <InputLabel id="unit">Unit</InputLabel>
-        <Select
-          labelid="unit"
-          id="unit"
-          name="unit"
-          value={props.newSchedule.unit ? props.newSchedule.unit : ''}
-          onChange={e => {
-            handleInputChange(e);
-            setRoom(e);
-          }}
+        <FormControl className={classes.formControl}>
+          <InputLabel id="room">Room</InputLabel>
+          <Select
+            labelid="room"
+            id="room"
+            name="room"
+            value={roomForm ? roomForm : ''}
+            onChange={e => {
+              handleInputChange(e);
+              setMapID(e);
+            }}
+          >
+            {roomList.map(value => (
+              <MenuItem value={value.name} key={value.name}>
+                {value.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <Button
+          variant="contained"
+          color="primary"
+          size="medium"
+          className="submit"
+          onClick={submitSchedule}
         >
-          {props.unitList.map(value => (
-            <MenuItem value={value.name} key={value.name}>
-              {value.name}
-            </MenuItem>
-          ))}
-        </Select>
+          登録
+        </Button>
       </FormControl>
-
-      <FormControl className={classes.formControl}>
-        <InputLabel id="room">Room</InputLabel>
-        <Select
-          labelid="room"
-          id="room"
-          name="room"
-          value={roomForm ? roomForm : ''}
-          onChange={e => {
-            handleInputChange(e);
-            setMapID(e);
-          }}
-        >
-          {roomList.map(value => (
-            <MenuItem value={value.name} key={value.name}>
-              {value.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-
-      <Button
-        variant="contained"
-        color="primary"
-        size="medium"
-        className="submit"
-        onClick={submitSchedule}
-      >
-        登録
-      </Button>
     </div>
   );
 }

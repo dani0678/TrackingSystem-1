@@ -12,7 +12,7 @@ export default function Schedule() {
     openingTime: new Date(),
     closingTime: new Date(),
     unit: '',
-    room: '',
+    room: ''
   });
 
   const scheduleURL = new URL(`${process.env.REACT_APP_API_URL}/api/schedule`);

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { lighten, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -202,7 +202,7 @@ export default function ScheduleList(props) {
   };
   //API
   const updateTrackerList = (shceduleID, trackerList) => {
-    const scheduleURL = 'http://localhost:3000/api/schedule';
+    const scheduleURL = `${process.env.REACT_APP_API_URL}/api/schedule`;
     const updateScheduleUrl = scheduleURL + '/' + shceduleID;
     fetch(updateScheduleUrl, {
       method: 'PUT',
@@ -212,7 +212,7 @@ export default function ScheduleList(props) {
   };
 
   const deleteSchedule = selected => {
-    const scheduleURL = 'http://localhost:3000/api/schedule';
+    const scheduleURL = `${process.env.REACT_APP_API_URL}/api/schedule`;
     selected.map(select => {
       const schedule = props.scheduleList.find(schedule => schedule.name === select);
       const deleteScheduleUrl = scheduleURL + '/' + schedule.scheduleID;

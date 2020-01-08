@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { lighten, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -14,16 +14,15 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Checkbox from '@material-ui/core/Checkbox';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
-import _ from 'underscore';
 
 const useStyles = makeStyles({
   root: {
-    width: '75%',
+    width: '75%'
   },
   tableWrapper: {
     maxHeight: 440,
-    overflow: 'auto',
-  },
+    overflow: 'auto'
+  }
 });
 
 const StaffTableToolbar = props => {
@@ -56,7 +55,7 @@ const StaffTableToolbar = props => {
 
 StaffTableToolbar.propTypes = {
   selected: PropTypes.array.isRequired,
-  deleteTracker: PropTypes.func.isRequired,
+  deleteTracker: PropTypes.func.isRequired
 };
 
 const ResitentsTableToolbar = props => {
@@ -89,14 +88,14 @@ const ResitentsTableToolbar = props => {
 
 ResitentsTableToolbar.propTypes = {
   selected: PropTypes.array.isRequired,
-  deleteTracker: PropTypes.func.isRequired,
+  deleteTracker: PropTypes.func.isRequired
 };
 
 const columns = [
   { id: 'checkbox', label: '', minWidth: 30, align: 'center' },
   { id: 'trackerName', label: '名前', minWidth: 170, align: 'center' },
   { id: 'beaconID', label: 'ビーコンID', minWidth: 170, align: 'center' },
-  { id: 'userStatus', label: 'ユーザー', minWidth: 170, align: 'center' },
+  { id: 'userStatus', label: 'ユーザー', minWidth: 170, align: 'center' }
 ];
 
 export default function List(props) {
@@ -138,14 +137,14 @@ export default function List(props) {
   const isSelected = name => selected.indexOf(name) !== -1;
 
   const deleteTracker = selected => {
-    const trackerURL = 'http://localhost:3000/api/tracker';
+    const trackerURL = `${process.env.REACT_APP_API_URL}/api/tracker`;
     selected.map(select => {
       const tracker = props.trackers.find(tracker => tracker.trackerName === select);
       const deleteTrackerUrl = trackerURL + '/' + tracker.trackerID;
       fetch(deleteTrackerUrl, {
         method: 'DELETE',
         headers: { 'content-type': 'application/json; charset=utf-8' },
-        body: JSON.stringify(tracker),
+        body: JSON.stringify(tracker)
       });
       setSelected([]);
     });
@@ -214,10 +213,10 @@ export default function List(props) {
           rowsPerPage={rowsPerPage}
           page={page}
           backIconButtonProps={{
-            'aria-label': 'previous page',
+            'aria-label': 'previous page'
           }}
           nextIconButtonProps={{
-            'aria-label': 'next page',
+            'aria-label': 'next page'
           }}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
@@ -251,10 +250,10 @@ export default function List(props) {
           rowsPerPage={rowsPerPage}
           page={page}
           backIconButtonProps={{
-            'aria-label': 'previous page',
+            'aria-label': 'previous page'
           }}
           nextIconButtonProps={{
-            'aria-label': 'next page',
+            'aria-label': 'next page'
           }}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
