@@ -4,7 +4,8 @@ import 'react-tabs/style/react-tabs.css';
 
 import Realtime from './Realtime/Realtime';
 import Playback from './Playback/Playback';
-import ListUpTrackerByMap from "./ListUpTrackerByMap/ListUpTrackerByMap";
+import ListUpTrackerByMap from './ListUpTrackerByMap/ListUpTrackerByMap';
+import CompareSchedule from './CompareSchedule/CompareSchedule';
 
 export default function Whereabouts() {
   return (
@@ -14,6 +15,7 @@ export default function Whereabouts() {
           <Tab>リアルタイム</Tab>
           <Tab>プレイバック</Tab>
           <Tab>入居者所在検索</Tab>
+          <Tab>スケジュール比較</Tab>
         </TabList>
 
         <TabPanel>
@@ -24,6 +26,9 @@ export default function Whereabouts() {
         </TabPanel>
         <TabPanel>
           <ListUpTrackerByMap />
+        </TabPanel>
+        <TabPanel>
+          <CompareSchedule />
         </TabPanel>
       </Tabs>
     </div>

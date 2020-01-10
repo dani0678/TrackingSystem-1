@@ -7,7 +7,7 @@ const Schedule = require('./Schedule');
 const DBName = process.env.DB_NAME || 'tracking';
 const DBURL = process.env.DB_URL + DBName || 'mongodb://localhost:27017/' + DBName;
 
-module.exports = class MetaRepository {
+module.exports = class ScheduleRepository {
   static async addSchedule(scheduleData) {
     const schedule = new Schedule(
       scheduleData['name'],
@@ -70,6 +70,7 @@ module.exports = class MetaRepository {
     const db = client.db(DBName);
     const ID = scheduleID;
     const List = trackerIDList;
+
     const res = await db
       .collection('schedule')
       .update({ scheduleID: ID }, { $set: { trackerList: List } });
