@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Form from './Form/Form';
 import ScheduleList from './List/List';
+import './Schedule.scss';
 
 export default function Schedule() {
   const [unitList, setUnitList] = useState([]);

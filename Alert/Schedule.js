@@ -23,36 +23,59 @@ module.exports = class Schedule {
       const closingHour = closingTime.getHours();
       const openingMinute = openingTime.getMinutes();
       const closingMinute = closingTime.getMinutes();
-
       if (schedule.trackerList.includes(tracker.trackerID)) {
         if (openingHour <= now.getHours() && now.getHours() <= closingHour) {
           if (openingHour === closingHour) {
             if (openingMinute <= now.getMinutes() && now.getMinutes() <= closingMinute) {
-              checkSchedule(schedule);
+              if (tracker.Location.map !== schedule.room) {
+                tracker.alert.schedule = true;
+                return tracker.tarckerName + 'さんが予定とは違う場所にいます';
+              } else {
+                tracker.alert.schedule = false;
+                continue;
+              }
             } else {
               tracker.alert.schedule = false;
-              return '';
+              continue;
             }
           } else if (openingHour === now.getHours()) {
             if (openingMinute <= now.getMinutes()) {
-              checkSchedule(schedule);
+              if (tracker.Location.map !== schedule.room) {
+                tracker.alert.schedule = true;
+                return tracker.tarckerName + 'さんが予定とは違う場所にいます';
+              } else {
+                tracker.alert.schedule = false;
+                continue;
+              }
             } else {
               tracker.alert.schedule = false;
-              return '';
+              continue;
             }
           } else if (closingHour === now.getHours()) {
             if (now.getMinutes() <= closingMinute) {
-              checkSchedule(schedule);
+              if (tracker.Location.map !== schedule.room) {
+                tracker.alert.schedule = true;
+                return tracker.tarckerName + 'さんが予定とは違う場所にいます';
+              } else {
+                tracker.alert.schedule = false;
+                continue;
+              }
             } else {
               tracker.alert.schedule = false;
-              return '';
+              continue;
             }
           } else {
-            checkSchedule(schedule);
+            if (tracker.Location.map !== schedule.room) {
+              tracker.alert.schedule = true;
+              return tracker.tarckerName + 'さんが予定とは違う場所にいます';
+            } else {
+              tracker.alert.schedule = false;
+              continue;
+            }
           }
         } else {
           tracker.alert.schedule = false;
-          return '';
+          continue;
         }
       }
     }
