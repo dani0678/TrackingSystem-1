@@ -1,27 +1,27 @@
-"use strict";
+'use strict';
 
 require('dotenv').config();
-const MongoClient = require("mongodb").MongoClient;
-const Tracker = require("./Tracker");
-const LocationRepository = require("../Location/LocationRepository");
-const MapRepository = require("../Map/MapRepository");
+const MongoClient = require('mongodb').MongoClient;
+const Tracker = require('./Tracker');
+const LocationRepository = require('../Location/LocationRepository');
+const MapRepository = require('../Map/MapRepository');
 
-const DBName = process.env.DB_NAME || "tracking";
-const DBURL = process.env.DB_URL + DBName || "mongodb://localhost:27017/" + DBName;
+const DBName = process.env.DB_NAME || 'tracking';
+const DBURL = process.env.DB_URL + DBName || 'mongodb://localhost:27017/' + DBName;
 
 module.exports = class TrackerRepository {
   static async addTracker(trackerData) {
     const tracker = new Tracker(
-      trackerData["trackerName"],
-      trackerData["beaconID"],
-      trackerData["userStatus"]
+      trackerData['trackerName'],
+      trackerData['beaconID'],
+      trackerData['userStatus']
     );
 
     const client = await MongoClient.connect(DBURL).catch(err => {
       console.log(err);
     });
     const db = client.db(DBName);
-    const res = await db.collection("tracker").insert(tracker);
+    const res = await db.collection('tracker').insert(tracker);
     client.close();
     return res.result;
   }
@@ -32,7 +32,7 @@ module.exports = class TrackerRepository {
     });
     const db = client.db(DBName);
     const removeQuery = { beaconID: removedBeaconID };
-    const res = await db.collection("tracker").remove(removeQuery);
+    const res = await db.collection('tracker').remove(removeQuery);
     client.close();
     return res.result;
   }
@@ -43,7 +43,7 @@ module.exports = class TrackerRepository {
     });
     const db = client.db(DBName);
     const trackerQuery = await db
-      .collection("tracker")
+      .collection('tracker')
       .find()
       .toArray();
     client.close();
@@ -55,9 +55,7 @@ module.exports = class TrackerRepository {
           searchTimes
         );
       } else {
-        tracker.Location = await LocationRepository.getLocationRecently(
-          tracker.beaconID
-        );
+        tracker.Location = await LocationRepository.getLocationRecently(tracker.beaconID);
       }
       trackers.push(tracker);
     }
@@ -70,17 +68,12 @@ module.exports = class TrackerRepository {
     });
     const db = client.db(DBName);
     const searchQuery = { beaconID: searchedBeaconID };
-    const tracker = await db.collection("tracker").findOne(searchQuery);
+    const tracker = await db.collection('tracker').findOne(searchQuery);
     if (Object.keys(times).length) {
-      const locations = await LocationRepository.getLocationByTime(
-        tracker.beaconID,
-        times
-      );
+      const locations = await LocationRepository.getLocationByTime(tracker.beaconID, times);
       tracker.Location = locations;
     } else {
-      const locations = await LocationRepository.getLocationRecently(
-        tracker.beaconID
-      );
+      const locations = await LocationRepository.getLocationRecently(tracker.beaconID);
       tracker.Location = locations;
     }
     client.close();
@@ -93,18 +86,13 @@ module.exports = class TrackerRepository {
     });
     const db = client.db(DBName);
     const searchQuery = { trackerID: searchedTrackerID };
-    const tracker = await db.collection("tracker").findOne(searchQuery);
+    const tracker = await db.collection('tracker').findOne(searchQuery);
     client.close();
     if (Object.keys(times).length) {
-      const locations = await LocationRepository.getLocationByTime(
-        tracker.beaconID,
-        times
-      );
+      const locations = await LocationRepository.getLocationByTime(tracker.beaconID, times);
       tracker.Location = locations;
     } else {
-      const locations = await LocationRepository.getLocationRecently(
-        tracker.beaconID
-      );
+      const locations = await LocationRepository.getLocationRecently(tracker.beaconID);
       tracker.Location = locations;
     }
     client.close();
@@ -128,10 +116,18 @@ module.exports = class TrackerRepository {
     const db = client.db(DBName);
     const searchQuery = { trackerID: searchedTrackerID };
     const setValueQuery = { $set: newValueQuery };
-    const res = await db
-      .collection("tracker")
-      .updateOne(searchQuery, setValueQuery);
+    const res = await db.collection('tracker').updateOne(searchQuery, setValueQuery);
     client.close();
     return res.result;
+  }
+
+  static async removeTracker(trackerID) {
+    const client = await MongoClient.connect(DBURL).catch(err => {
+      console.log(err);
+    });
+    const db = client.db(DBName);
+    const removeQuery = { trackerID: trackerID };
+    const res = await db.collection('tracker').remove(removeQuery);
+    client.close();
   }
 };

@@ -1,10 +1,11 @@
-"use strict";
+'use strict';
 
-const mailer = require("nodemailer");
-const TrackerRepository = require("../Tracker/TrackerRepository");
+const mailer = require('nodemailer');
+const TrackerRepository = require('../Tracker/TrackerRepository');
 
-const Lost = require("./Lost");
-const KeepOut = require("./KeepOut");
+const Lost = require('./Lost');
+const KeepOut = require('./KeepOut');
+const Schedule = require('./Schedule');
 
 module.exports = class Alert {
   static async check() {
@@ -12,14 +13,18 @@ module.exports = class Alert {
     for (let tracker of trackers) {
       const lostResult = await Lost.check(tracker);
       const keepOutResult = await KeepOut.check(tracker);
+      const scheduleResult = await Schedule.check(tracker);
 
-      if (lostResult || keepOutResult) {
+      if (lostResult || keepOutResult || scheduleResult) {
         const message =
           lostResult +
-          "</br>" +
+          '</br>' +
           keepOutResult +
+          '</br>' +
+          scheduleResult +
           '</br></br><a href="http://192.168.235.135:3000">Webで確認する</a>';
         this.sendMail(tracker, message);
+        TrackerRepository.updateTracker(tracker.trackerID, tracker);
       } else {
         TrackerRepository.updateTracker(tracker.trackerID, tracker);
       }
@@ -28,7 +33,7 @@ module.exports = class Alert {
 
   static sendMail(tracker, message) {
     const smtpConfig = {
-      host: process.env.MAIL_HOST || "smtp.gmail.com",
+      host: process.env.MAIL_HOST || 'smtp.gmail.com',
       port: 465,
       secure: true, // SSL
       auth: {
@@ -37,17 +42,14 @@ module.exports = class Alert {
       }
     };
     const date = new Date();
-    if (
-      this.abs(date.getTime() - tracker.mailTimeStamp) > 600000 ||
-      tracker.mailTimeStamp === 0
-    ) {
+    if (this.abs(date.getTime() - tracker.mailTimeStamp) > 600000 || tracker.mailTimeStamp === 0) {
       const smtp = mailer.createTransport(smtpConfig);
 
       for (let addless of tracker.notifyAddressList) {
         let mailOptions = {
           from: process.env.MAIL_USER,
           to: addless,
-          subject: "TrackingSystemAlert",
+          subject: 'TrackingSystemAlert',
           html: message
         };
 
@@ -55,7 +57,7 @@ module.exports = class Alert {
           if (err) {
             console.log(err);
           } else {
-            console.log("Message sent: " + message);
+            console.log('Message sent: ' + message);
             return;
           }
         });
