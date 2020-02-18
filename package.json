@@ -17,7 +17,7 @@
     "express": "^4.16.3",
     "identicon.js": "^2.3.3",
     "migrate-mongo": "^7.0.1",
-    "mongo-express": "^0.53.0",
+    "mongo-express": "^0.54.0",
     "mongodb": "^3.4.0",
     "node-fetch": "^2.1.2",
     "nodemailer": "^4.6.8",
