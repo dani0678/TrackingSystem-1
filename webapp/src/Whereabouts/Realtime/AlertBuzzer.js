@@ -8,7 +8,8 @@ export default function AlertBuzzer(props) {
     const trackers = props.trackers;
     if (trackers.length) {
       trackers.forEach(tracker => {
-        if (tracker.alert.keepOut || tracker.alert.lost) {
+        console.log(tracker.alert);
+        if (tracker.alert.keepOut >= 3.93 || tracker.alert.lost || tracker.alert.schedule >= 300) {
           setStatus(Sound.status.PLAYING);
         } else {
           setStatus(Sound.status.STOPPED);

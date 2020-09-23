@@ -88,7 +88,7 @@ export default function Movement() {
 
   useEffect(() => {
     if (chosenTrackers.length && Object.keys(term).length) {
-      chosenTrackers.forEach((tracker) => {
+      chosenTrackers.forEach(tracker => {
         fetchTrackers(term, tracker);
       });
     }
@@ -106,7 +106,9 @@ export default function Movement() {
           value={span}
           onChange={(event, value) => setSpan(event.target.value)}
         >
+          <MenuItem value={30}>30秒</MenuItem>
           <MenuItem value={60}>1分</MenuItem>
+          <MenuItem value={180}>3分</MenuItem>
           <MenuItem value={300}>5分</MenuItem>
           <MenuItem value={600}>10分</MenuItem>
           <MenuItem value={1800}>30分</MenuItem>

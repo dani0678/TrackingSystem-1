@@ -58,7 +58,7 @@ export default function Form(props) {
           value={props.newTracker.userStatus ? props.newTracker.userStatus : ''}
           onChange={handleInputChange}
         >
-          <MenuItem value={'入居者'}>入居者</MenuItem>
+          <MenuItem value={'入所者'}>入所者</MenuItem>
           <MenuItem value={'職員'}>職員</MenuItem>
         </Select>
       </FormControl>

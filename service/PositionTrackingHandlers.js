@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-const PositionTracking = require("./PositionTracking");
-const Alert = require("../Alert/Alert");
+const PositionTracking = require('./PositionTracking');
+const Alert = require('../Alert/Alert');
 let timerID;
 
 module.exports = class PositionTrackingHandlers {
@@ -12,11 +12,11 @@ module.exports = class PositionTrackingHandlers {
       PositionTracking.updateLocations(startTime);
       Alert.check();
     }, 1000);
-    res.send("Tracking Start!");
+    res.send('Tracking Start!');
   }
 
   static stopPositionTracking(req, res) {
     clearInterval(timerID);
-    res.send("Tracking Stop!");
+    res.send('Tracking Stop!');
   }
 };

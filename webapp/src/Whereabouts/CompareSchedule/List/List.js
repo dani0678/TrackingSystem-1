@@ -43,7 +43,7 @@ export default function List(props) {
   };
 
   const residentsList = props.trackers.filter(function(tracker) {
-    if (tracker.userStatus === '入居者') return true;
+    if (tracker.userStatus === '入所者') return true;
   });
 
   const makeTrackerList = trackers => {

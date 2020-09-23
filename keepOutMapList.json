@@ -2,8 +2,10 @@
   "map": [
     {
       "meta": "ミーティング室",
-      "name": "ミーティング室",
-      "IDList": ["0fd80c85-f533-4ba1-92ac-1cca158ffac8"]
+      "name": "3806室",
+      "shape": "vertical",
+      "entrance": "top",
+      "IDList": ["68170c64-99fb-431f-aa24-219a7b6547ae"]
     },
     {
       "name": "fuga",

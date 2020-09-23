@@ -38,8 +38,8 @@ module.exports = class Alert {
       secure: true, // SSL
       auth: {
         user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASS
-      }
+        pass: process.env.MAIL_PASS,
+      },
     };
     const date = new Date();
     if (this.abs(date.getTime() - tracker.mailTimeStamp) > 600000 || tracker.mailTimeStamp === 0) {
@@ -50,10 +50,10 @@ module.exports = class Alert {
           from: process.env.MAIL_USER,
           to: addless,
           subject: 'TrackingSystemAlert',
-          html: message
+          html: message,
         };
 
-        smtp.sendMail(mailOptions, function(err, res) {
+        smtp.sendMail(mailOptions, function (err, res) {
           if (err) {
             console.log(err);
           } else {

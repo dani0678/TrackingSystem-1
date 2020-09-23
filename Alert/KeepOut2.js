@@ -8,18 +8,24 @@ module.exports = class KeepOut {
   static async check(tracker) {
     const keepOutList = JSON.parse(fs.readFileSync('./keepOutMapList.json', 'utf-8'));
     const allMaps = await MapRepository.getAllMap();
+    console.log(allMaps);
     let trackerLocation = allMaps.find((map) => map.mapID === tracker.Location.map);
 
     const includedMeta = (map) => {
-      return map.meta === trackerLocation.mName;
+      if (trackerLocation) {
+        return map.meta === trackerLocation.mName;
+      }
     };
     const includedPlace = (map) => {
-      return map.name === trackerLocation.name;
+      if (trackerLocation) {
+        return map.name === trackerLocation.name;
+      }
     };
     const includedMetaPlace = (map) => {
-      return map.meta === trackerLocation.mName && map.name == trackerLocation.name;
+      if (trackerLocation) {
+        return map.meta === trackerLocation.mName && map.name == trackerLocation.name;
+      }
     };
-
     const addKeepOutValue = (map) => {
       if (map.shape === 'vertical') {
         if (map.entrance === 'top') {
@@ -43,7 +49,6 @@ module.exports = class KeepOut {
         }
       }
     };
-
     let keepout = false;
     for (let map of keepOutList['map']) {
       if (tracker.Location) {

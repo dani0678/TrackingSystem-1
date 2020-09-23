@@ -27,7 +27,7 @@ export default function sketch(p) {
     if (trackers.length) {
       trackers.forEach(tracker => {
         if (tracker.Location && Object.keys(tracker.Location).length) {
-          if (tracker.alert.keepOut) {
+          if (tracker.alert.keepOut >= 3.93) {
             p.textSize(20);
             p.fill(p.color('red'));
             p.textAlign(p.LEFT, p.TOP);
@@ -49,7 +49,18 @@ export default function sketch(p) {
             );
             p.tint('red');
             p.image(tracker.image, tracker.Location.grid.x, tracker.Location.grid.y);
-          } else if (tracker.alert.schedule) {
+          } else if (tracker.alert.schedule >= 1 && tracker.alert.schedule < 300) {
+            p.textSize(20);
+            p.fill(p.color('yellow'));
+            p.textAlign(p.LEFT, p.TOP);
+            p.text(
+              tracker.trackerName + 'さんがスケジュール通りでない行動をしている可能性があります！',
+              tracker.Location.grid.x + 30,
+              tracker.Location.grid.y + 30
+            );
+            p.tint('yellow');
+            p.image(tracker.image, tracker.Location.grid.x, tracker.Location.grid.y);
+          } else if (tracker.alert.schedule >= 300) {
             p.textSize(20);
             p.fill(p.color('red'));
             p.textAlign(p.LEFT, p.TOP);

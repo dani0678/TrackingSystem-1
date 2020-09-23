@@ -14,7 +14,7 @@ export default function Setting() {
       <Tabs>
         <TabList>
           <Tab>スケジュール</Tab>
-          <Tab>入居者</Tab>
+          <Tab>入所者</Tab>
           <Tab>部屋</Tab>
           <Tab>ユニット</Tab>
           <Tab>受信機</Tab>

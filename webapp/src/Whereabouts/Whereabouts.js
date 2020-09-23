@@ -14,7 +14,7 @@ export default function Whereabouts() {
         <TabList>
           <Tab>リアルタイム</Tab>
           <Tab>プレイバック</Tab>
-          <Tab>入居者所在検索</Tab>
+          <Tab>入所者所在検索</Tab>
           <Tab>スケジュール比較</Tab>
         </TabList>
 

@@ -110,7 +110,7 @@ function SimpleDialog(props) {
 
   return (
     <Dialog onClose={handleClose} aria-labelledby="tracker-dialog" open={open}>
-      <DialogTitle id="tracker-dialog">入居者を選んでください</DialogTitle>
+      <DialogTitle id="tracker-dialog">入所者を選んでください</DialogTitle>
       <DialogContent>
         <List>
           {residentsList.map(tracker => (
@@ -159,7 +159,7 @@ export default function ScheduleList(props) {
   const [openId, setOpenId] = React.useState(null);
 
   const residentsList = props.trackerList.filter(function(tracker) {
-    if (tracker.userStatus === '入居者') return true;
+    if (tracker.userStatus === '入所者') return true;
   });
 
   //tableのページとcheckbox

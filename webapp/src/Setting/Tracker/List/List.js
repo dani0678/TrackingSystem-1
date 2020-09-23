@@ -65,7 +65,7 @@ const ResitentsTableToolbar = props => {
   return (
     <Toolbar>
       <Typography className={'title'} variant="h6" id="tableTitle">
-        入居者一覧
+        入所者一覧
       </Typography>
 
       {selected.length > 0 ? (
@@ -154,7 +154,7 @@ export default function List(props) {
     if (tracker.userStatus === '職員') return true;
   });
   const residentsList = props.trackers.filter(function(tracker) {
-    if (tracker.userStatus === '入居者') return true;
+    if (tracker.userStatus === '入所者') return true;
   });
 
   const makeTrackerList = trackers => {

@@ -1,6 +1,4 @@
-'use strict';
 const ScheduleRepository = require('../Schedule/ScheduleRepository');
-const fs = require('fs');
 
 module.exports = class Schedule {
   static async check(tracker) {
@@ -10,11 +8,18 @@ module.exports = class Schedule {
 
     const checkSchedule = (schedule) => {
       if (tracker.Location.map !== schedule.room) {
-        tracker.alert.schedule = true;
+        for (let map of moveableMapList['map']) {
+          console.log(taracker.alert.schedule);
+          if (map.mapID === tracker.Location.map) {
+            tracker.alert.schedule += 1;
+          } else {
+            tracker.alert.schedule += 100;
+          }
+        }
         return tracker.trackerName + 'さんが予定とは違う場所にいます';
       } else {
-        tracker.alert.schedule = false;
-        return '';
+        tracker.alert.schedule = 0;
+        continue;
       }
     };
 
@@ -28,17 +33,17 @@ module.exports = class Schedule {
       if (schedule.trackerList.includes(tracker.trackerID)) {
         if (openingHour <= now.getHours() && now.getHours() <= closingHour) {
           if (openingHour === closingHour) {
-            console.log('a');
             if (openingMinute <= now.getMinutes() && now.getMinutes() <= closingMinute) {
               if (tracker.Location.map !== schedule.room) {
                 for (let map of moveableMapList['map']) {
+                  console.log(taracker.alert.schedule);
                   if (map.mapID === tracker.Location.map) {
                     tracker.alert.schedule += 1;
                   } else {
-                    tracker.alert.schedule += 5;
+                    tracker.alert.schedule += 100;
                   }
                 }
-                return tracker.trackerName + 'さんが予定とは違う場所にいます';
+                return tracker.tarckerName + 'さんが予定とは違う場所にいます';
               } else {
                 tracker.alert.schedule = 0;
                 continue;
@@ -48,25 +53,22 @@ module.exports = class Schedule {
               continue;
             }
           } else if (openingHour === now.getHours()) {
-            console.log('b');
-            console.log(tracker.alert.schedule);
             if (openingMinute <= now.getMinutes()) {
               if (tracker.Location.map !== schedule.room) {
                 for (let map of moveableMapList['map']) {
+                  console.log(taracker.alert.schedule);
                   if (map.mapID === tracker.Location.map) {
                     tracker.alert.schedule += 1;
                   } else {
-                    tracker.alert.schedule += 5;
+                    tracker.alert.schedule += 100;
                   }
                 }
-                return tracker.trackerName + 'さんが予定とは違う場所にいます';
+                return tracker.tarckerName + 'さんが予定とは違う場所にいます';
               } else {
-                console.log('k1');
                 tracker.alert.schedule = 0;
                 continue;
               }
             } else {
-              console.log('k2');
               tracker.alert.schedule = 0;
               continue;
             }
@@ -74,13 +76,14 @@ module.exports = class Schedule {
             if (now.getMinutes() <= closingMinute) {
               if (tracker.Location.map !== schedule.room) {
                 for (let map of moveableMapList['map']) {
+                  console.log(taracker.alert.schedule);
                   if (map.mapID === tracker.Location.map) {
                     tracker.alert.schedule += 1;
                   } else {
-                    tracker.alert.schedule += 5;
+                    tracker.alert.schedule += 100;
                   }
                 }
-                return tracker.trackerName + 'さんが予定とは違う場所にいます';
+                return tracker.tarckerName + 'さんが予定とは違う場所にいます';
               } else {
                 tracker.alert.schedule = 0;
                 continue;
@@ -90,17 +93,16 @@ module.exports = class Schedule {
               continue;
             }
           } else {
-            console.log('d');
-            console.log(tracker.alert.schedule);
             if (tracker.Location.map !== schedule.room) {
               for (let map of moveableMapList['map']) {
+                console.log(taracker.alert.schedule);
                 if (map.mapID === tracker.Location.map) {
                   tracker.alert.schedule += 1;
                 } else {
-                  tracker.alert.schedule += 5;
+                  tracker.alert.schedule += 100;
                 }
               }
-              return tracker.trackerName + 'さんが予定とは違う場所にいます';
+              return tracker.tarckerName + 'さんが予定とは違う場所にいます';
             } else {
               tracker.alert.schedule = 0;
               continue;

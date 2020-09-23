@@ -22,9 +22,8 @@ export default function ListUpTrackerByMap(props) {
     const d = new Date(intTime);
     const hour = ('0' + d.getHours()).slice(-2);
     const min = ('0' + d.getMinutes()).slice(-2);
-    const sec = ('0' + d.getSeconds()).slice(-2);
 
-    return hour + ':' + min + ':' + sec;
+    return hour + ':' + min;
   };
 
   const fetchLocationByMap = (map, term) => {
@@ -95,11 +94,11 @@ export default function ListUpTrackerByMap(props) {
   const makeNameList = (trackers, staffOnly = false) => {
     if (staffOnly) {
       trackers = trackers.filter(tracker => {
-        return tracker.status === 'staff';
+        return tracker.status === '職員';
       });
     } else {
       trackers = trackers.filter(tracker => {
-        return tracker.status === 'tenant';
+        return tracker.status === '入所者';
       });
     }
     if (trackers.length) {
@@ -137,7 +136,7 @@ export default function ListUpTrackerByMap(props) {
               <TableRow>
                 <TableCell align="center">時間</TableCell>
                 <TableCell align="center">職員</TableCell>
-                <TableCell align="center">入居者</TableCell>
+                <TableCell align="center">入所者</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
